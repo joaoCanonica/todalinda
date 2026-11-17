@@ -1,0 +1,52 @@
+{
+  "name": "todalinda-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site da Todalinda (Ateliê de Beleza Toda Linda), Lages/SC.",
+  "engines": {
+    "node": ">=22.23.4",
+    "pnpm": ">=10.28.0"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check && eslint . && prettier --check .",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "validate-config": "node scripts/pendente.mjs validate-config 2",
+    "audit-compliance": "node scripts/pendente.mjs audit-compliance 2",
+    "audit-a11y": "node scripts/pendente.mjs audit-a11y 9",
+    "audit-lighthouse": "node scripts/pendente.mjs audit-lighthouse 9",
+    "audit-seo": "node scripts/pendente.mjs audit-seo 8",
+    "audit-contraste": "node scripts/pendente.mjs audit-contraste 3",
+    "audit-pesos": "node scripts/pendente.mjs audit-pesos 9",
+    "media:prepare": "node scripts/pendente.mjs media:prepare 1",
+    "model:prepare": "node scripts/pendente.mjs model:prepare 6B",
+    "capturar": "node scripts/capturar.mjs"
+  },
+  "dependencies": {
+    "astro": "7.4.12",
+    "sharp": "0.35.5",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@eslint/js": "10.0.1",
+    "@types/node": "^22.20.5",
+    "@types/three": "0.187.0",
+    "astro-eslint-parser": "3.2.0",
+    "eslint": "10.15.0",
+    "eslint-plugin-astro": "3.2.1",
+    "globals": "17.14.0",
+    "playwright": "1.63.0",
+    "prettier": "3.10.1",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "8.73.0",
+    "vitest": "5.1.0"
+  }
+}
