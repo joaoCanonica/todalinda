@@ -1,0 +1,657 @@
+{
+  "_leiaMe": "Avaliações públicas do Google da TODALINDA (Lages/SC), coletadas em 17/11/2026 — todas as 57. Só 29 têm texto. No site: citar literal com primeiro nome + inicial, selo 'Avaliação no Google' e link para a ficha. Nunca colocar nota em JSON-LD (AggregateRating autosservido). A avaliação de 'DIDO Rodrigues' é de profissional da casa: fora do site. Recoletar a cada 30 dias.",
+  "fonte": {
+    "plataforma": "Google Maps",
+    "ficha": "Todalinda",
+    "categoria": "Salão de Beleza",
+    "endereco": "R. Lauro Muller, 574 - Centro, Lages - SC, 88501-000",
+    "telefone": "(49) 3018-0082",
+    "coordenadas": [
+      -27.8168249,
+      -50.3245096
+    ],
+    "plusCode": "5MMG+75",
+    "cid": "0x94e01f39d95c7339:0xcf9b17ab53fde0b4",
+    "urlFicha": "https://www.google.com/maps?cid=14959576611857227956",
+    "site": "NÃO CADASTRADO",
+    "horarioNaFicha": "cadastrado (fecha 19:00)",
+    "coletadoEm": "2026-11-17"
+  },
+  "resumo": {
+    "nota": 4.6,
+    "total": 57,
+    "distribuicao": {
+      "5": 46,
+      "4": 6,
+      "3": 3,
+      "2": 0,
+      "1": 2
+    },
+    "comTexto": 29,
+    "ultimos12meses": 12,
+    "respondidasPeloDono": 1,
+    "exibirNotaNoSite": false,
+    "motivoNaoExibirNota": "4,6 com 57 avaliações perde para concorrentes com 150–250 (Léia 232, Géssica Ramos 257, Ayni 180). Mostrar a nota só depois de 100+ e média ≥ 4,7.",
+    "citacoesDestacadasPeloGoogle": [
+      "Ótimo serviço e equipe atenciosa.",
+      "Não recomendo o salão pela falta de atenção, técnica e profissionalismo."
+    ],
+    "temasRecorrentes": [
+      "atendimento/acolhimento",
+      "ambiente aconchegante e bonito",
+      "profissionais competentes",
+      "café, água e música",
+      "Isabela (coloração/corte) citada 2x",
+      "protocolo pós-mechas",
+      "massagem relaxante (2020)"
+    ]
+  },
+  "citacoesSugeridasParaOSite": [
+    {
+      "id": 2,
+      "exibirComo": "A V.",
+      "texto": "Fui muito bem atendida! Quem cortou o meu cabelo foi a Isabela, ela tem muito conhecimento sobre coloração, corte de cabelo e o que mais se adequa para cada rosto, tom de pele, rotina, etc."
+    },
+    {
+      "id": 4,
+      "exibirComo": "Fernanda B.",
+      "texto": "Encantada com o atendimento. Fiz morena iluminada e adquiri o protocolo pós-mechas. Meu cabelo está maravilhoso. Obrigada aos profissionais, todos perfeitos."
+    },
+    {
+      "id": 5,
+      "exibirComo": "Marta K.",
+      "texto": "Adoro frequentar o Toda Linda !!!! A equipe sempre receptiva e agradável, meus sábados sempre são com elas todos sem exceção nos recebem com uma alegria contagiante. Gratidão acolhida por mim recebida.💞"
+    },
+    {
+      "id": 6,
+      "exibirComo": "Mandyshow",
+      "texto": "Fomos na Toda Linda fazer hidratação de cabelo e fui cortar minhas pontas pro meu cabelo continuar crescendo. Todos muito atenciosos e carinhosos, ambiente muito aconchegante e estéticamente agradável. Meu cabelo ficou super soltinho e perfeito, do jeito que eu amo. Tem cafézin e água e música boa. Adorei e a localização é bem conveniente também."
+    },
+    {
+      "id": 8,
+      "exibirComo": "Maria R.",
+      "texto": "Amo o trabalho desses profissionais maravilhosos! Parabéns 👏👏👏"
+    },
+    {
+      "id": 9,
+      "exibirComo": "Rafaela W.",
+      "texto": "Melhor atendimento, lugar aconchegante. Profissionais exemplares, dedicadas, nos fazem se sentir em casa. Voltarei sempre 👏❤️"
+    },
+    {
+      "id": 10,
+      "exibirComo": "Vanessa R.",
+      "texto": "Fiz massagem relaxante, realmente maravilhosa e o custo benefício ótimo. Aconselho depois de uma semana de stress sim vc merece essa massagem! Meninas muito receptivas, lugar muito Chick, mas acessível."
+    },
+    {
+      "id": 11,
+      "exibirComo": "Arceloni V.",
+      "texto": "Excelente ambiente, acolhedor! Profissionais super bem preparadas! Diferenciado! Recomendo!"
+    },
+    {
+      "id": 12,
+      "exibirComo": "Ivana S.",
+      "texto": "Ótimo atendimento,e ambiente maravilhoso..meninas e atendente com um carisma maravilhoso"
+    },
+    {
+      "id": 13,
+      "exibirComo": "Vinéia K.",
+      "texto": "O dia que de loura fui para Ruivo. Isa foi sensacional"
+    },
+    {
+      "id": 14,
+      "exibirComo": "Sheila C.",
+      "texto": "Lugar lindo, excelente atendimento, trabalho impecável! Amei demais!"
+    },
+    {
+      "id": 16,
+      "exibirComo": "Juliane M.",
+      "texto": "Atendimento nota 1.000! E qualidade dos produtos excelente!"
+    }
+  ],
+  "avaliacoes": [
+    {
+      "id": 1,
+      "autor": "DIDO Rodrigues",
+      "exibirComo": "Dido R.",
+      "perfil": "Local Guide · 50 avaliações · 72 fotos",
+      "estrelas": 5,
+      "data": "2 anos atrás",
+      "texto": "Lugar incrível! Profissionais super competentes. Aconchegante, atendimento maravilhoso, produtos top, café fresquinho, preço justo.",
+      "alertas": [
+        "AUTOR É DA EQUIPE (@didorodrigues) — não usar no site; política do Google desaconselha avaliação de funcionário"
+      ]
+    },
+    {
+      "id": 2,
+      "autor": "A viajante.",
+      "exibirComo": "A V.",
+      "perfil": "Local Guide · 47 avaliações · 7 fotos",
+      "estrelas": 5,
+      "data": "7 meses atrás",
+      "texto": "Fui muito bem atendida! Quem cortou o meu cabelo foi a Isabela, ela tem muito conhecimento sobre coloração, corte de cabelo e o que mais se adequa para cada rosto, tom de pele, rotina, etc.",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 3,
+      "autor": "Georgea Oliveira",
+      "exibirComo": "Georgea O.",
+      "perfil": "5 avaliações · 2 fotos",
+      "estrelas": 1,
+      "data": "11 meses atrás",
+      "texto": "Infelizmente, foi o pior corte de cabelo que já fiz. Expliquei exatamente o que queria, mas a cabeleireira fez algo totalmente oposto. O corte ficou tão torto que até quem não entende de cabelo percebeu. Tive que voltar para arrumar e saí ainda mais decepcionada: cortaram demais e o resultado ficou com aspecto de “facão”, totalmente irregular e descuidado. Não recomendo o salão pela falta de atenção, técnica e profissionalismo.",
+      "alertas": [
+        "negativa/neutra — responder com cuidado; nunca exibir"
+      ]
+    },
+    {
+      "id": 4,
+      "autor": "Fernanda Batista",
+      "exibirComo": "Fernanda B.",
+      "perfil": "3 avaliações",
+      "estrelas": 5,
+      "data": "9 meses atrás",
+      "texto": "Encantada com o atendimento. Fiz morena iluminada e adquiri o protocolo pós-mechas. Meu cabelo está maravilhoso. Obrigada aos profissionais, todos perfeitos.",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 5,
+      "autor": "marta kramer",
+      "exibirComo": "Marta K.",
+      "perfil": "3 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "9 meses atrás",
+      "texto": "Adoro frequentar o Toda Linda !!!! A equipe sempre receptiva e agradável, meus sábados sempre são com elas todos sem exceção nos recebem com uma alegria contagiante. Gratidão acolhida por mim recebida.💞",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 6,
+      "autor": "Mandyshow",
+      "exibirComo": "Mandyshow",
+      "perfil": "Local Guide · 23 avaliações · 17 fotos",
+      "estrelas": 5,
+      "data": "um ano atrás",
+      "texto": "Fomos na Toda Linda fazer hidratação de cabelo e fui cortar minhas pontas pro meu cabelo continuar crescendo. Todos muito atenciosos e carinhosos, ambiente muito aconchegante e estéticamente agradável. Meu cabelo ficou super soltinho e perfeito, do jeito que eu amo. Tem cafézin e água e música boa. Adorei e a localização é bem conveniente também.",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 7,
+      "autor": "Priscila Farias",
+      "exibirComo": "Priscila F.",
+      "perfil": "2 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "Editado 2 meses atrás",
+      "texto": "Amei. Desde recepção ao atendimento"
+    },
+    {
+      "id": 8,
+      "autor": "Maria Regina",
+      "exibirComo": "Maria R.",
+      "perfil": "5 avaliações",
+      "estrelas": 5,
+      "data": "8 meses atrás",
+      "texto": "Amo o trabalho desses profissionais maravilhosos! Parabéns 👏👏👏",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 9,
+      "autor": "Rafaela Weisheimer",
+      "exibirComo": "Rafaela W.",
+      "perfil": "Local Guide · 17 avaliações · 3 fotos",
+      "estrelas": 5,
+      "data": "2 anos atrás",
+      "texto": "Melhor atendimento, lugar aconchegante. Profissionais exemplares, dedicadas, nos fazem se sentir em casa. Voltarei sempre 👏❤️",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 10,
+      "autor": "Vanessa Ribeiro",
+      "exibirComo": "Vanessa R.",
+      "perfil": "Local Guide · 162 avaliações · 17 fotos",
+      "estrelas": 5,
+      "data": "Editado 5 anos atrás",
+      "texto": "Fiz massagem relaxante, realmente maravilhosa e o custo benefício ótimo. Aconselho depois de uma semana de stress sim vc merece essa massagem! Meninas muito receptivas, lugar muito Chick, mas acessível.",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 11,
+      "autor": "Arceloni Neusa Volpato",
+      "exibirComo": "Arceloni V.",
+      "perfil": "Local Guide · 161 avaliações · 5 fotos",
+      "estrelas": 5,
+      "data": "2 anos atrás",
+      "texto": "Excelente ambiente, acolhedor! Profissionais super bem preparadas! Diferenciado! Recomendo!",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 12,
+      "autor": "Ivana da silva",
+      "exibirComo": "Ivana S.",
+      "perfil": "10 avaliações · 4 fotos",
+      "estrelas": 5,
+      "data": "um ano atrás",
+      "texto": "Ótimo atendimento,e ambiente maravilhoso..meninas e atendente com um carisma maravilhoso",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 13,
+      "autor": "Vinéia köche",
+      "exibirComo": "Vinéia K.",
+      "perfil": "Local Guide · 42 avaliações · 115 fotos",
+      "estrelas": 5,
+      "data": "2 anos atrás",
+      "texto": "O dia que de loura fui para Ruivo. Isa foi sensacional",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 14,
+      "autor": "Sheila da Cruz",
+      "exibirComo": "Sheila C.",
+      "perfil": "Local Guide · 7 avaliações · 18 fotos",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": "Lugar lindo, excelente atendimento, trabalho impecável! Amei demais!",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 15,
+      "autor": "Senhora Zu",
+      "exibirComo": "Senhora Z.",
+      "perfil": "Local Guide · 14 avaliações · 1 foto",
+      "estrelas": 1,
+      "data": "um ano atrás",
+      "texto": "Serviço prestado deixou muito a desejar",
+      "alertas": [
+        "negativa/neutra — responder com cuidado; nunca exibir"
+      ]
+    },
+    {
+      "id": 16,
+      "autor": "Juliane K. G. Montes",
+      "exibirComo": "Juliane M.",
+      "perfil": "Local Guide · 76 avaliações · 31 fotos",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": "Atendimento nota 1.000! E qualidade dos produtos excelente!",
+      "usoSite": "candidata a citação"
+    },
+    {
+      "id": 17,
+      "autor": "Caroline C A Costa",
+      "exibirComo": "Caroline C.",
+      "perfil": "Local Guide · 15 avaliações · 27 fotos",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": "Ótimo atendimento. Ambiente aconchegante!"
+    },
+    {
+      "id": 18,
+      "autor": "NEUSA CAMPOS",
+      "exibirComo": "Neusa C.",
+      "perfil": "3 avaliações",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": "Fui muito bem atendida!! Amei ❤❤"
+    },
+    {
+      "id": 19,
+      "autor": "Clarissa Matos",
+      "exibirComo": "Clarissa M.",
+      "perfil": "Local Guide · 40 avaliações · 4 fotos",
+      "estrelas": 5,
+      "data": "4 anos atrás",
+      "texto": "Atendimento, espaço e profissionais: ótimos!"
+    },
+    {
+      "id": 20,
+      "autor": "Larissa Blue",
+      "exibirComo": "Larissa B.",
+      "perfil": "Local Guide · 28 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": "Ótimo serviço e equipe atenciosa."
+    },
+    {
+      "id": 21,
+      "autor": "Daiane Paes",
+      "exibirComo": "Daiane P.",
+      "perfil": "Local Guide · 16 avaliações · 31 fotos",
+      "estrelas": 5,
+      "data": "5 anos atrás",
+      "texto": "Muito bem atendida!"
+    },
+    {
+      "id": 22,
+      "autor": "Marisa Perin",
+      "exibirComo": "Marisa P.",
+      "perfil": "Local Guide · 11 avaliações · 4 fotos",
+      "estrelas": 4,
+      "data": "2 anos atrás",
+      "texto": "Bom atendimento"
+    },
+    {
+      "id": 23,
+      "autor": "Rhana Lunkes",
+      "exibirComo": "Rhana L.",
+      "perfil": "Local Guide · 20 avaliações · 7 fotos",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": "Atendimento excelente!"
+    },
+    {
+      "id": 24,
+      "autor": "Patricia Mariano",
+      "exibirComo": "Patricia M.",
+      "perfil": "Local Guide · 33 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": "Minha manicura preferida"
+    },
+    {
+      "id": 25,
+      "autor": "Loreci Schmitt",
+      "exibirComo": "Loreci S.",
+      "perfil": "9 avaliações",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": "Amei o atendimento!"
+    },
+    {
+      "id": 26,
+      "autor": "Folia na Cozinha",
+      "exibirComo": "Folia C.",
+      "perfil": "Local Guide · 36 avaliações · 20 fotos",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": "Excelente"
+    },
+    {
+      "id": 27,
+      "autor": "Suani Gerber",
+      "exibirComo": "Suani G.",
+      "perfil": "Local Guide · 5 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": "Ótimo Atendimento!!"
+    },
+    {
+      "id": 28,
+      "autor": "Larissa Marinho",
+      "exibirComo": "Larissa M.",
+      "perfil": "5 avaliações",
+      "estrelas": 5,
+      "data": "um ano atrás",
+      "texto": null
+    },
+    {
+      "id": 29,
+      "autor": "Edi Cileni Vieira",
+      "exibirComo": "Edi V.",
+      "perfil": "1 avaliação",
+      "estrelas": 5,
+      "data": "3 anos atrás",
+      "texto": "Maravilhosa"
+    },
+    {
+      "id": 30,
+      "autor": "Luana Beretta Tartas",
+      "exibirComo": "Luana T.",
+      "perfil": "15 avaliações",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": "Atendimento excelente"
+    },
+    {
+      "id": 31,
+      "autor": "Hadia Vieira",
+      "exibirComo": "Hadia V.",
+      "perfil": "6 avaliações",
+      "estrelas": 3,
+      "data": "6 meses atrás",
+      "texto": null,
+      "alertas": [
+        "negativa/neutra — responder com cuidado; nunca exibir"
+      ]
+    },
+    {
+      "id": 32,
+      "autor": "Priscila Costa",
+      "exibirComo": "Priscila C.",
+      "perfil": "4 avaliações · 5 fotos",
+      "estrelas": 5,
+      "data": "um ano atrás",
+      "texto": null
+    },
+    {
+      "id": 33,
+      "autor": "Caroline Miniskovski",
+      "exibirComo": "Caroline M.",
+      "perfil": "Local Guide · 13 avaliações · 14 fotos",
+      "estrelas": 5,
+      "data": "3 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 34,
+      "autor": "Gabriela Rosa",
+      "exibirComo": "Gabriela R.",
+      "perfil": "1 avaliação",
+      "estrelas": 5,
+      "data": "3 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 35,
+      "autor": "Luiz_ pc",
+      "exibirComo": "Luiz_ P.",
+      "perfil": "1 avaliação",
+      "estrelas": 3,
+      "data": "3 anos atrás",
+      "texto": null,
+      "alertas": [
+        "negativa/neutra — responder com cuidado; nunca exibir"
+      ]
+    },
+    {
+      "id": 36,
+      "autor": "Raiane Macedo",
+      "exibirComo": "Raiane M.",
+      "perfil": "2 avaliações",
+      "estrelas": 5,
+      "data": "3 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 37,
+      "autor": "Debora Böell",
+      "exibirComo": "Debora B.",
+      "perfil": "Local Guide · 29 avaliações · 11 fotos",
+      "estrelas": 5,
+      "data": "3 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 38,
+      "autor": "Juliana Santos",
+      "exibirComo": "Juliana S.",
+      "perfil": "8 avaliações · 1 foto",
+      "estrelas": 4,
+      "data": "3 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 39,
+      "autor": "Tathiane Trentin",
+      "exibirComo": "Tathiane T.",
+      "perfil": "Local Guide · 115 avaliações · 44 fotos",
+      "estrelas": 4,
+      "data": "4 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 40,
+      "autor": "Mirian Cordova",
+      "exibirComo": "Mirian C.",
+      "perfil": "Local Guide · 5 avaliações · 53 fotos",
+      "estrelas": 5,
+      "data": "4 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 41,
+      "autor": "Juliana Melim",
+      "exibirComo": "Juliana M.",
+      "perfil": "1 avaliação",
+      "estrelas": 5,
+      "data": "4 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 42,
+      "autor": "Edirce. Leal",
+      "exibirComo": "Edirce L.",
+      "perfil": "Local Guide · 129 avaliações · 792 fotos",
+      "estrelas": 5,
+      "data": "4 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 43,
+      "autor": "Francine Córdova",
+      "exibirComo": "Francine C.",
+      "perfil": "2 avaliações",
+      "estrelas": 5,
+      "data": "5 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 44,
+      "autor": "Brenda Amaral",
+      "exibirComo": "Brenda A.",
+      "perfil": "5 avaliações · 3 fotos",
+      "estrelas": 5,
+      "data": "5 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 45,
+      "autor": "Matheus Quadra",
+      "exibirComo": "Matheus Q.",
+      "perfil": "Local Guide · 7 avaliações · 1 foto",
+      "estrelas": 4,
+      "data": "6 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 46,
+      "autor": "Lais Volpato",
+      "exibirComo": "Lais V.",
+      "perfil": "19 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "6 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 47,
+      "autor": "Rodrigo Saviski",
+      "exibirComo": "Rodrigo S.",
+      "perfil": "Local Guide · 13 avaliações · 128 fotos",
+      "estrelas": 4,
+      "data": "6 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 48,
+      "autor": "Muriá Mussi",
+      "exibirComo": "Muriá M.",
+      "perfil": "Local Guide · 15 avaliações · 25 fotos",
+      "estrelas": 4,
+      "data": "7 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 49,
+      "autor": "Alan Amaro",
+      "exibirComo": "Alan A.",
+      "perfil": "6 avaliações",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 50,
+      "autor": "Evelyn Diconcili caetano",
+      "exibirComo": "Evelyn C.",
+      "perfil": "4 avaliações",
+      "estrelas": 3,
+      "data": "7 anos atrás",
+      "texto": null,
+      "alertas": [
+        "negativa/neutra — responder com cuidado; nunca exibir"
+      ]
+    },
+    {
+      "id": 51,
+      "autor": "Regiane Kanunfre",
+      "exibirComo": "Regiane K.",
+      "perfil": "Local Guide · 10 avaliações · 5 fotos",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 52,
+      "autor": "Ana Claudia Hinckel",
+      "exibirComo": "Ana H.",
+      "perfil": "7 avaliações",
+      "estrelas": 5,
+      "data": "7 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 53,
+      "autor": "Alexsandra Osorio Zigliotto",
+      "exibirComo": "Alexsandra Z.",
+      "perfil": "Local Guide · 3 avaliações",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 54,
+      "autor": "Luiz Alberto Vieira",
+      "exibirComo": "Luiz V.",
+      "perfil": "3 avaliações",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": null,
+      "respostaDoDono": "Obrigado por sua avaliação, Luiz! (8 anos atrás)"
+    },
+    {
+      "id": 55,
+      "autor": "Lariana Rosa",
+      "exibirComo": "Lariana R.",
+      "perfil": "14 avaliações",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 56,
+      "autor": "Luciana Guimarães Vieira",
+      "exibirComo": "Luciana V.",
+      "perfil": "Local Guide · 55 avaliações · 1 foto",
+      "estrelas": 5,
+      "data": "8 anos atrás",
+      "texto": null
+    },
+    {
+      "id": 57,
+      "autor": "Neuza Neves",
+      "exibirComo": "Neuza N.",
+      "perfil": "3 fotos",
+      "estrelas": 5,
+      "data": "Editado 9 anos atrás",
+      "texto": null
+    }
+  ]
+}
