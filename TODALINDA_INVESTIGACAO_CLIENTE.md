@@ -49,7 +49,7 @@ Tudo o que não encontrei em fonte pública está marcado como **PENDENTE**.
 | Bio | "Inovação para mulheres que buscam tratamentos essenciais para unir beleza e bem estar!" | confirmado |
 | Categoria Google | Salão de Beleza | confirmado |
 | Endereço | R. Lauro Müller, 574 – Centro, Lages – SC | confirmado |
-| CEP | Google: **88501-000**; Facebook: **88502-110** | **PENDENTE: confirmar o correto** |
+| CEP | **88501-000** (Facebook mostra 88502-110, que está errado: corrigir lá) | CONFIRMADO (João, 17/11) |
 | Coordenadas | -27.8168249, -50.3245096 · Plus Code 5MMG+75 | confirmado |
 | WhatsApp (agendamento) | +55 49 99177-2089 (Linktree) | confirmado |
 | Telefone fixo (Google) | (49) 3018-0082 | confirmado |
@@ -57,7 +57,7 @@ Tudo o que não encontrei em fonte pública está marcado como **PENDENTE**.
 | Ficha Google | `https://www.google.com/maps?cid=14959576611857227956` | confirmado |
 | Site na ficha | **não cadastrado** | cadastrar no lançamento |
 | Facebook | "Todalinda \| Lages SC" ("Uma proposta inovadora para mulheres") | existe; não auditado |
-| CNPJ / razão social | não encontrado em fonte pública | **PENDENTE** |
+| CNPJ / razão social | **25.337.323/0001-04** · **Cordova Antoniolli Serviços de Estéticas LTDA** · nome fantasia **Ateliê de Beleza Toda Linda** · atividade principal: cabeleireiros, manicure e pedicure | CONFIRMADO (João, 17/11) |
 | Ano de abertura | **2017**. Edna: "desde 2017"; revista "5 anos" em jul/2022; avaliação mais antiga de 9 anos | confirmado |
 | Agência atual | **Peak Criativa** (@peak.criativa), que publica as revistas e grava conteúdo. Videomaker: @viniciusleite.videomaker | alinhar para não conflitar |
 
@@ -96,7 +96,22 @@ As fontes são as revistas e as legendas, e as frases citadas são da própria E
 
 ## 4. Equipe identificada
 
-As fotos de cada pessoa só entram com o OK dela, já que o direito de imagem das clientes não cobre a equipe automaticamente.
+**Equipe confirmada pelo João (17/11)**, todos com autorização de imagem:
+
+| Pessoa | Função para o site |
+|---|---|
+| **Edna Antoniolli** | Fundadora e proprietária |
+| **Dido Rodrigues** | Cabeleireiro, **26 anos de profissão** |
+| **Andressa Savaris** | Cabeleireira e **cosmetóloga**, **9 anos de profissão** |
+| **Isabela Cristina** | **Colorista profissional**, especialização em colorimetria avançada · mechas · "técnica + cor" |
+| **Karine (Kah)** | Manicure e pedicure |
+| **Thaynara Colombo** | **Educadora e nail designer** |
+| **Marina Schpanski** | Maquiadora |
+
+**Fora da lista do João:** Mariana Spautz, Hevilly, Dra. Marianne Turossi, Morgana e Quelen. **Não aparecem no site** até a casa confirmar.
+**Cursos:** o último foi há cerca de 5 anos (273 semanas). No site, só uma linha na história ("a casa já formou profissionais em cursos próprios"), sem página e sem destaque.
+
+Tabela de pesquisa (fontes públicas, mantida para referência):
 
 | Pessoa | @ | Papel evidenciado | Fonte |
 |---|---|---|---|
@@ -179,7 +194,13 @@ O botão é o único caminho, e nada é filtrado antes da conversa. A recepção
    É uma pergunta-filtro por serviço, e cor e mechas perguntam pelo histórico químico, que alimenta o teste de mecha.
 4. **"Primeira vez em cor/mechas?"** Aqui aparece um aviso: "começamos com avaliação e teste de mecha". É o discurso da casa, e reduz a frustração que gerou a avaliação de 1 estrela.
 5. Status ao vivo: "**Aberto agora · fecha às 19h**" / "Abrimos terça às 9h".
-6. **Fase 2 (opcional):** a agenda online com Trinks/Avec. Concorrentes já usam: a Ayni cobra R$ 15 pela "Avaliação + Teste de Mechas" no Trinks. Isso só depois de a casa decidir abrir a agenda.
+6. **Agenda online (decisão do João, 17/11): os dois canais, implantados aos poucos.**
+   - **Fase 1:** o agendador monta a mensagem e envia ao WhatsApp. Vai no lançamento.
+   - **Fase 2:** agenda online de verdade, com horários livres, confirmação e lembrete.
+
+   O componente nasce com um **adaptador de destino** (whatsapp | link-externo | api). Assim a fase 2 troca o destino sem refazer a interface.
+   Opções para a fase 2: Trinks/Avec/Booksy (link ou widget) **ou** agenda própria da WAXLO (CRM + WhatsApp). A decisão entra pelo Prompt A.
+   Concorrentes já usam o Trinks: a Ayni cobra R$ 15 pela "Avaliação + Teste de Mechas".
 
 O link do WhatsApp sai de **uma única função** (`linkWhatsApp()`), com o UTM `?origem=site` no texto da mensagem para medir.
 
@@ -256,6 +277,11 @@ O link do WhatsApp sai de **uma única função** (`linkWhatsApp()`), com o UTM 
 
 ## 10. Compliance (ler antes de escrever qualquer texto)
 
+> **Atualização (17/11):** pela regra do João, só entra o procedimento que tem mídia no repositório.
+> **Ficam fora:** microagulhamento, mesoterapia, escleroterapia, lash lift, massagem e drenagem.
+> **Limpeza de pele** só entra se a casa confirmar.
+> Os itens 1 e 2 abaixo valem se algum desses voltar pelo Prompt L.
+
 1. **Procedimentos com agulha ou injetáveis** (mesoterapia capilar, microagulhamento, escleroterapia com glicose):
    - só aparecem no site com **nome e registro do profissional responsável** (Dra. Marianne Turossi: CRBM **PENDENTE**);
    - "avaliação individual" é obrigatória;
@@ -283,13 +309,15 @@ O link do WhatsApp sai de **uma única função** (`linkWhatsApp()`), com o UTM 
 ## 11. Direção do site (para o pacote de prompts)
 
 - **Promessa da Home:** *"Desde 2017, no Centro de Lages. Cor, corte e cuidado com quem entende de fio."* Esta é a hipótese de copy, e a validação é com a Edna.
-- **Assinatura visual proposta: "Moldura".**
-  - A filigrana dourada do logo vira o elemento que **emoldura** o trabalho, como um espelho de salão;
-  - o hero abre com a moldura se desenhando em volta de um vídeo de transformação;
-  - os trabalhos aparecem como "retratos" emoldurados;
-  - o "Momento Todalinda" vira o retrato da cliente.
+- **Assinatura visual (revisada 17/11): "Edição Todalinda".** O site é desenhado como a **revista** da casa:
+  - capa no hero;
+  - **capitulares** (a letra grande que abre o texto, como nas matérias);
+  - **etiquetas em pílula** (#TalentoTodalinda, #MomentoTodalinda);
+  - **fólio** (TODALINDA · 07 · COR) no canto de cada seção;
+  - alternância entre "capa escura" e "página clara".
 
-  Não repete o "arco", a "Luz de Treino" nem outras assinaturas já usadas.
+  A **filigrana** do logo aparece só na abertura e no selo.
+  Troquei a ideia de "Moldura" porque o site da Prime House já usa molduras de luz. Assim não repete a assinatura.
 - **Paleta derivada da marca:** preto quente, dourado da filigrana, um marfim e um **marrom mocha** que conversa com as morenas iluminadas. **PENDENTE: os códigos oficiais**, que serão medidos no logo quando chegar o repositório.
 - **Tipografia:** a casa já usa uma geométrica nos títulos (logo) e uma serifada itálica de alto contraste nas matérias da revista. As fontes finais serão escolhidas fora da lista das que já usamos, e a checagem fica no pacote.
 - **Mapa do site:**
@@ -308,18 +336,28 @@ O link do WhatsApp sai de **uma única função** (`linkWhatsApp()`), com o UTM 
 
 ---
 
-## 12. Pendências para a Edna
+## 12. Pendências para a Edna (atualizado 17/11)
 
-1. CNPJ e razão social; CEP correto (88501-000 ou 88502-110).
-2. **Link oficial "Pedir avaliações"** do Perfil da Empresa.
-3. Equipe atual: nomes, funções, fotos oficiais e autorização de cada pessoa.
-4. Registro da biomédica e confirmação de quais procedimentos ficam no site.
-5. Mês e data de abertura em 2017, para o "10 anos".
-6. Logo original em vetor e as cores oficiais.
-7. Se atendem noiva fora do salão; se há estacionamento; acessibilidade; formas de pagamento; se há cartão-presente para venda.
-8. O que é o destaque "Cursos": a casa oferece cursos para profissionais?
-9. Se querem agenda online (Trinks/Avec) agora ou mais tarde.
-10. Autorizações por escrito arquivadas: clientes, equipe, crianças e influenciadoras.
+**Já resolvido pelo João:**
+- CNPJ e razão social;
+- CEP 88501-000;
+- equipe e funções;
+- autorizações (clientes do repositório, equipe e influenciadoras);
+- crianças fora;
+- cursos: só uma menção;
+- procedimentos: só os que têm mídia;
+- agenda em duas fases;
+- logo vetorizado.
+
+**Falta:**
+1. **Link oficial "Pedir avaliações"** do Perfil da Empresa.
+2. Retratos em alta de Dido, Marina, Thaynara e Karine; fotos do espaço em alta (lista em `TODALINDA_MAPA_MIDIA.md`).
+3. Planta baixa ou medidas dos dois andares, para o 3D.
+4. Mês de abertura em 2017, para o "10 anos".
+5. Ouro oficial e logo horizontal.
+6. Atendimento de noiva fora do salão, estacionamento, acessibilidade, formas de pagamento, cartão-presente. O João vai perguntar; até lá, ficam fora do site.
+7. Se a limpeza de pele (Dra. Marianne Turossi) segue na casa.
+8. Fase 2 da agenda: Trinks/Avec ou agenda própria da WAXLO.
 
 ---
 
