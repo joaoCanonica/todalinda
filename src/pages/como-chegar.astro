@@ -1,0 +1,435 @@
+---
+// /como-chegar — o "SERVIÇO" da revista: o endereço em manchete com copiar, a fachada, o horário com
+// status ao vivo e os próximos feriados, o mapa (estático; o interativo só depois do clique e do aviso
+// de privacidade) e os três apps. Estacionamento só quando a casa confirmar.
+import Botao from '../components/base/Botao.astro';
+import Poster from '../components/base/Poster.astro';
+import Rotulo from '../components/base/Rotulo.astro';
+import StatusHorario from '../components/base/StatusHorario.astro';
+import TabelaHorario from '../components/base/TabelaHorario.astro';
+import Capitular from '../components/edicao/Capitular.astro';
+import Folio from '../components/edicao/Folio.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import Provisorio from '../components/Provisorio.astro';
+import { contato } from '../config/contato.ts';
+import { feriados, horario } from '../config/horario.ts';
+import { valorDe } from '../config/tipos.ts';
+import { botoes, whatsapp } from '../content/textos/geral.ts';
+import { alt } from '../content/textos/midia.ts';
+import { comoChegar as c } from '../content/textos/paginas.ts';
+import Interna from '../layouts/Interna.astro';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const e = contato.endereco.valor;
+const { lat, lng } = contato.geo.valor;
+const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - ${e.uf}, ${e.cep}`;
+const estacionamento = valorDe(contato.estacionamento);
+const hoje = new Date().toISOString().slice(0, 10);
+const proximos = feriados.filter((f) => f.data >= hoje).slice(0, 6);
+const fmtData = (iso: string) =>
+  new Intl.DateTimeFormat('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    weekday: 'short',
+    timeZone: 'UTC',
+  }).format(new Date(`${iso}T12:00:00Z`));
+const d = 0.004; // ~400 m de cada lado
+const bbox = [lng - d * 1.4, lat - d, lng + d * 1.4, lat + d].map((n) => n.toFixed(5)).join('%2C');
+const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
+---
+
+<Interna titulo={c.meta.title} descricao={c.meta.description}>
+  <section class="end tom-capa" aria-labelledby="endereco">
+    <Folio secao="Como chegar" />
+    <div class="end__texto">
+      <Rotulo tom="acento">{c.rotulo}</Rotulo>
+      <h1 id="endereco" class="end__rua">
+        {c.titulo.antes}
+        <em>{c.titulo.destaque}</em>
+      </h1>
+      <address class="end__resto">
+        {e.bairro} · {e.cidade}/{e.uf} · <span class="numeros">CEP {e.cep}</span>
+      </address>
+      <button type="button" class="end__copiar versalete" data-copiar={linhaCopiar} hidden>
+        <span data-copiar-texto>{botoes.copiarEndereco}</span>
+      </button>
+      <Capitular>
+        <p class="lead">{c.resposta}</p>
+      </Capitular>
+      <p class="end__ref">{c.referencia}</p>
+    </div>
+    <figure class="end__fachada">
+      <div class="end__moldura">
+        <Poster
+          imagem="cap-12-24-16"
+          alt={alt['cap-12-24-16'] ?? ''}
+          sizes="(min-width: 60rem) 26rem, 90vw"
+          prioridade
+        />
+      </div>
+      <figcaption class="versalete">A fachada, vista da rua</figcaption>
+    </figure>
+  </section>
+
+  <Pagina tom="pagina" secao="Horário" rotulo={c.horario}>
+    <div class="hor">
+      <div>
+        <h2 class="hor__titulo">{c.horario}</h2>
+        <StatusHorario />
+        <TabelaHorario semNotaFeriados />
+      </div>
+      <div class="hor__feriados">
+        <h3 class="versalete">{c.proximosFeriados}</h3>
+        <ul role="list" data-feriados={JSON.stringify(feriados.map((f) => [f.data, f.nome]))}>
+          {proximos.map((f) => (
+            <li>
+              <time datetime={f.data}>{fmtData(f.data)}</time>
+              <span>{f.nome}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="hor__nota">
+          {horario.fechaNosFeriados.estado === 'aviso' ? (
+            <Provisorio motivo={horario.fechaNosFeriados.motivo}>{c.feriados}</Provisorio>
+          ) : (
+            c.feriados
+          )}
+        </p>
+      </div>
+    </div>
+  </Pagina>
+
+  <Pagina tom="pagina" secao="Mapa" rotulo={c.mapa.titulo}>
+    <div class="mapa">
+      <div class="mapa__palco" data-mapa={embed}>
+        <div class="mapa__cartao" aria-hidden="true">
+          <span class="mapa__rosa">N</span>
+          <span class="numeros">{Math.abs(lat).toFixed(4)}° S</span>
+          <span class="numeros">{Math.abs(lng).toFixed(4)}° O</span>
+          <span class="mapa__plus">{contato.plusCode.valor}</span>
+        </div>
+        <div class="mapa__consentimento" data-mapa-aviso hidden>
+          <p>{c.mapa.aviso}</p>
+          <button type="button" class="mapa__botao versalete" data-mapa-carregar>
+            {c.mapa.botao}
+          </button>
+        </div>
+      </div>
+      <div class="mapa__lado">
+        <h2 class="versalete">{c.apps}</h2>
+        <ul class="apps" role="list">
+          <li>
+            <a href={contato.mapas.google.valor} rel="noopener" target="_blank">
+              Google Maps<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+          </li>
+          <li>
+            <a href={contato.mapas.waze.valor} rel="noopener" target="_blank">
+              Waze<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+          </li>
+          <li>
+            <a href={contato.mapas.apple.valor} rel="noopener" target="_blank">
+              Apple Mapas<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+          </li>
+        </ul>
+        {estacionamento && (
+          <>
+            <h2 class="versalete">Estacionamento</h2>
+            <p>{estacionamento}</p>
+          </>
+        )}
+        <h2 class="versalete">{c.contato}</h2>
+        <div class="contato">
+          <Botao href={linkWhatsApp(whatsapp.comoChegar)} externo>
+            WhatsApp
+          </Botao>
+          <a class="contato__tel" href={`tel:${contato.telefone.valor.tel}`}>
+            {botoes.ligar} {contato.telefone.valor.exibir}
+          </a>
+        </div>
+      </div>
+    </div>
+  </Pagina>
+</Interna>
+
+<script>
+  // copiar endereço
+  for (const b of document.querySelectorAll<HTMLButtonElement>('[data-copiar]')) {
+    if (!navigator.clipboard) continue;
+    b.hidden = false;
+    const t = b.querySelector('[data-copiar-texto]');
+    b.addEventListener('click', () => {
+      void navigator.clipboard.writeText(b.dataset.copiar ?? '').then(() => {
+        if (t) t.textContent = 'Endereço copiado';
+        setTimeout(() => t && (t.textContent = 'Copiar endereço'), 2500);
+      });
+    });
+  }
+  // próximos feriados: atualiza pela data de quem visita (o HTML traz os da data do build)
+  const lista = document.querySelector<HTMLUListElement>('[data-feriados]');
+  if (lista) {
+    const hoje = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Sao_Paulo' });
+    const fmt = new Intl.DateTimeFormat('pt-BR', {
+      day: 'numeric',
+      month: 'long',
+      weekday: 'short',
+      timeZone: 'UTC',
+    });
+    const todos = JSON.parse(lista.dataset.feriados ?? '[]') as [string, string][];
+    const prox = todos.filter(([d]) => d >= hoje).slice(0, 6);
+    lista.replaceChildren(
+      ...prox.map(([d, nome]) => {
+        const li = document.createElement('li');
+        const t = document.createElement('time');
+        t.dateTime = d;
+        t.textContent = fmt.format(new Date(`${d}T12:00:00Z`));
+        const s = document.createElement('span');
+        s.textContent = nome;
+        li.append(t, s);
+        return li;
+      }),
+    );
+  }
+  // mapa interativo: só depois do clique
+  const palco = document.querySelector<HTMLElement>('[data-mapa]');
+  const aviso = palco?.querySelector<HTMLElement>('[data-mapa-aviso]');
+  if (palco && aviso) {
+    aviso.hidden = false;
+    aviso.querySelector('[data-mapa-carregar]')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = palco.dataset.mapa ?? '';
+      f.title = 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer';
+      f.className = 'mapa__iframe';
+      palco.replaceChildren(f);
+      f.focus();
+    });
+  }
+</script>
+
+<style>
+  .end {
+    position: relative;
+    display: grid;
+    gap: var(--e-6);
+    padding: var(--e-8) var(--margem);
+  }
+  .end__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-3);
+  }
+  .end__rua {
+    font-size: clamp(3rem, 1.2rem + 7vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    overflow-wrap: anywhere;
+  }
+  .end__resto {
+    font-style: normal;
+    font-size: var(--fs-lead);
+    color: var(--texto-2);
+  }
+  .end__copiar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+    margin-bottom: var(--e-4);
+  }
+  /* o botão só funciona com JS, mas o espaço fica reservado (CLS 0) */
+  .end__copiar[hidden] {
+    display: inline-flex;
+    visibility: hidden;
+  }
+  .end__ref {
+    color: var(--texto-2);
+  }
+  .end__fachada {
+    margin: 0;
+    max-width: 26rem;
+  }
+  .end__moldura {
+    padding: var(--e-2);
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .end__fachada figcaption {
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .end {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      align-items: end;
+      gap: var(--e-8);
+      padding-top: var(--e-9);
+    }
+  }
+  .hor {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .hor__titulo {
+    margin-bottom: var(--e-4);
+  }
+  .hor__feriados h3 {
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+    margin-bottom: var(--e-3);
+  }
+  .hor__feriados ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 28rem;
+  }
+  /* os itens são refeitos pelo script (sem o atributo de escopo): seletores globais */
+  .hor__feriados :global(li) {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--e-3);
+    padding-block: 0.55em;
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .hor__feriados :global(time) {
+    color: var(--texto-2);
+  }
+  .hor__nota {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  @media (min-width: 60rem) {
+    .hor {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--e-8);
+    }
+  }
+  @media (max-width: 30rem) {
+    /* os itens são refeitos pelo script (sem o atributo de escopo): seletores globais */
+    .hor__feriados :global(li) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+  .mapa {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .mapa__palco {
+    display: grid;
+    gap: var(--e-4);
+    align-content: start;
+  }
+  .mapa__palco :global(.mapa__iframe) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .mapa__cartao {
+    position: relative;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: var(--e-2);
+    aspect-ratio: 4 / 3;
+    border: var(--fio) solid var(--fio-cor);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 47px, var(--fio-cor) 47px 48px),
+      repeating-linear-gradient(90deg, transparent 0 47px, var(--fio-cor) 47px 48px);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .mapa__rosa {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-end: var(--e-4);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+    color: var(--acento);
+  }
+  .mapa__plus {
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-pequeno);
+    color: var(--texto-2);
+  }
+  .mapa__consentimento {
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-4);
+  }
+  .mapa__consentimento[hidden] {
+    display: block;
+    visibility: hidden;
+  }
+  .mapa__consentimento p {
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .mapa__botao {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--cor-tinta);
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+  }
+  .mapa__lado h2 {
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+    margin: var(--e-5) 0 var(--e-3);
+  }
+  .mapa__lado h2:first-child {
+    margin-top: 0;
+  }
+  .apps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .apps a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    text-decoration: none;
+  }
+  .apps a::after {
+    content: '→';
+    margin-inline-start: auto;
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+  }
+  .contato {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+  }
+  .contato__tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--acento);
+  }
+  @media (min-width: 60rem) {
+    .mapa {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: var(--e-8);
+    }
+  }
+</style>

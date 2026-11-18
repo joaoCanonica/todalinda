@@ -1,0 +1,175 @@
+---
+// /revista — o ARQUIVO: as três edições como capas na estante, com número grande, data, páginas e a
+// linha de cada uma. O link do Flipsnack entra quando chegar (está no Linktree da casa); até lá,
+// "Edição online em breve" (com selo PROVISÓRIO no preview).
+import Botao from '../components/base/Botao.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import Provisorio from '../components/Provisorio.astro';
+import { doisDigitos } from '../components/secoes/util.ts';
+import { contato } from '../config/contato.ts';
+import { revista as r } from '../content/textos/paginas.ts';
+import Interna from '../layouts/Interna.astro';
+
+// links do Flipsnack: PENDENTES (docs/PENDENCIAS.md)
+const LINKS: (string | null)[] = [null, null, null];
+const edicoes = r.edicoes.map((e, i) => ({
+  ...e,
+  numero: doisDigitos(i + 1),
+  link: LINKS[i] ?? null,
+}));
+---
+
+<Interna titulo={r.meta.title} descricao={r.meta.description}>
+  <CabecaPagina secao="Arquivo" rotulo={r.rotulo} titulo={r.titulo} resposta={r.resposta} />
+
+  <Pagina tom="capa" secao="As edições" rotulo="As três edições">
+    <ol class="estante" role="list">
+      {edicoes.map((e) => (
+        <li class="estante__item">
+          <article class="capa" aria-labelledby={`ed-${e.numero}`}>
+            <p class="capa__cabeca versalete" aria-hidden="true">
+              Todalinda
+            </p>
+            <p class="capa__numero numeros" aria-hidden="true">
+              <span class="capa__no">Nº</span>
+              {e.numero}
+            </p>
+            <h2 id={`ed-${e.numero}`} class="capa__nome">
+              {e.nome}
+            </h2>
+            <p class="capa__data versalete">
+              {e.data} · {e.paginas} páginas
+            </p>
+          </article>
+          <p class="estante__linha">{e.linha}</p>
+          {e.link ? (
+            <a class="estante__link" href={e.link} rel="noopener" target="_blank">
+              {r.botao}
+              <span class="sr-only"> (abre em nova aba)</span>
+            </a>
+          ) : (
+            <p class="estante__link estante__link--pendente">
+              <Provisorio motivo="link do Flipsnack pendente (está no Linktree)">
+                Edição online em breve
+              </Provisorio>
+            </p>
+          )}
+        </li>
+      ))}
+    </ol>
+  </Pagina>
+
+  <Pagina tom="pagina" secao="Próxima edição" rotulo="Próxima edição">
+    <div class="prox">
+      <p class="prox__num numeros" aria-hidden="true">
+        Nº 10
+      </p>
+      <div>
+        <h2>
+          Este site é a <em>edição</em> dos 10 anos
+        </h2>
+        <p class="lead">
+          Em 2027 a Todalinda completa dez anos no Centro de Lages. Enquanto a próxima revista não
+          chega, o dia a dia da casa sai no Instagram.
+        </p>
+        <Botao href={contato.instagram.valor.url} externo variante="secundario">
+          Instagram @{contato.instagram.valor.usuario}
+        </Botao>
+      </div>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .estante {
+    display: grid;
+    gap: var(--e-7);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  @media (min-width: 48rem) {
+    .estante {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--e-6);
+    }
+  }
+  .capa {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    aspect-ratio: 3 / 4;
+    padding: var(--e-5);
+    border: var(--fio) solid var(--fio-cor);
+    background: var(--cor-cafe);
+    box-shadow: inset 6px 0 0 color-mix(in srgb, var(--cor-noite) 55%, transparent); /* a lombada */
+  }
+  .capa__cabeca {
+    margin: 0;
+    padding-bottom: var(--e-2);
+    border-bottom: var(--fio) solid var(--fio-cor);
+    color: var(--cor-papel);
+    letter-spacing: 0.4em;
+  }
+  .capa__numero {
+    align-self: center;
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(4.5rem, 3rem + 5vw, 8rem);
+    line-height: 1;
+    color: var(--cor-ouro-claro);
+  }
+  .capa__no {
+    font-size: 0.32em;
+    vertical-align: super;
+    margin-inline-end: 0.15em;
+  }
+  .capa__nome {
+    font-size: var(--fs-h3);
+    font-style: italic;
+    font-weight: 700;
+  }
+  .capa__data {
+    margin: var(--e-3) 0 0;
+    color: var(--cor-ouro);
+  }
+  .estante__linha {
+    margin: var(--e-4) 0 var(--e-2);
+    color: var(--texto-2);
+  }
+  .estante__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--cor-ouro-claro);
+  }
+  .estante__link--pendente {
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .prox {
+    display: grid;
+    gap: var(--e-5);
+    max-width: var(--largura-max);
+    align-items: center;
+  }
+  .prox__num {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(5rem, 3rem + 8vw, 11rem);
+    line-height: 0.85;
+    color: var(--cor-mocha);
+  }
+  .prox h2 {
+    margin-bottom: var(--e-4);
+  }
+  @media (min-width: 60rem) {
+    .prox {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--e-8);
+    }
+  }
+</style>

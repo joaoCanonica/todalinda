@@ -198,6 +198,15 @@ export const comoChegar = {
   horario: 'Horário',
   feriados: 'Em feriados, confirme o horário pelo WhatsApp antes de vir.',
   contato: 'Dúvida no caminho? Fale com a recepção.',
+  proximosFeriados: 'Próximos feriados',
+  /** Mapa interativo: só carrega depois do clique (e do aviso de privacidade). */
+  mapa: {
+    titulo: 'O mapa',
+    aviso:
+      'O mapa interativo vem do OpenStreetMap. Ao carregar, o seu navegador se conecta a ele, que recebe o seu endereço IP. Nada é carregado antes do clique.',
+    botao: 'Carregar o mapa interativo',
+    moldura: 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)',
+  },
   // estacionamento: PENDENTE (só entra quando a casa confirmar)
 };
 
@@ -322,6 +331,11 @@ export const privacidade = {
       titulo: 'Cookies e medição',
       texto:
         'Hoje o site não usa cookies de terceiros nem ferramentas de publicidade. Se isso mudar, esta página será atualizada e você poderá escolher antes.',
+    },
+    {
+      titulo: 'Mapa',
+      texto:
+        'Na página Como chegar, o mapa interativo do OpenStreetMap só carrega se você clicar para carregá-lo. A partir daí, o seu navegador se conecta ao OpenStreetMap, que recebe o seu endereço IP, conforme a política de privacidade dele.',
     },
     {
       titulo: 'Links para outros sites',

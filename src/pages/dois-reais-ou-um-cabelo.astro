@@ -1,0 +1,221 @@
+---
+// /dois-reais-ou-um-cabelo — o quadro como "caderno especial": o nome em manchete, o que é, e a
+// grade das temporadas (encerrada × no ar), como a programação de uma revista. Os episódios ficam no
+// Instagram (nada de terceiros carrega aqui). Sem regras de participação nem promoção no site.
+import Botao from '../components/base/Botao.astro';
+import Poster from '../components/base/Poster.astro';
+import Rotulo from '../components/base/Rotulo.astro';
+import Capitular from '../components/edicao/Capitular.astro';
+import Folio from '../components/edicao/Folio.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import { doisDigitos, liberada } from '../components/secoes/util.ts';
+import { contato } from '../config/contato.ts';
+import { doisReais as d } from '../content/textos/paginas.ts';
+import { alt } from '../content/textos/midia.ts';
+import Interna from '../layouts/Interna.astro';
+
+const STILL = 'q-revelacao-espelho';
+const status = ['Encerrada', 'No ar'];
+---
+
+<Interna titulo={d.meta.title} descricao={d.meta.description}>
+  <section class="caderno tom-capa" aria-labelledby="titulo-quadro">
+    <Folio secao="O quadro" />
+    <div class="caderno__texto">
+      <Rotulo tom="acento">{d.rotulo} · caderno especial</Rotulo>
+      <h1 id="titulo-quadro" class="caderno__titulo">
+        <span>Dois Reais</span>
+        <span class="caderno__ou">ou um</span>
+        <em>Cabelo</em>
+      </h1>
+      <Capitular>
+        <p class="lead">{d.resposta}</p>
+      </Capitular>
+      <Botao href={contato.instagram.valor.url} externo>
+        {d.botao}
+      </Botao>
+    </div>
+    {liberada(STILL) && (
+      <figure class="caderno__still">
+        <Poster
+          imagem={STILL}
+          alt={alt[STILL] ?? ''}
+          proporcao="4 / 5"
+          sizes="(min-width: 60rem) 36vw, 100vw"
+          prioridade
+        />
+        <figcaption class="versalete">Um episódio, no espelho do salão</figcaption>
+      </figure>
+    )}
+  </section>
+
+  <Pagina tom="pagina" secao="O que é" rotulo="O que é">
+    <div class="oque">
+      <h2>
+        O que é o <em>quadro</em>
+      </h2>
+      <div class="oque__colunas">
+        {d.oQueE.map((p) => (
+          <p>{p}</p>
+        ))}
+      </div>
+    </div>
+  </Pagina>
+
+  <Pagina tom="pagina" secao="Temporadas" rotulo="Temporadas">
+    <h2 class="temp__titulo">
+      As <em>temporadas</em>
+    </h2>
+    <ol class="temp" role="list">
+      {d.temporadas.map((t, i) => (
+        <li class:list={['temp__item', { 'temp__item--no-ar': i === d.temporadas.length - 1 }]}>
+          <span class="temp__num numeros" aria-hidden="true">
+            {doisDigitos(i + 1)}
+          </span>
+          <div>
+            <h3>{t.nome}</h3>
+            <p>{t.texto}</p>
+          </div>
+          <span class="temp__status versalete">{status[i] ?? ''}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="temp__nota">{d.participar}</p>
+  </Pagina>
+
+  <Pagina tom="capa" secao="Assistir" rotulo="Assistir">
+    <div class="assistir">
+      <h2>
+        Os episódios estão no <em>Instagram</em>
+      </h2>
+      <p class="lead">@{contato.instagram.valor.usuario}</p>
+      <Botao href={contato.instagram.valor.url} externo>
+        {d.botao}
+      </Botao>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .caderno {
+    position: relative;
+    display: grid;
+    gap: var(--e-6);
+    padding: var(--e-8) var(--margem);
+  }
+  .caderno__texto {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-5);
+  }
+  .caderno__texto :global(.capitular) {
+    max-width: var(--largura-texto);
+  }
+  .caderno__titulo {
+    display: grid;
+    font-size: clamp(3.2rem, 1.2rem + 8vw, 9rem);
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+  }
+  .caderno__ou {
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+    letter-spacing: var(--espaco-versalete);
+    text-transform: uppercase;
+    color: var(--acento);
+    padding-block: 0.6em 0.3em;
+  }
+  .caderno__still {
+    margin: 0;
+  }
+  .caderno__still figcaption {
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .caderno {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      align-items: end;
+      gap: var(--e-8);
+      padding-top: var(--e-9);
+    }
+  }
+  .oque {
+    max-width: var(--largura-max);
+  }
+  .oque h2 {
+    margin-bottom: var(--e-5);
+  }
+  .oque__colunas p {
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+  }
+  @media (min-width: 60rem) {
+    .oque__colunas {
+      columns: 2;
+      column-gap: var(--e-7);
+    }
+  }
+  .temp__titulo {
+    margin-bottom: var(--e-6);
+  }
+  .temp {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 56rem;
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .temp__item {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: var(--e-2) var(--e-4);
+    padding-block: var(--e-5);
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .temp__num {
+    font-family: var(--fonte-titulo);
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--acento);
+  }
+  .temp__item h3 {
+    margin-bottom: var(--e-2);
+  }
+  .temp__item p {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  .temp__status {
+    grid-column: 2;
+    justify-self: start;
+    padding: 0.35em 0.9em 0.3em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    color: var(--texto-2);
+  }
+  .temp__item--no-ar .temp__status {
+    background: var(--cor-tinta);
+    border-color: var(--cor-tinta);
+    color: var(--cor-papel);
+  }
+  @media (min-width: 48rem) {
+    .temp__item {
+      grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    .temp__status {
+      grid-column: auto;
+    }
+  }
+  .temp__nota {
+    margin-top: var(--e-5);
+    color: var(--texto-2);
+  }
+  .assistir {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-4);
+  }
+</style>

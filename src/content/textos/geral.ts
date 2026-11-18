@@ -101,7 +101,8 @@ export const pagina404 = {
   caminhos: [
     { rotulo: 'A capa', href: '/' },
     { rotulo: 'Os trabalhos', href: '/trabalhos' },
-    { rotulo: 'Agendar', href: '/agendar' },
+    // /agendar nasce com o agendador (sessão 7); até lá, o ponto #agendar da capa
+    { rotulo: 'Agendar', href: '/#agendar' },
   ],
 } as const;
 

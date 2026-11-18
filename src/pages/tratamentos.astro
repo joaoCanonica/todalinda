@@ -1,0 +1,311 @@
+---
+// /tratamentos — FICHA TÉCNICA do fio: o corte transversal com as três camadas (diagrama próprio,
+// em traço fino), a cutícula alinhada × aberta, e a ficha de cada tratamento (o que repõe, o que faz).
+// Técnica de salão, não de saúde: o aviso aparece antes da ficha.
+import Botao from '../components/base/Botao.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import DiagramaFio from '../components/paginas/DiagramaFio.astro';
+import { doisDigitos } from '../components/secoes/util.ts';
+import { whatsapp } from '../content/textos/geral.ts';
+import { camadas, cta, dano, meta, pagina, tratamentos } from '../content/textos/tratamentos.ts';
+import Interna from '../layouts/Interna.astro';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const zap = linkWhatsApp(whatsapp.avaliacao);
+const tituloCta = cta.titulo.split('fio'); // "Qual o seu fio pede?": a palavra em itálico pesado
+---
+
+<Interna titulo={meta.title} descricao={meta.description} agendar={zap}>
+  <CabecaPagina
+    secao="Ficha técnica"
+    rotulo={pagina.rotulo}
+    titulo={pagina.titulo}
+    resposta={pagina.resposta}
+  >
+    <p class="aviso" role="note">
+      {pagina.aviso}
+    </p>
+  </CabecaPagina>
+
+  <!-- AS TRÊS CAMADAS: o corte do fio -->
+  <Pagina tom="capa" secao="Camadas" rotulo={camadas.titulo}>
+    <div class="ficha">
+      <div class="ficha__diagrama">
+        <DiagramaFio
+          vista="corte"
+          titulo="Corte transversal de um fio: cutícula por fora, córtex no meio, medula no centro."
+        >
+          Fig. 1 · O fio em corte
+        </DiagramaFio>
+      </div>
+      <div class="ficha__texto">
+        <h2>
+          As três <em>camadas</em>
+        </h2>
+        <p class="lead">{camadas.intro}</p>
+        <dl class="legenda">
+          {camadas.itens.map((c, i) => (
+            <div class="legenda__item">
+              <dt>
+                <span class="legenda__num numeros" aria-hidden="true">
+                  {doisDigitos(i + 1)}
+                </span>
+                {c.nome}
+              </dt>
+              <dd>{c.texto}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </Pagina>
+
+  <!-- DANO: cutícula alinhada × aberta -->
+  <Pagina tom="pagina" secao="Dano" rotulo={dano.titulo}>
+    <h2 class="titulo-secao">
+      Quando o fio está <em>danificado</em>
+    </h2>
+    <p class="lead">{dano.intro}</p>
+    <div class="comparar">
+      <DiagramaFio
+        vista="escamas-alinhadas"
+        titulo="Fio visto de lado com as escamas da cutícula fechadas e alinhadas."
+      >
+        Fig. 2 · Cutícula alinhada
+      </DiagramaFio>
+      <DiagramaFio
+        vista="escamas-abertas"
+        titulo="Fio visto de lado com as escamas da cutícula levantadas e o córtex exposto."
+      >
+        Fig. 3 · Cutícula aberta
+      </DiagramaFio>
+    </div>
+    <ul class="sinais" role="list">
+      {dano.itens.map((d) => (
+        <li>
+          <h3>{d.nome}</h3>
+          <p>{d.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </Pagina>
+
+  <!-- A FICHA DOS TRATAMENTOS -->
+  <Pagina tom="pagina" secao="Tratamentos" rotulo={tratamentos.titulo}>
+    <h2 class="titulo-secao">
+      O que cada tratamento <em>faz</em>
+    </h2>
+    <table class="tabela">
+      <caption class="sr-only">{tratamentos.titulo}</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="versalete">
+            Nº
+          </th>
+          <th scope="col" class="versalete">
+            Tratamento
+          </th>
+          <th scope="col" class="versalete">
+            Repõe
+          </th>
+          <th scope="col" class="versalete">
+            O que faz no fio
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {tratamentos.itens.map((x, i) => (
+          <tr>
+            <td class="tabela__num numeros">{doisDigitos(i + 1)}</td>
+            <th scope="row" class="tabela__nome">
+              {x.nome}
+            </th>
+            <td class="tabela__repoe">{x.oQueRepoe}</td>
+            <td>{x.texto}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="nota">{tratamentos.nota}</p>
+  </Pagina>
+
+  <Pagina tom="capa" secao="Avaliação" rotulo={cta.titulo}>
+    <div class="cta">
+      <h2>
+        {tituloCta[0]}
+        <em>fio</em>
+        {tituloCta[1]}
+      </h2>
+      <p class="lead">{cta.texto}</p>
+      <Botao href={zap} externo>
+        {cta.botao}
+      </Botao>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .aviso {
+    margin-top: var(--e-5);
+    padding: var(--e-3) var(--e-4);
+    border-inline-start: 2px solid var(--acento);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .ficha {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+    align-items: center;
+  }
+  .ficha__diagrama {
+    max-width: 30rem;
+    width: 100%;
+    justify-self: center;
+  }
+  .ficha__texto h2 {
+    margin-bottom: var(--e-4);
+  }
+  .legenda {
+    margin: var(--e-5) 0 0;
+  }
+  .legenda__item {
+    padding-block: var(--e-4);
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .legenda dt {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .legenda__num {
+    color: var(--acento-forte);
+    font-size: 0.8em;
+  }
+  .legenda dd {
+    margin: var(--e-2) 0 0;
+    color: var(--texto-2);
+    max-width: var(--largura-texto);
+  }
+  @media (min-width: 60rem) {
+    .ficha {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--e-9);
+    }
+  }
+  .titulo-secao {
+    margin-bottom: var(--e-4);
+  }
+  .comparar {
+    display: grid;
+    gap: var(--e-6);
+    margin-block: var(--e-6);
+    max-width: 60rem;
+  }
+  @media (min-width: 48rem) {
+    .comparar {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .sinais {
+    display: grid;
+    gap: var(--e-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .sinais li {
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-3);
+  }
+  .sinais h3 {
+    margin-bottom: var(--e-2);
+  }
+  .sinais p {
+    color: var(--texto-2);
+    margin: 0;
+  }
+  @media (min-width: 48rem) {
+    .sinais {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 72rem) {
+    .sinais {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .tabela {
+    width: 100%;
+    max-width: var(--largura-max);
+    border-collapse: collapse;
+    margin-top: var(--e-5);
+  }
+  .tabela th,
+  .tabela td {
+    padding: var(--e-4) var(--e-3) var(--e-4) 0;
+    border-top: var(--fio) solid var(--fio-cor);
+    text-align: start;
+    vertical-align: top;
+  }
+  .tabela thead th {
+    color: var(--texto-2);
+    border-top: 0;
+    padding-bottom: var(--e-2);
+  }
+  .tabela__num {
+    color: var(--acento);
+    font-weight: 600;
+    width: 3rem;
+  }
+  .tabela__nome {
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+  .tabela__repoe {
+    color: var(--acento);
+    font-weight: 600;
+  }
+  @media (max-width: 47.99rem) {
+    /* no celular, cada linha vira uma ficha */
+    .tabela thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    .tabela tr {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      border-top: var(--fio) solid var(--fio-cor);
+      padding-block: var(--e-4);
+    }
+    .tabela th,
+    .tabela td {
+      display: block;
+      border: 0;
+      padding: 0;
+    }
+    .tabela__repoe,
+    .tabela td:last-child {
+      grid-column: 2;
+      margin-top: var(--e-2);
+    }
+  }
+  .nota {
+    margin-top: var(--e-5);
+    color: var(--texto-2);
+  }
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-4);
+  }
+</style>

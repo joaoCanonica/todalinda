@@ -1,0 +1,78 @@
+---
+// /privacidade — LGPD simples, desenhada como o EXPEDIENTE da revista: quem é a responsável no topo,
+// as seções numeradas em colunas estreitas, a data de atualização no pé.
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import { doisDigitos } from '../components/secoes/util.ts';
+import { privacidade as p } from '../content/textos/paginas.ts';
+import Interna from '../layouts/Interna.astro';
+---
+
+<Interna titulo={p.meta.title} descricao={p.meta.description}>
+  <CabecaPagina
+    secao="Expediente"
+    rotulo="Expediente"
+    titulo={{ antes: '', destaque: p.titulo, depois: '' }}
+    resposta={p.resposta}
+    tom="pagina"
+  />
+  <Pagina tom="pagina" secao="LGPD" rotulo="Seções">
+    <ol class="exp" role="list">
+      {p.secoes.map((s, i) => (
+        <li class="exp__item">
+          <h2 class="exp__titulo">
+            <span class="numeros">{doisDigitos(i + 1)}</span>
+            {s.titulo}
+          </h2>
+          <p>{s.texto}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="exp__data versalete">{p.atualizado}</p>
+  </Pagina>
+</Interna>
+
+<style>
+  .exp {
+    display: grid;
+    gap: var(--e-6) var(--e-7);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .exp__item {
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-3);
+  }
+  .exp__titulo {
+    display: flex;
+    gap: var(--e-3);
+    align-items: baseline;
+    font-size: var(--fs-h3);
+    margin-bottom: var(--e-3);
+  }
+  .exp__titulo .numeros {
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+  }
+  .exp__item p {
+    color: var(--texto-2);
+  }
+  @media (min-width: 48rem) {
+    .exp {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 80rem) {
+    .exp {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .exp__data {
+    margin-top: var(--e-7);
+    color: var(--texto-2);
+  }
+</style>

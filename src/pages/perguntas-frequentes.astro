@@ -1,0 +1,164 @@
+---
+// /perguntas-frequentes — a seção "Cartas" da revista: um índice dos assuntos e, em cada assunto,
+// as perguntas em <details> nativos (abrem pelo teclado, sem JS). Sem preço, sem prazo inventado.
+import Botao from '../components/base/Botao.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import { doisDigitos } from '../components/secoes/util.ts';
+import { contato } from '../config/contato.ts';
+import { whatsapp } from '../content/textos/geral.ts';
+import { faq } from '../content/textos/paginas.ts';
+import Interna from '../layouts/Interna.astro';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const slug = (s: string) =>
+  s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+---
+
+<Interna titulo={faq.meta.title} descricao={faq.meta.description}>
+  <CabecaPagina secao="Dúvidas" rotulo={faq.rotulo} titulo={faq.titulo} resposta={faq.resposta}>
+    <nav class="indice" aria-label="Assuntos">
+      <ol role="list">
+        {faq.grupos.map((g, i) => (
+          <li>
+            <a href={`#${slug(g.titulo)}`}>
+              <span class="numeros">{doisDigitos(i + 1)}</span> {g.titulo}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </CabecaPagina>
+
+  {faq.grupos.map((g, i) => (
+    <Pagina tom="pagina" secao={g.titulo} id={slug(g.titulo)} rotulo={g.titulo}>
+      <div class="grupo">
+        <h2 class="grupo__titulo">
+          <span class="grupo__num numeros" aria-hidden="true">
+            {doisDigitos(i + 1)}
+          </span>
+          {g.titulo}
+        </h2>
+        <div class="grupo__itens">
+          {g.itens.map((q) => (
+            <details class="q">
+              <summary>{q.pergunta}</summary>
+              <p>{q.resposta}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </Pagina>
+  ))}
+
+  <Pagina tom="capa" secao="Outra dúvida" rotulo="Outra dúvida">
+    <div class="fim">
+      <h2>
+        Ficou alguma <em>dúvida</em>?
+      </h2>
+      <p class="lead">
+        A recepção responde pelo WhatsApp ou pelo telefone {contato.telefone.valor.exibir}.
+      </p>
+      <Botao href={linkWhatsApp(whatsapp.duvida)} externo>
+        Perguntar pelo WhatsApp
+      </Botao>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .indice {
+    margin-top: var(--e-6);
+  }
+  .indice ol {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: 36rem;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .indice a {
+    display: flex;
+    gap: var(--e-3);
+    align-items: center;
+    min-height: 48px;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    text-decoration: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .indice .numeros {
+    color: var(--acento-forte);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+  }
+  .grupo {
+    display: grid;
+    gap: var(--e-5);
+    max-width: var(--largura-max);
+  }
+  .grupo__titulo {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-4);
+  }
+  .grupo__num {
+    color: var(--acento);
+    font-size: 0.6em;
+  }
+  .grupo__itens {
+    border-top: var(--fio) solid var(--fio-cor);
+    max-width: 52rem;
+  }
+  .q {
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .q summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--e-4);
+    min-height: 56px;
+    padding-block: var(--e-3);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+  }
+  .q summary::-webkit-details-marker {
+    display: none;
+  }
+  .q summary::after {
+    content: '+';
+    flex: none;
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+  }
+  .q[open] summary::after {
+    content: '−';
+  }
+  .q p {
+    padding-bottom: var(--e-4);
+  }
+  @media (min-width: 60rem) {
+    .grupo {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: var(--e-8);
+      align-items: start;
+    }
+  }
+  .fim {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-4);
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+// Diagrama do fio em traço fino, desenhado em código (não imita as artes do Instagram):
+// "corte" = seção transversal com as três camadas; "escamas" = vista lateral da cutícula,
+// alinhada (fio saudável) ou aberta (fio danificado). Cores pelo tom (currentColor + acento).
+interface Props {
+  vista: 'corte' | 'escamas-alinhadas' | 'escamas-abertas';
+  titulo: string;
+}
+const { vista, titulo } = Astro.props;
+const id = `fio-${vista}`;
+
+// seção transversal: córtex com fibras (círculos pequenos), medula ao centro, cutícula em anéis
+const fibras: [number, number, number][] = [];
+for (let anel = 0; anel < 4; anel++) {
+  const r = 34 + anel * 13;
+  const n = 9 + anel * 5;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + anel * 0.37;
+    fibras.push([160 + Math.cos(a) * r, 160 + Math.sin(a) * r, 4.6 - anel * 0.35]);
+  }
+}
+// cutícula: escamas sobrepostas (arcos) ao longo do fio
+const escamas = Array.from({ length: 9 }, (_, i) => 26 + i * 33);
+const aberta = vista === 'escamas-abertas';
+const r = (n: number) => Math.round(n * 10) / 10;
+---
+
+<figure class="fio" aria-labelledby={`${id}-t`}>
+  {vista === 'corte' ? (
+    <svg viewBox="0 0 320 320" role="img" aria-labelledby={`${id}-t`} class="fio__svg">
+      <title id={`${id}-t`}>{titulo}</title>
+      {/* cutícula: três anéis finos sobrepostos */}
+      <g class="fio__traco" fill="none">
+        <circle cx="160" cy="160" r="104" />
+        <circle cx="160" cy="160" r="98" stroke-dasharray="14 5" />
+        <circle cx="160" cy="160" r="92" />
+      </g>
+      {/* córtex: feixes de fibras */}
+      <g class="fio__traco fio__fino" fill="none">
+        {fibras.map(([x, y, raio]) => (
+          <circle cx={r(x)} cy={r(y)} r={r(raio)} />
+        ))}
+      </g>
+      {/* medula */}
+      <circle cx="160" cy="160" r="17" class="fio__acento" fill="none" />
+      <circle cx="160" cy="160" r="3" class="fio__ponto" />
+      {/* chamadas numeradas */}
+      <g class="fio__traco fio__fino">
+        <line x1="232" y1="88" x2="276" y2="44" />
+        <line x1="206" y1="190" x2="290" y2="236" />
+        <line x1="160" y1="160" x2="62" y2="282" />
+      </g>
+      <g class="fio__num">
+        <text x="280" y="40">
+          01
+        </text>
+        <text x="294" y="250">
+          02
+        </text>
+        <text x="30" y="300">
+          03
+        </text>
+      </g>
+    </svg>
+  ) : (
+    <svg viewBox="0 0 340 120" role="img" aria-labelledby={`${id}-t`} class="fio__svg">
+      <title id={`${id}-t`}>{titulo}</title>
+      {/* o fio, de lado */}
+      <g class="fio__traco" fill="none">
+        <line x1="10" y1="40" x2="330" y2="40" />
+        <line x1="10" y1="80" x2="330" y2="80" />
+      </g>
+      {/* córtex: fibras longitudinais */}
+      <g class="fio__traco fio__fino" fill="none">
+        <line x1="10" y1="52" x2="330" y2="52" stroke-dasharray={aberta ? '22 9' : 'none'} />
+        <line x1="10" y1="60" x2="330" y2="60" />
+        <line x1="10" y1="68" x2="330" y2="68" stroke-dasharray={aberta ? '30 7' : 'none'} />
+      </g>
+      {/* escamas da cutícula, em cima e embaixo */}
+      <g class="fio__acento" fill="none">
+        {escamas.map((x, i) => {
+          const lev = aberta ? 9 + (i % 3) * 4 : 1.5;
+          return (
+            <>
+              <path d={`M${x} 40 q 14 ${-lev} 34 ${-lev * 0.35}`} />
+              <path d={`M${x} 80 q 14 ${lev} 34 ${lev * 0.35}`} />
+            </>
+          );
+        })}
+      </g>
+      {aberta && (
+        <g class="fio__ponto">
+          {[48, 120, 190, 262].map((x, i) => (
+            <circle cx={x + 12} cy={i % 2 ? 18 : 102} r="2.2" />
+          ))}
+        </g>
+      )}
+    </svg>
+  )}
+  <figcaption class="versalete">
+    <slot />
+  </figcaption>
+</figure>
+
+<style>
+  .fio {
+    margin: 0;
+    color: var(--texto);
+  }
+  .fio__svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .fio__traco {
+    stroke: currentColor;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .fio__fino {
+    stroke-width: 0.75;
+    opacity: 0.7;
+  }
+  .fio__acento {
+    stroke: var(--acento-forte);
+    stroke-width: 1.25;
+    vector-effect: non-scaling-stroke;
+  }
+  .fio__ponto {
+    fill: var(--acento-forte);
+  }
+  .fio__num text {
+    fill: var(--acento-forte);
+    font-family: var(--fonte-titulo);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+  }
+  figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+</style>

@@ -1,0 +1,253 @@
+---
+// Documento das páginas internas (sessão 6C): <head>, faixa de preview, cabeçalho da edição
+// (palavra TODALINDA + sumário + Agendar), conteúdo, rodapé e, quando a página pede, o CTA fixo.
+// O fólio numera sozinho (contador CSS) em cada página.
+import '../styles/global.css';
+import { cores } from '../config/tema.ts';
+import { robotsMeta } from '../config/seo.ts';
+import { navegacao } from '../content/textos/geral.ts';
+import Logo from '../components/marca/Logo.astro';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import Rodape from '../components/secoes/Rodape.astro';
+import { linkWhatsApp, MENSAGENS } from '../lib/whatsapp.ts';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  /** href do botão Agendar do cabeçalho (padrão: WhatsApp geral). */
+  agendar?: string;
+  /** Imagem a pré-carregar (a capa da matéria), para o LCP. */
+  preload?: { srcset: string; sizes: string; tipo?: string };
+  /** Página que não deve ser indexada mesmo em produção (404). */
+  noindex?: boolean;
+}
+const { titulo, descricao, agendar, preload, noindex = false } = Astro.props;
+const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
+const hrefAgendar = agendar ?? linkWhatsApp(MENSAGENS.geral());
+const externo = hrefAgendar.startsWith('http');
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : robotsMeta()} />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <meta name="theme-color" content={cores.noite} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {preload && (
+      <link
+        rel="preload"
+        as="image"
+        type={preload.tipo ?? 'image/avif'}
+        imagesrcset={preload.srcset}
+        imagesizes={preload.sizes}
+        fetchpriority="high"
+      />
+    )}
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/manrope-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular versalete" href="#conteudo">
+      {navegacao.pular}
+    </a>
+    <PreviewBanner />
+    <header class="topo tom-capa">
+      <a href="/" class="topo__logo" aria-label="Todalinda, voltar à capa">
+        <Logo variante="palavra" titulo="" />
+      </a>
+      <nav class="topo__nav" aria-label="Sumário da edição">
+        <ul class="topo__lista" role="list">
+          {navegacao.itens.map((i) => (
+            <li>
+              <a
+                href={i.href}
+                class="versalete"
+                aria-current={atual === i.href ? 'page' : undefined}
+              >
+                {i.rotulo}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <details class="topo__menu">
+          <summary class="versalete">{navegacao.menu}</summary>
+          <ul role="list">
+            {navegacao.itens.map((i) => (
+              <li>
+                <a
+                  href={i.href}
+                  class="versalete"
+                  aria-current={atual === i.href ? 'page' : undefined}
+                >
+                  {i.rotulo}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </nav>
+      <a
+        href={hrefAgendar}
+        class="topo__agendar versalete"
+        {...(externo ? { rel: 'noopener', target: '_blank' } : {})}
+      >
+        {navegacao.agendar}
+        {externo && <span class="sr-only"> (abre o WhatsApp em nova aba)</span>}
+      </a>
+    </header>
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Rodape />
+    <slot name="fixo" />
+  </body>
+</html>
+
+<script>
+  import '../scripts/video.ts';
+  // menu: fecha ao clicar fora ou com Esc (o <details> nativo já abre/fecha pelo teclado)
+  const menu = document.querySelector<HTMLDetailsElement>('.topo__menu');
+  if (menu) {
+    document.addEventListener('click', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+    menu.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .pular {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: var(--margem);
+    z-index: 20;
+    padding: 0.8em 1em;
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    translate: 0 -120%;
+  }
+  .pular:focus-visible {
+    translate: 0 0;
+  }
+  main:focus {
+    outline: none;
+  }
+  .topo {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: var(--e-4);
+    padding: var(--e-4) var(--margem);
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .topo__logo {
+    display: block;
+    width: min(12rem, 40vw);
+    margin-inline-end: auto;
+    color: var(--cor-papel);
+  }
+  .topo__menu summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 0.4em;
+    cursor: pointer;
+    list-style: none;
+    color: var(--texto);
+  }
+  .topo__menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .topo__menu summary::after {
+    content: '';
+    width: 0.5em;
+    height: 0.5em;
+    margin-inline-start: 0.6em;
+    border-right: var(--fio) solid currentColor;
+    border-bottom: var(--fio) solid currentColor;
+    rotate: 45deg;
+    translate: 0 -0.15em;
+  }
+  .topo__menu[open] summary::after {
+    rotate: -135deg;
+    translate: 0 0.1em;
+  }
+  .topo__menu ul {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    margin: 0;
+    padding: var(--e-3) var(--margem) var(--e-5);
+    list-style: none;
+    background: var(--cor-noite);
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .topo__menu a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    color: var(--texto);
+    text-decoration: none;
+  }
+  .topo__menu a[aria-current='page'] {
+    color: var(--acento-forte);
+  }
+  .topo__agendar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1.1em;
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    text-decoration: none;
+  }
+  .topo__agendar:hover {
+    background: var(--cor-ouro-claro);
+  }
+  .topo__lista {
+    display: none;
+  }
+  @media (min-width: 64rem) {
+    .topo__menu {
+      display: none;
+    }
+    .topo__lista {
+      display: flex;
+      gap: var(--e-5);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .topo__lista a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--texto-2);
+      text-decoration: none;
+    }
+    .topo__lista a:hover,
+    .topo__lista a[aria-current='page'] {
+      color: var(--texto);
+    }
+  }
+</style>

@@ -4,6 +4,11 @@ import { horario } from '../../config/horario.ts';
 import Provisorio from '../Provisorio.astro';
 
 const NOMES = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+interface Props {
+  /** A página trata os feriados à parte (/como-chegar). */
+  semNotaFeriados?: boolean;
+}
+const { semNotaFeriados = false } = Astro.props;
 const ordem = [2, 3, 4, 5, 6, 0, 1]; // a semana da casa começa na terça
 const fmt = (hhmm: string) => {
   const [h, m] = hhmm.split(':').map(Number);
@@ -25,13 +30,15 @@ const fmt = (hhmm: string) => {
     })}
   </tbody>
 </table>
-<p class="tabela-horario__nota">
-  <Provisorio
-    motivo={horario.fechaNosFeriados.estado === 'aviso' ? horario.fechaNosFeriados.motivo : ''}
-  >
-    Feriados: fechado.
-  </Provisorio>
-</p>
+{!semNotaFeriados && (
+  <p class="tabela-horario__nota">
+    <Provisorio
+      motivo={horario.fechaNosFeriados.estado === 'aviso' ? horario.fechaNosFeriados.motivo : ''}
+    >
+      Feriados: fechado.
+    </Provisorio>
+  </p>
+)}
 
 <script>
   import '../../scripts/horario-vivo.ts';

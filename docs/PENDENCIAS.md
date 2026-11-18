@@ -132,3 +132,16 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **KTX2:** `toktx` não está instalado neste ambiente; o `model:prepare` comprime texturas em WebP e anota no relatório. Instalar KTX-Software antes de processar um GLB com texturas.
 - **FPS medidos em renderização por software** (SwiftShader, sem GPU): 53–58 fps em 1440 px e 44–60 fps em 390 px com CPU 4× mais lenta. Falta medir num Android intermediário de verdade.
 - **Abertura:** o botão "Pular" agora some sem fade (o Lighthouse media o contraste no meio do fade e dava 97 em acessibilidade de forma intermitente).
+
+## Sessão 6C — Páginas internas (18/11/2026)
+- **Agendador com o serviço escolhido:** o CTA fixo "Agendar {serviço}" de cada matéria abre hoje o WhatsApp com a mensagem do serviço e carrega `data-agendar-servico="<id>"`; o agendador da sessão 7 intercepta esse atributo e abre já com o serviço marcado. O 404 aponta "Agendar" para `/#agendar` até existir `/agendar`.
+- **Quem faz:** nenhum serviço tem profissional confirmado. As matérias mostram a sugestão pelas especialidades **só no preview** (PROVISÓRIO); em produção o bloco some.
+- **Antes e depois:** nenhum par confirmado. Os pares prováveis aparecem só no preview; em produção a seção não existe.
+- **Trabalhos assinados:** nenhuma foto tem autoria confirmada; os perfis da equipe dizem que os trabalhos aparecem quando a casa confirmar.
+- **Tratamentos e limpeza de pele:** sem mídia/publicação, não geram matéria (`/servicos/tratamentos` e `/servicos/limpeza-de-pele` dão 404). O glossário do fio fica em `/tratamentos`.
+- **Retratos:** Dido, Karine, Thaynara e Marina sem retrato em alta: grade com cartão tipográfico; no perfil, monograma com "Retrato em breve".
+- **Revista:** links do Flipsnack pendentes (estão no Linktree). Capas tipográficas até lá.
+- **Mapa:** a imagem estática de mapa não foi gerada (tile.openstreetmap.org bloqueado neste ambiente); no lugar, um cartão com coordenadas e Plus Code. O mapa interativo é o embed do OpenStreetMap, carregado só depois do clique, com aviso de privacidade (texto novo em `/privacidade`). **Não testado aqui** (rede bloqueada): conferir no preview publicado.
+- **Estacionamento:** opcional e não confirmado: `/como-chegar` não fala de estacionamento.
+- **Feriados:** a lista de próximos feriados sai do calendário em `src/config/horario.ts`; a frase "confirme pelo WhatsApp" continua com PROVISÓRIO até a casa dizer se fecha nos feriados. Aniversário de Lages (22/11) com lei municipal a confirmar.
+- **/a-casa** mantém o cabeçalho próprio da sessão 6B; as demais internas usam `src/layouts/Interna.astro` (sumário no desktop, menu nativo `<details>` no celular).
