@@ -1,0 +1,58 @@
+{
+  "modelo": "large-v3-turbo",
+  "duracao": 61.6,
+  "segmentos": [
+    {
+      "inicio": 0.78,
+      "fim": 27.94,
+      "texto": "Vou compartilhar com vocês o nosso Obrigada por Ser Toda Pontual. É o nosso cartão de incentivo a nossa cliente a chegar no horário. Nós tínhamos várias situações em que clientes chegavam atrasadas. Isso gerava atraso para o mar. É um efeito dominó. Nós que somos de salão, nós que somos clientes, sabemos que uma pessoa atrasando impacta em várias pessoas."
+    },
+    {
+      "inicio": 28.48,
+      "fim": 31.66,
+      "texto": "Então, nós não queríamos nos indispor com a nossa cliente."
+    },
+    {
+      "inicio": 31.98,
+      "fim": 32.9,
+      "texto": "Como que a gente vai ficar?"
+    },
+    {
+      "inicio": 33.36,
+      "fim": 35.5,
+      "texto": "Ai, vou não ter horário, não consigo te atender."
+    },
+    {
+      "inicio": 35.66,
+      "fim": 39.6,
+      "texto": "Isso gerava um desconforto para o profissional e para a cliente."
+    },
+    {
+      "inicio": 39.68,
+      "fim": 43.14,
+      "texto": "Então, nós criamos o obrigada por ser toda pontual"
+    },
+    {
+      "inicio": 43.14,
+      "fim": 48.04,
+      "texto": "para presentear a nossa cliente e valorizar a pontualidade dela."
+    },
+    {
+      "inicio": 48.04,
+      "fim": 51.56,
+      "texto": "Sabe como que eu pensei nisso? Tomando banho."
+    },
+    {
+      "inicio": 51.82,
+      "fim": 55.76,
+      "texto": "É ali que são meus momentos de reflexão e que eu tenho várias ideias."
+    },
+    {
+      "inicio": 55.76,
+      "fim": 60.18,
+      "texto": "Só compartilhando uma experiência que para nós trouxe resultado."
+    }
+  ],
+  "arquivo": "media-originais/videos/snapinsta-1794932334383.mp4",
+  "revisado": false
+}

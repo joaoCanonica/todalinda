@@ -1,0 +1,38 @@
+{
+  "modelo": "large-v3-turbo",
+  "duracao": 31.51,
+  "segmentos": [
+    {
+      "inicio": 0,
+      "fim": 5,
+      "texto": "Tem clientes que eu olho e penso, meu Deus, você está aqui há quanto tempo?"
+    },
+    {
+      "inicio": 5.26,
+      "fim": 10.94,
+      "texto": "A gente acompanhou mudança de cabelo, trabalho, namoro, casamento, filhos."
+    },
+    {
+      "inicio": 11.28,
+      "fim": 14.08,
+      "texto": "E no meio disso tudo, continuou se encontrando aqui."
+    },
+    {
+      "inicio": 14.08,
+      "fim": 19.92,
+      "texto": "Por isso eu digo, salão tem uma coisa muito especial, a gente não cuida só do cabelo de alguém."
+    },
+    {
+      "inicio": 20.34,
+      "fim": 24.14,
+      "texto": "De alguma forma, a gente acaba acompanhando fases da vida."
+    },
+    {
+      "inicio": 24.14,
+      "fim": 31.4,
+      "texto": "Talvez por isso algumas clientes deixam de ser apenas clientes e começam a fazer parte da nossa história."
+    }
+  ],
+  "arquivo": "media-originais/videos/SaveClip.App_AQNLG2IJMkbQn6pkAVkcIur2Id3yH0t9wVn6rp15e3_aFnY0ejXTxLVfPT9isU-hk1XJH9VKTGhavAISxLJqq9VlXPFCkHopz9ilpAg.mp4",
+  "revisado": false
+}

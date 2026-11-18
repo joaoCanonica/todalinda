@@ -83,16 +83,16 @@ Para isso usei folhas de contato, 16 quadros por vídeo, 1 quadro por segundo no
 
 Ficam no manifesto e servem de fonte para a sessão 5.
 
-- **Edna** (`SaveClip.App_AQNLG2…`): "Tem clientes que eu olho e penso: meu Deus, você está aqui há quanto tempo? A gente acompanhou mudança de cabelo, namoro, casamento, filhos… continuou se encontrando aqui. Por isso eu digo: salão tem uma coisa muito especial. De alguma forma, a gente acaba acompanhando fases da vida. Talvez por isso algumas clientes deixam de ser apenas clientes. Começam a fazer parte da nossa história."
-- **Edna** (`…936089171`): "Tem dias que eu vejo o salão cheio e penso… hoje foi um dia desses. Porque chega uma hora que o negócio ganha vida própria. […] escova sendo feita, […] momentos que vão ficar pra sempre na memória de algumas pessoas. O que um dia foi uma ideia e um sonho hoje faz parte da rotina de muitas pessoas. Talvez uma das partes mais bonitas de empreender seja essa: ver um sonho se tornar um lugar."
+- **Edna** (`SaveClip.App_AQNLG2…`): "Tem clientes que eu olho e penso: meu Deus, você está aqui há quanto tempo? A gente acompanhou mudança de cabelo, trabalho, namoro, casamento, filhos. E no meio disso tudo, continuou se encontrando aqui. Por isso eu digo: salão tem uma coisa muito especial, a gente não cuida só do cabelo de alguém. De alguma forma, a gente acaba acompanhando fases da vida. Talvez por isso algumas clientes deixam de ser apenas clientes. Começam a fazer parte da nossa história."
+- **Edna** (`…936089171`): "Tem dias que eu vejo o salão cheio e penso como tudo começou. Hoje foi um dia desses. Porque chega uma hora que o negócio ganha vida própria. Tem cliente chegando, tem gente conversando, tem gente rindo, café sendo servido, escova sendo feita, mulher sendo produzida. E momentos que vão ficar pra sempre na memória de algumas pessoas, e a gente faz parte nesses momentos. O que um dia foi uma ideia e um sonho hoje faz parte da rotina de muitas pessoas. Talvez uma das partes mais bonitas de empreender seja essa: ver um sonho se tornar um lugar."
 - **Dido e Edna** (`…936180983`):
   - "Dido, vamos falar sobre esse cabelo, que é uma coloração e mechas, certo?" "Coloração. Não, só coloração, Edna. Não tem mechas aqui, não. Cê acredita?";
-  - "A [cliente] tem cem por cento de cabelinhos brancos […] a gente consegue fazer um loiro num cabelo cem por cento branco […] esse tom maravilhoso, o famoso loiro de tinta";
-  - "Claro que foi feito mechas anteriormente, porque ela tinha uma raiz escura […] a gente foi clareando aos poucos, mas hoje em dia a gente só retoca a raiz […] pra gente manter esse tom de loiro perolado, que fica perfeito".
+  - "A cliente tem cem por cento de cabelinhos brancos, se você for ver bem a raizinha dela aqui, é bem clarinha. Por quê? Porque a gente consegue fazer um loiro num cabelo cem por cento branco e fica esse tom maravilhoso, olha só. É o famoso loiro de tinta, né, que a gente fala";
+  - "Claro que foi feito mechas anteriormente, porque ela tinha uma raiz escura, e a gente foi clareando aos poucos, mas hoje em dia a gente só retoca a raiz dela pra gente manter esse tom de loiro perolado, que fica perfeito, né? Olha só".
 
   A cliente é chamada pelo nome no vídeo, e no site ela vira "a cliente".
 
-Os trechos marcados com […] não ficaram legíveis. Na sessão 1, o Code transcreve o áudio (Whisper local) e completa.
+Os trechos que estavam como […] foram completados na sessão 1 pela transcrição do áudio (Whisper local). Texto integral com tempo, inclusive dos dois vídeos sem legenda: `docs/dados/falas.md`.
 
 ---
 

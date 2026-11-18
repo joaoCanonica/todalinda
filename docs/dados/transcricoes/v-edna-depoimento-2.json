@@ -1,0 +1,98 @@
+{
+  "modelo": "large-v3-turbo",
+  "duracao": 83.99,
+  "segmentos": [
+    {
+      "inicio": 1.36,
+      "fim": 8.12,
+      "texto": "Vou compartilhar com vocês a experiência que eu tive no dia que eu me tornei empreendedora de verdade."
+    },
+    {
+      "inicio": 9.08,
+      "fim": 13.08,
+      "texto": "Eu era uma empreendedora que eu não conseguia falar que eu era empreendedora,"
+    },
+    {
+      "inicio": 13.16,
+      "fim": 18.68,
+      "texto": "dava um nó na minha garganta e eu não conseguia assumir isso, ou me sentir merecedora disso."
+    },
+    {
+      "inicio": 19.74,
+      "fim": 26.42,
+      "texto": "E eu toda semana ficava reunindo as pessoas e eu queria que a gente discutisse quais seriam as estratégias,"
+    },
+    {
+      "inicio": 26.42,
+      "fim": 29.84,
+      "texto": "o que nós podíamos fazer de campanha, como é que nós podíamos melhorar."
+    },
+    {
+      "inicio": 29.84,
+      "fim": 33.32,
+      "texto": "E um dia, uma profissional levantou e disse assim,"
+    },
+    {
+      "inicio": 33.82,
+      "fim": 35.76,
+      "texto": "ai, hoje eu não quero ouvir, a Ginei saiu."
+    },
+    {
+      "inicio": 36.18,
+      "fim": 38.82,
+      "texto": "E naquele dia, eu me tornei empreendedora."
+    },
+    {
+      "inicio": 39.48,
+      "fim": 44.86,
+      "texto": "Foi nesse dia que eu entendi que isso dependia de mim, eu precisava fazer."
+    },
+    {
+      "inicio": 44.94,
+      "fim": 46.7,
+      "texto": "Os profissionais estavam ali para atender,"
+    },
+    {
+      "inicio": 47.92,
+      "fim": 51.22,
+      "texto": "os profissionais estavam ali se preocupando com o atendimento da cliente."
+    },
+    {
+      "inicio": 51.54,
+      "fim": 55.26,
+      "texto": "Agora, como ia ser a campanha, se nós íamos ter que fazer marketing,"
+    },
+    {
+      "inicio": 55.44,
+      "fim": 58.42,
+      "texto": "quem nos queríamos buscar, o que nós íamos organizar,"
+    },
+    {
+      "inicio": 58.42,
+      "fim": 64.54,
+      "texto": "isso é uma responsabilidade minha, nesse dia do eu, quando ela virou as costas para mim,"
+    },
+    {
+      "inicio": 64.94,
+      "fim": 69.36,
+      "texto": "mas ela me deu uma lição de vida que me mudou para sempre, hoje eu sou empreendedora,"
+    },
+    {
+      "inicio": 69.72,
+      "fim": 74.62,
+      "texto": "hoje eu sei das minhas responsabilidades, hoje eu estou da linda, é minha responsabilidade,"
+    },
+    {
+      "inicio": 74.68,
+      "fim": 79.62,
+      "texto": "eu tenho que deixar organizado para que a equipe possa trabalhar, isso é aprender todo dia,"
+    },
+    {
+      "inicio": 80.04,
+      "fim": 83.66,
+      "texto": "ter humildade para entender, que nem sempre todo mundo quer te ouvir."
+    }
+  ],
+  "arquivo": "media-originais/videos/snapinsta-1794933027692.mp4",
+  "revisado": false
+}

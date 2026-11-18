@@ -1,0 +1,38 @@
+{
+  "modelo": "large-v3-turbo",
+  "duracao": 40.57,
+  "segmentos": [
+    {
+      "inicio": 0,
+      "fim": 7.16,
+      "texto": "Tem dias que eu vejo o salão cheio e penso, como tudo começou. Hoje foi um dia desses."
+    },
+    {
+      "inicio": 7.56,
+      "fim": 10.08,
+      "texto": "Porque chega uma hora que o negócio ganha vida própria."
+    },
+    {
+      "inicio": 10.08,
+      "fim": 18.88,
+      "texto": "Tem cliente chegando, tem gente conversando, tem gente rindo, café sendo servido, escova sendo feita, mulher sendo produzida."
+    },
+    {
+      "inicio": 19.8,
+      "fim": 26.58,
+      "texto": "E momentos que vão ficar para sempre na memória de algumas pessoas e a gente faz parte nesses momentos."
+    },
+    {
+      "inicio": 26.58,
+      "fim": 33.54,
+      "texto": "E você percebe que o que um dia foi uma ideia e um sonho, hoje faz parte da rotina de muitas pessoas."
+    },
+    {
+      "inicio": 34.06,
+      "fim": 40.2,
+      "texto": "Talvez uma das partes mais bonitas de empreender seja essa, ver um sonho se tornar um lugar."
+    }
+  ],
+  "arquivo": "media-originais/videos/snapinsta-1794936089171.mp4",
+  "revisado": false
+}

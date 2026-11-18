@@ -10,7 +10,9 @@
   },
   "packageManager": "pnpm@10.28.0",
   "scripts": {
+    "predev": "node scripts/prepare-media.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/prepare-media.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check && eslint . && prettier --check .",
@@ -24,9 +26,12 @@
     "audit-seo": "node scripts/pendente.mjs audit-seo 8",
     "audit-contraste": "node scripts/pendente.mjs audit-contraste 3",
     "audit-pesos": "node scripts/pendente.mjs audit-pesos 9",
-    "media:prepare": "node scripts/pendente.mjs media:prepare 1",
+    "media:prepare": "node scripts/prepare-media.mjs",
     "model:prepare": "node scripts/pendente.mjs model:prepare 6B",
-    "capturar": "node scripts/capturar.mjs"
+    "capturar": "node scripts/capturar.mjs",
+    "media:manifesto": "node scripts/gerar-manifesto.mjs",
+    "media:quadros": "node scripts/extract-stills.mjs --folhas",
+    "media:transcrever": "node scripts/transcrever.mjs"
   },
   "dependencies": {
     "astro": "7.4.12",
@@ -38,6 +43,7 @@
     "@eslint/js": "10.0.1",
     "@types/node": "^22.20.5",
     "@types/three": "0.187.0",
+    "ajv": "^8.20.0",
     "astro-eslint-parser": "3.2.0",
     "eslint": "10.15.0",
     "eslint-plugin-astro": "3.2.1",
