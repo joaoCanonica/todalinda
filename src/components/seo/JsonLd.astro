@@ -1,0 +1,14 @@
+---
+// Os blocos JSON-LD da página. Ficam no fim do <body>: no <head> atrasariam a descoberta da imagem
+// do LCP (o Google lê JSON-LD em qualquer lugar do documento).
+import { serializar } from './jsonld.ts';
+
+interface Props {
+  grafo: object[];
+}
+const { grafo } = Astro.props;
+---
+
+{grafo.map((g) => (
+  <script type="application/ld+json" set:html={serializar(g as never)} />
+))}

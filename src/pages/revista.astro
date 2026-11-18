@@ -20,7 +20,11 @@ const edicoes = r.edicoes.map((e, i) => ({
 }));
 ---
 
-<Interna titulo={r.meta.title} descricao={r.meta.description}>
+<Interna
+  titulo={r.meta.title}
+  descricao={r.meta.description}
+  trilha={[{ nome: 'A revista', url: '/revista' }]}
+>
   <CabecaPagina secao="Arquivo" rotulo={r.rotulo} titulo={r.titulo} resposta={r.resposta} />
 
   <Pagina tom="capa" secao="As edições" rotulo="As três edições">

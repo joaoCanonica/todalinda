@@ -1,4 +1,4 @@
-import { SITE_URL_ENV } from './ambiente.ts';
+import { INDEXAR_ENV, SITE_URL_ENV } from './ambiente.ts';
 import { bloqueante, confirmado } from './tipos.ts';
 
 export const seo = {
@@ -7,7 +7,7 @@ export const seo = {
     ? confirmado(SITE_URL_ENV.replace(/\/$/, ''), 'variável de ambiente')
     : bloqueante('domínio definitivo do site (PUBLIC_SITE_URL)'),
   /** Indexação desligada até a sessão 8/9 (SEO e conferência final). */
-  indexar: false,
+  indexar: INDEXAR_ENV,
   idioma: 'pt-BR',
   titulo: 'Todalinda',
   sufixoTitulo: ' · Todalinda · Lages/SC',

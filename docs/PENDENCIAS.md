@@ -154,3 +154,13 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Feriados:** o agendador desabilita os feriados porque `horario.fechaNosFeriados` está presumido como `true` (aviso). Se a casa abrir em algum, mudar a config.
 - **Edna:** "Falar com a Edna" vai direto ao WhatsApp; a fundadora não aparece como opção de horário. Confirmar se ela atende.
 - **LCP da home:** com a 4G aplicada (Lighthouse/devtools), segue em 1,6 s. Na simulação (Lantern), passou de 2,0–2,1 s para 2,2 s, pelo HTML do agendador na seção Agendar. Os scripts do agendador e do aviso já carregam depois do LCP.
+
+## Sessão 8 — SEO e GEO (18/11/2026)
+- **Domínio definitivo (`PUBLIC_SITE_URL`):** sem ele não há canonical/og:url absolutos, sitemap nem medição (o Plausible usa o domínio como "site"). Com ele + `PUBLIC_INDEXAR=sim` (sessão 9), o site indexa: testado com domínio de exemplo, audit-seo verde, sitemap com 27 URLs. O servidor precisa servir as páginas **sem barra no fim** (as canônicas são `/servicos/loiros`).
+- **Validadores online:** Rich Results Test e validator.schema.org não abrem neste ambiente (rede). A validação é local (vocabulário schema.org 30.1 + campos obrigatórios do Google, `pnpm audit-seo`). Os JSON-LD prontos para colar estão em `docs/capturas/2026-11-18/jsonld/`; **fazer as capturas no preview publicado.**
+- **Facebook:** o endereço da página não está no repositório; entra em `contato.facebook` (sameAs) quando o João mandar. Corrigir lá o CEP 88502-110 → 88501-000.
+- **Vídeos (`uploadDate`):** usa a data em que o arquivo entrou no site (1º commit), conforme o schema.org; a data do post no Instagram não está no repositório.
+- **FAQ:** o Google retirou os resultados ricos de FAQ em 2026; o `FAQPage` fica pelo schema.org e pelas IAs.
+- **Plausible:** padrão do site (decisão do João). Liga sozinho com o domínio; só depois do "Aceitar".
+- **LCP simulado das matérias:** oscila entre ~0,9 e ~2,9 s (em /servicos/loiros e /corte) porque o elemento LCP alterna entre o parágrafo-resposta e a foto da capa; a versão anterior oscila igual (A/B no mesmo servidor). Rever na sessão 9 (ex.: `sizes` menor na capa do celular).
+- **Checklist fora do site** (ficha do Google, 57 respostas, NAP no Facebook/Instagram/WhatsApp Business/Apple/Bing, teste mensal no Modo IA): `docs/SEO_GEO.md` §2.

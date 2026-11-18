@@ -1,0 +1,61 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://todalinda.exemplo/equipe/dido-rodrigues#pessoa",
+    "name": "Dido Rodrigues",
+    "jobTitle": "Cabeleireiro",
+    "url": "https://todalinda.exemplo/equipe/dido-rodrigues",
+    "description": "Dido Rodrigues é cabeleireiro há 26 anos.",
+    "knowsAbout": [
+      "Cabelo"
+    ],
+    "sameAs": "https://www.instagram.com/didorodrigues/",
+    "worksFor": {
+      "@id": "https://todalinda.exemplo/#salao"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Dido Rodrigues: loiro em cabelo branco",
+    "description": "Dido explica como chegar ao loiro perolado em cabelo com fios brancos. Com som e legenda.",
+    "thumbnailUrl": "https://todalinda.exemplo/media/video/v-dido-loiro--inteiro-540x960.avif",
+    "contentUrl": "https://todalinda.exemplo/media/video/v-dido-loiro--inteiro-540x960.mp4",
+    "uploadDate": "2026-11-18T01:22:09+00:00",
+    "duration": "PT45S",
+    "inLanguage": "pt-BR",
+    "transcript": "Dido, vamos falar sobre esse cabelo que é uma coloração e mechas, certo? Coloração. Não, é só coloração, Edna. Não tem mechas aqui não, você acredita? A gente, porque a cliente tem 100% de cabelinhos brancos, se você for ver bem a raizinha dela aqui, é bem clarinha. Por quê? Porque a gente consegue fazer um loiro num cabelo 100% branco e fica esse tom maravilhoso, olha só. É o famoso loiro de tinta, né, que a gente fala. Claro que Foi feito mechas anteriormente Porque ela tinha uma raiz escura E a gente foi clareando aos poucos Mas hoje em dia a gente só retoca a raiz dela Pra gente manter esse tom de loiro perolado Que fica perfeito, né? Olha só",
+    "actor": {
+      "@type": "Person",
+      "name": "Dido Rodrigues"
+    },
+    "publisher": {
+      "@id": "https://todalinda.exemplo/#salao"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Todalinda",
+        "item": "https://todalinda.exemplo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Equipe",
+        "item": "https://todalinda.exemplo/equipe"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Dido Rodrigues",
+        "item": "https://todalinda.exemplo/equipe/dido-rodrigues"
+      }
+    ]
+  }
+]

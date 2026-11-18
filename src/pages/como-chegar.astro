@@ -17,6 +17,7 @@ import { valorDe } from '../config/tipos.ts';
 import { botoes, whatsapp } from '../content/textos/geral.ts';
 import { alt } from '../content/textos/midia.ts';
 import { comoChegar as c } from '../content/textos/paginas.ts';
+import { salaoLd } from '../components/seo/dados.ts';
 import Interna from '../layouts/Interna.astro';
 import { linkWhatsApp } from '../lib/whatsapp.ts';
 
@@ -38,7 +39,12 @@ const bbox = [lng - d * 1.4, lat - d, lng + d * 1.4, lat + d].map((n) => n.toFix
 const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
 ---
 
-<Interna titulo={c.meta.title} descricao={c.meta.description}>
+<Interna
+  titulo={c.meta.title}
+  descricao={c.meta.description}
+  trilha={[{ nome: 'Como chegar', url: '/como-chegar' }]}
+  jsonld={[await salaoLd()]}
+>
   <section class="end tom-capa" aria-labelledby="endereco">
     <Folio secao="Como chegar" />
     <div class="end__texto">

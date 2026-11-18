@@ -14,7 +14,9 @@ describe('fundação', () => {
   it('home usa a capa e o robots da config', () => {
     const pagina = ler('src/pages/index.astro');
     expect(pagina).toContain('DocumentoCapa');
-    expect(ler('src/components/capa/DocumentoCapa.astro')).toContain('robotsMeta()');
+    // o robots vem da config por meio do <Seo> (sessão 8)
+    expect(ler('src/components/capa/DocumentoCapa.astro')).toContain('<Seo');
+    expect(ler('src/components/seo/Seo.astro')).toContain('robotsMeta()');
   });
 
   it('three e astro estão com versão fixada', () => {

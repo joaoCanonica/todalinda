@@ -119,7 +119,7 @@ export const servicos: Record<string, TextoServico> = {
     },
     rotulo: 'Cor',
     titulo: { antes: '', destaque: 'Loiros', depois: '' },
-    resposta: `Os loiros da Todalinda são feitos ${ONDE}, ${HORARIO}. Perolado, bege ou manteiga: o caminho até o tom começa pela avaliação e pelo teste de mecha.`,
+    resposta: `Os loiros são feitos ${ONDE}, ${HORARIO}. Perolado, bege ou manteiga: o caminho até o tom começa pela avaliação e pelo teste de mecha.`,
     oQueE: [
       'Loiro é uma família de tons. Perolado é mais frio, bege é neutro, manteiga é mais quente. O tom certo depende da sua pele, da base do fio e do que ele já passou.',
       'Às vezes o loiro vem do clareamento em mechas; às vezes, da coloração. Em cabelo com muitos fios brancos, por exemplo, a coloração pode chegar ao loiro sem mechas.',
@@ -165,7 +165,7 @@ export const servicos: Record<string, TextoServico> = {
     meta: {
       title: 'Ruivo e cobre em Lages · Todalinda, salão no Centro',
       description:
-        'Ruivos e acobreados em salão em Lages, no Centro: do cobre suave ao ruivo intenso, com avaliação e teste de mecha. Agende na Todalinda.',
+        'Ruivo cobre e acobreados em salão em Lages, no Centro: do cobre suave ao ruivo intenso, com avaliação e teste de mecha. Agende na Todalinda.',
     },
     rotulo: 'Cor',
     titulo: { antes: 'Ruivo e ', destaque: 'cobre', depois: '' },
@@ -235,7 +235,7 @@ export const servicos: Record<string, TextoServico> = {
     meta: {
       title: 'Mechas com teste de mecha em Lages · Todalinda, Centro',
       description:
-        'Mechas em salão em Lages, no Centro, sempre com teste de mecha antes: com contraste ou sutis, do jeito do seu fio. Agende na Todalinda.',
+        'Mechas em Lages, no Centro, sempre com teste de mecha antes: com contraste ou sutis, do jeito do seu fio. Agende na Todalinda pelo WhatsApp.',
     },
     rotulo: 'Cor',
     titulo: { antes: '', destaque: 'Mechas', depois: '' },
@@ -378,7 +378,7 @@ export const servicos: Record<string, TextoServico> = {
     meta: {
       title: 'Esmalteria e unha em gel em Lages · Todalinda, Centro',
       description:
-        'Manicure, pedicure e esmaltação em gel com blindagem em salão em Lages, no Centro. Agende a esmalteria da Todalinda pelo WhatsApp.',
+        'Esmalteria em Lages, no Centro: manicure, pedicure e unha em gel com blindagem. Agende a esmalteria da Todalinda pelo WhatsApp.',
     },
     rotulo: 'Unhas',
     titulo: { antes: '', destaque: 'Esmalteria', depois: '' },

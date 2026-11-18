@@ -17,6 +17,8 @@ import { contato } from '../../config/contato.ts';
 import type { Membro } from '../../content/schemas.ts';
 import { perfis, trabalhosDaPessoa, type Perfil } from '../../content/textos/equipe.ts';
 import { alt, videos } from '../../content/textos/midia.ts';
+import { abs, ID_SALAO } from '../../components/seo/jsonld.ts';
+import { videoLd } from '../../components/seo/videos.ts';
 import Interna from '../../layouts/Interna.astro';
 import { NOME_TECNICA, ondeDe, posterDe, videoDaFala } from '../../lib/paginas.ts';
 import { linkWhatsApp } from '../../lib/whatsapp.ts';
@@ -52,6 +54,20 @@ const servicosConfirmados = (await getCollection('servicos'))
   .map((s) => s.data)
   .filter((s) => s.publicado && m.servicos.includes(s.id));
 const videoFala = p.fala ? videoDaFala(p.fala.fonte) : null;
+const ldVideo = videoFala ? videoLd(videoFala) : null;
+// JSON-LD: a pessoa, ligada ao salão (só fatos confirmados: função, anos, Instagram)
+const pessoaLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': abs(`/equipe/${m.slug}#pessoa`),
+  name: m.nome.replace(/\s*"[^"]*"/, ''),
+  jobTitle: m.slug === 'edna-antoniolli' ? 'Fundadora' : m.funcao,
+  url: abs(`/equipe/${m.slug}`),
+  description: p.bio.join(' '),
+  knowsAbout: p.especialidades,
+  ...(m.instagram ? { sameAs: `https://www.instagram.com/${m.instagram}/` } : {}),
+  worksFor: { '@id': ID_SALAO() },
+};
 const [primeiro, ...resto] = m.nome.split(' ');
 // sem retrato: monograma (as iniciais), em vez de repetir o nome que já está na manchete
 const iniciais = m.nome
@@ -66,6 +82,12 @@ const iniciais = m.nome
 <Interna
   titulo={p.meta.title}
   descricao={p.meta.description}
+  tipoOg="profile"
+  jsonld={[pessoaLd, ...(ldVideo ? [ldVideo] : [])]}
+  trilha={[
+    { nome: 'Equipe', url: '/equipe' },
+    { nome: m.nome.replace(/\s*"[^"]*"/, ''), url: `/equipe/${m.slug}` },
+  ]}
   agendar={zap}
   {...(ehAgendavel ? { agendarCom: { profissional: m.slug } } : {})}
 >

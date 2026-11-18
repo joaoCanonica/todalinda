@@ -1,6 +1,7 @@
 // Medição do funil, sem invadir (CLAUDE.md §3 e docs/FUNIL.md).
 // - Nada de terceiro carrega antes do "Aceitar" no aviso de privacidade.
-// - Ferramenta: PUBLIC_MEDICAO = "plausible" (recomendada: sem cookie, sem dado pessoal, script de ~1 KB)
+// - Ferramenta: Plausible (decisão do João, sessão 8: sem cookie, sem dado pessoal, script de ~1 KB).
+//   PUBLIC_MEDICAO troca para "umami" | "ga4", ou "nenhuma" para desligar.
 //   | "umami" | "ga4" (só com aceite; usa cookie) | vazio (desligada: eventos só no console do preview).
 // - Nenhum evento leva nome, telefone ou o texto da mensagem: só ids de serviço/profissional e a origem.
 import { EVENTO, aceito, quandoAceitar } from '../components/consentimento/consentimento.ts';
@@ -17,9 +18,14 @@ export type Evento =
 type Ferramenta = 'plausible' | 'umami' | 'ga4' | null;
 const env = (import.meta as { env?: Record<string, string | undefined> }).env ?? {};
 const FERRAMENTA: Ferramenta =
-  (['plausible', 'umami', 'ga4'] as const).find((f) => f === env.PUBLIC_MEDICAO) ?? null;
+  env.PUBLIC_MEDICAO === 'nenhuma'
+    ? null
+    : ((['plausible', 'umami', 'ga4'] as const).find((f) => f === env.PUBLIC_MEDICAO) ??
+      'plausible');
 /** plausible: domínio do site; umami: website id; ga4: G-XXXX. */
-const ID = env.PUBLIC_MEDICAO_ID ?? '';
+// Plausible: o "site" é o domínio definitivo; sem domínio (preview), a medição fica desligada
+const dominio = (env.PUBLIC_SITE_URL ?? '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+const ID = env.PUBLIC_MEDICAO_ID ?? (FERRAMENTA === 'plausible' ? dominio : '');
 /** Endereço do script (permite servir pelo próprio domínio, via proxy). */
 const SCRIPT = env.PUBLIC_MEDICAO_SCRIPT ?? '';
 
@@ -64,7 +70,7 @@ function carregar(): void {
 }
 
 function enviar(nome: string, props: Record<string, string>): boolean {
-  if (!aceito() || !FERRAMENTA) return false;
+  if (!aceito() || !FERRAMENTA || !ID) return false;
   carregar();
   if (FERRAMENTA === 'plausible') w.plausible?.(nome, { props });
   else if (FERRAMENTA === 'umami') w.umami?.track(nome, props);

@@ -16,7 +16,12 @@ const zap = linkWhatsApp(whatsapp.avaliacao);
 const tituloCta = cta.titulo.split('fio'); // "Qual o seu fio pede?": a palavra em itálico pesado
 ---
 
-<Interna titulo={meta.title} descricao={meta.description} agendar={zap}>
+<Interna
+  titulo={meta.title}
+  descricao={meta.description}
+  agendar={zap}
+  trilha={[{ nome: 'Tratamentos', url: '/tratamentos' }]}
+>
   <CabecaPagina
     secao="Ficha técnica"
     rotulo={pagina.rotulo}

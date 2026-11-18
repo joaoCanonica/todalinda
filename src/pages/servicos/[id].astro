@@ -21,6 +21,8 @@ import { EM_PREVIEW } from '../../config/ambiente.ts';
 import type { Membro, Servico, Trabalho } from '../../content/schemas.ts';
 import { servicos as textos, type TextoServico } from '../../content/textos/servicos.ts';
 import { alt, videos } from '../../content/textos/midia.ts';
+import { faq as faqLd, servico as servicoLd } from '../../components/seo/jsonld.ts';
+import { videoLd } from '../../components/seo/videos.ts';
 import Interna from '../../layouts/Interna.astro';
 import {
   autorDe,
@@ -74,6 +76,20 @@ const quemFaz =
       : null;
 const fala = t.fala;
 const videoFala = fala ? videoDaFala(fala.fonte) : null;
+const ldVideo = videoFala ? videoLd(videoFala) : null;
+const jsonld = [
+  servicoLd({
+    id: s.id,
+    nome: s.nome,
+    resumo: s.resumo,
+    url: `/servicos/${s.id}`,
+    descricao: t.resposta,
+    tipo: s.nome,
+    imagem: `/og/servico-${s.id}.jpg`,
+  }),
+  faqLd(t.faq),
+  ...(ldVideo ? [ldVideo] : []),
+];
 ---
 
 <Interna
@@ -81,6 +97,10 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
   descricao={t.meta.description}
   agendar={zap}
   agendarCom={{ servico: s.id }}
+  og={`servico-${s.id}`}
+  tipoOg="article"
+  jsonld={jsonld}
+  trilha={[{ nome: s.nome, url: `/servicos/${s.id}` }]}
   {...(ehVideo(capa) ? {} : { preload: preloadDe(capa, SIZES_CAPA) })}
 >
   <!-- CAPA DA MATÉRIA -->
@@ -283,7 +303,9 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
     <div class="faq">
       {t.faq.map((f) => (
         <details class="faq__item">
-          <summary>{f.pergunta}</summary>
+          <summary>
+            <h3 class="faq__pergunta">{f.pergunta}</h3>
+          </summary>
           <p>{f.resposta}</p>
         </details>
       ))}
@@ -640,5 +662,11 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
     .cta-fixo__botao {
       width: auto;
     }
+  }
+  /* a pergunta real é o título (h3): leitores de tela e buscadores a encontram como título */
+  .faq__pergunta {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
   }
 </style>

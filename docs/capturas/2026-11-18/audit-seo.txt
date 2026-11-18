@@ -1,0 +1,3 @@
+[audit-seo] 34 páginas · vocabulário schema.org 30.1 (939 tipos, 1538 propriedades) · indexar=false
+  AVISO site: sem PUBLIC_SITE_URL: sem canonical/og:url absolutos e sem sitemap (ok no preview)
+  ✓ SEO/GEO ok: NAP idêntico, JSON-LD válido, robots e sitemap coerentes

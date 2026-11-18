@@ -43,6 +43,8 @@ export const contato = {
       'gerado das coordenadas da ficha',
     ),
   },
+  /** Página do Facebook ("Todalinda | Lages SC"): o endereço exato não está no repositório. */
+  facebook: opcional<string>(),
   estacionamento: opcional<string>(),
   pagamentos: opcional<string[]>(),
   acessibilidade: opcional<string>(),

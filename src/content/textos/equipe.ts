@@ -67,7 +67,11 @@ export const perfis: Record<string, Perfil> = {
     whatsapp: 'Olá! Vim pelo site e quero agendar com Andressa Savaris.',
   },
   'isabela-cristina': {
-    meta: m('Isabela Cristina', 'Colorista'),
+    meta: {
+      ...m('Isabela Cristina', 'Colorista'),
+      description:
+        'Isabela Cristina é colorista em Lages, na Todalinda, salão no Centro: colorimetria avançada, mechas e técnica + cor. Agende com Isabela pelo WhatsApp.',
+    },
     linha: 'Colorista: colorimetria avançada, mechas, técnica + cor.',
     bio: [
       'Isabela Cristina é colorista, com especialização em colorimetria avançada e mechas. Está na equipe desde março de 2020.',

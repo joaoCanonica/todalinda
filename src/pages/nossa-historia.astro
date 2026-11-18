@@ -21,18 +21,25 @@ import {
   pagina,
   valoresDaCasa,
 } from '../content/textos/nossa-historia.ts';
+import { videoLd } from '../components/seo/videos.ts';
 import Interna from '../layouts/Interna.astro';
 import { autorDe, ondeDe } from '../lib/paginas.ts';
 import { linkWhatsApp } from '../lib/whatsapp.ts';
 
 const FOTO_EQUIPE = 'f-851041550';
+const ldVideos = ['v-edna-sonho', 'v-edna-clientes'].flatMap((id) => videoLd(id) ?? []);
 const falas = [
   { id: 'v-edna-sonho', frase: editorial.citacao.texto },
   { id: 'v-edna-clientes', frase: momento.fala.at(-1)?.texto ?? '' },
 ].filter((f) => liberada(f.id, 'inteiro') && videos[f.id]);
 ---
 
-<Interna titulo={meta.title} descricao={meta.description}>
+<Interna
+  titulo={meta.title}
+  descricao={meta.description}
+  trilha={[{ nome: 'Nossa história', url: '/nossa-historia' }]}
+  jsonld={ldVideos}
+>
   <CabecaPagina
     secao="História"
     rotulo={pagina.rotulo}

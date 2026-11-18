@@ -12,6 +12,7 @@ import { provisoria } from '../components/secoes/util.ts';
 import { SERVICOS } from '../content/schemas.ts';
 import { botoes, whatsapp } from '../content/textos/geral.ts';
 import { trabalhos as t } from '../content/textos/paginas.ts';
+import { abs, imagem as imagemLd } from '../components/seo/jsonld.ts';
 import Interna from '../layouts/Interna.astro';
 import { NOME_TECNICA, posterDe } from '../lib/paginas.ts';
 import { imagem } from '../lib/midia.ts';
@@ -39,10 +40,25 @@ const itens = (await getCollection('trabalhos'))
     const grande = x.poster && 'imagem' in x.poster ? imagem(x.midia) : null;
     return { ...x, legenda, grande, motivo: provisoria(x.midia) };
   });
+// JSON-LD: as fotos da galeria como ImageObject (crédito da casa; sem nome de cliente)
+const galeria = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: 'Trabalhos da Todalinda',
+  url: abs('/trabalhos'),
+  associatedMedia: itens
+    .filter((x) => x.grande)
+    .map((x) => imagemLd({ url: x.grande?.src ?? '', legenda: x.legenda })),
+};
 const tecnicas = [...new Set(itens.map((x) => x.tecnica))];
 ---
 
-<Interna titulo={t.meta.title} descricao={t.meta.description}>
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  trilha={[{ nome: 'Trabalhos', url: '/trabalhos' }]}
+  jsonld={[galeria]}
+>
   <CabecaPagina secao="Trabalhos" rotulo={t.rotulo} titulo={t.titulo} resposta={t.resposta} />
 
   <Pagina tom="pagina" secao="Galeria" rotulo="Galeria de trabalhos">

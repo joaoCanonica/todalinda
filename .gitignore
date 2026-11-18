@@ -21,3 +21,5 @@ docs/capturas/**/*.png
 
 # transcrição local (modelos e venv)
 .ferramentas/
+public/og/
+public/marca/todalinda-logo-512.png

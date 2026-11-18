@@ -4,7 +4,9 @@
 // O fólio numera sozinho (contador CSS) em cada página.
 import '../styles/global.css';
 import { cores } from '../config/tema.ts';
-import { robotsMeta } from '../config/seo.ts';
+import JsonLd from '../components/seo/JsonLd.astro';
+import Seo from '../components/seo/Seo.astro';
+import { migalhas } from '../components/seo/jsonld.ts';
 import { navegacao } from '../content/textos/geral.ts';
 import Logo from '../components/marca/Logo.astro';
 import PreviewBanner from '../components/PreviewBanner.astro';
@@ -22,8 +24,28 @@ interface Props {
   preload?: { srcset: string; sizes: string; tipo?: string };
   /** Página que não deve ser indexada mesmo em produção (404). */
   noindex?: boolean;
+  /** SEO: imagem OG (public/og/<nome>.jpg), JSON-LD da página e o nome na trilha (BreadcrumbList). */
+  og?: string;
+  tipoOg?: 'website' | 'article' | 'profile';
+  jsonld?: object[];
+  trilha?: { nome: string; url: string }[];
 }
-const { titulo, descricao, agendar, agendarCom, preload, noindex = false } = Astro.props;
+const {
+  titulo,
+  descricao,
+  agendar,
+  agendarCom,
+  preload,
+  noindex = false,
+  og,
+  tipoOg,
+  jsonld = [],
+  trilha,
+} = Astro.props;
+const grafo = [
+  ...jsonld,
+  ...(trilha && !noindex ? [migalhas([{ nome: 'Todalinda', url: '/' }, ...trilha])] : []),
+];
 const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
 const hrefAgendar = agendar ?? linkWhatsApp(MENSAGENS.geral());
 const externo = hrefAgendar.startsWith('http');
@@ -34,9 +56,13 @@ const externo = hrefAgendar.startsWith('http');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="robots" content={noindex ? 'noindex, follow' : robotsMeta()} />
-    <title>{titulo}</title>
-    <meta name="description" content={descricao} />
+    <Seo
+      titulo={titulo}
+      descricao={descricao}
+      noindex={noindex}
+      {...(og ? { og } : {})}
+      {...(tipoOg ? { tipo: tipoOg } : {})}
+    />
     <meta name="theme-color" content={cores.noite} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
@@ -118,6 +144,7 @@ const externo = hrefAgendar.startsWith('http');
     </main>
     <Rodape />
     <slot name="fixo" />
+    <JsonLd grafo={grafo} />
   </body>
 </html>
 

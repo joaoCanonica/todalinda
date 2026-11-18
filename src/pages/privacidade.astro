@@ -8,7 +8,11 @@ import { privacidade as p } from '../content/textos/paginas.ts';
 import Interna from '../layouts/Interna.astro';
 ---
 
-<Interna titulo={p.meta.title} descricao={p.meta.description}>
+<Interna
+  titulo={p.meta.title}
+  descricao={p.meta.description}
+  trilha={[{ nome: 'Privacidade', url: '/privacidade' }]}
+>
   <CabecaPagina
     secao="Expediente"
     rotulo="Expediente"

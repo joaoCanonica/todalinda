@@ -18,7 +18,11 @@ const STILL = 'q-revelacao-espelho';
 const status = ['Encerrada', 'No ar'];
 ---
 
-<Interna titulo={d.meta.title} descricao={d.meta.description}>
+<Interna
+  titulo={d.meta.title}
+  descricao={d.meta.description}
+  trilha={[{ nome: 'Dois Reais ou um Cabelo', url: '/dois-reais-ou-um-cabelo' }]}
+>
   <section class="caderno tom-capa" aria-labelledby="titulo-quadro">
     <Folio secao="O quadro" />
     <div class="caderno__texto">

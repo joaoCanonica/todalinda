@@ -8,6 +8,7 @@ import { doisDigitos } from '../components/secoes/util.ts';
 import { contato } from '../config/contato.ts';
 import { whatsapp } from '../content/textos/geral.ts';
 import { faq } from '../content/textos/paginas.ts';
+import { faq as faqLd } from '../components/seo/jsonld.ts';
 import Interna from '../layouts/Interna.astro';
 import { linkWhatsApp } from '../lib/whatsapp.ts';
 
@@ -20,7 +21,12 @@ const slug = (s: string) =>
     .replace(/^-|-$/g, '');
 ---
 
-<Interna titulo={faq.meta.title} descricao={faq.meta.description}>
+<Interna
+  titulo={faq.meta.title}
+  descricao={faq.meta.description}
+  trilha={[{ nome: 'Perguntas frequentes', url: '/perguntas-frequentes' }]}
+  jsonld={[faqLd(faq.grupos.flatMap((g) => g.itens))]}
+>
   <CabecaPagina secao="Dúvidas" rotulo={faq.rotulo} titulo={faq.titulo} resposta={faq.resposta}>
     <nav class="indice" aria-label="Assuntos">
       <ol role="list">
@@ -47,7 +53,9 @@ const slug = (s: string) =>
         <div class="grupo__itens">
           {g.itens.map((q) => (
             <details class="q">
-              <summary>{q.pergunta}</summary>
+              <summary>
+                <h3 class="q__pergunta">{q.pergunta}</h3>
+              </summary>
               <p>{q.resposta}</p>
             </details>
           ))}
@@ -160,5 +168,11 @@ const slug = (s: string) =>
     display: grid;
     justify-items: start;
     gap: var(--e-4);
+  }
+  /* a pergunta real é o título (h3): leitores de tela e buscadores a encontram como título */
+  .q__pergunta {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
   }
 </style>

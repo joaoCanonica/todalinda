@@ -10,7 +10,11 @@ import { agendar as t } from '../content/textos/paginas.ts';
 import Interna from '../layouts/Interna.astro';
 ---
 
-<Interna titulo={t.meta.title} descricao={t.meta.description}>
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  trilha={[{ nome: 'Agendar', url: '/agendar' }]}
+>
   <CabecaPagina secao="Agendar" rotulo={t.rotulo} titulo={t.titulo} resposta={t.resposta}>
     <ol class="passos" role="list">
       {t.passos.map((p, i) => (

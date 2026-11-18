@@ -105,9 +105,9 @@ O problema é conversão, não satisfação: 57 avaliações e 16 mil seguidores
 
 Nenhum evento leva nome, telefone ou o texto da mensagem.
 
-### Ferramenta: proposta
+### Ferramenta: Plausible (decidido pelo João na sessão 8)
 
-**Recomendo Plausible** (`PUBLIC_MEDICAO=plausible`, `PUBLIC_MEDICAO_ID=<domínio>`):
+**Plausible é a padrão.** Liga sozinho quando existir `PUBLIC_SITE_URL` (o domínio vira o "site" do Plausible); `PUBLIC_MEDICAO_ID` sobrescreve, `PUBLIC_MEDICAO=nenhuma` desliga. Por que Plausible:
 
 - **Sem cookie e sem dado pessoal.** Pela própria documentação do Plausible, não usa cookie nem guarda IP. Encaixa no que a página de privacidade promete.
 - **Leve.** O script tem cerca de 1 KB e não pesa no LCP. Eventos personalizados com propriedades cobrem os 7 eventos acima.
