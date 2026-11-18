@@ -1,0 +1,10 @@
+{
+  "midia": "v-transformacao",
+  "tecnica": "morena-iluminada",
+  "destaque": false,
+  "parAntesDepois": {
+    "papel": "ambos",
+    "com": [],
+    "confirmado": false
+  }
+}

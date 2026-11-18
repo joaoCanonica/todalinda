@@ -1,0 +1,41 @@
+{
+  "id": "corte",
+  "nome": "Corte",
+  "grupo": "corte",
+  "resumo": "A Arte do Corte: camadas, comprimento e forma pensados para o rosto e a rotina.",
+  "especialidades": ["cabelo"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Corte a seco ou molhado, conforme o fio e o resultado combinado."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["dido-rodrigues", "andressa-savaris"]
+  },
+  "midia": ["f-902586035", "f-902586330", "f-801582372"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 6
+}

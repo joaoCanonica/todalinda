@@ -1,0 +1,55 @@
+{
+  "id": "mechas",
+  "nome": "Mechas",
+  "grupo": "cor",
+  "resumo": "Mechas com contraste ou sutis, sempre com teste de mecha antes.",
+  "especialidades": ["colorimetria avançada", "mechas"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "teste-de-mecha",
+      "titulo": "Teste de mecha",
+      "texto": "Antes de qualquer química, uma mecha de teste mostra como o fio reage."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Mechas na técnica escolhida na avaliação, com tonalização."
+    },
+    {
+      "etapa": "tratamento",
+      "titulo": "Tratamento",
+      "texto": "Cuidado com o fio indicado na avaliação, antes ou depois da técnica."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["isabela-cristina"]
+  },
+  "midia": ["v-mechas", "v-mechas-costas"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Por que fazer teste de mecha?",
+      "resposta": "Porque mostra como o seu fio reage à química antes do procedimento completo."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 5
+}

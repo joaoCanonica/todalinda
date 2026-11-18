@@ -1,0 +1,10 @@
+{
+  "midia": "f-756143696",
+  "tecnica": "castanho-e-mocha",
+  "destaque": false,
+  "parAntesDepois": {
+    "papel": "antes",
+    "com": ["f-754970697", "f-756641555"],
+    "confirmado": false
+  }
+}

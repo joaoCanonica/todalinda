@@ -1,0 +1,41 @@
+{
+  "id": "tratamentos",
+  "nome": "Tratamentos",
+  "grupo": "tratamento",
+  "resumo": "Hidratação, nutrição e reconstrução indicadas na avaliação do fio.",
+  "especialidades": ["cosmetologia"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Protocolo escolhido pela necessidade do fio (hidratação, nutrição ou reconstrução)."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["andressa-savaris"]
+  },
+  "midia": [],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    }
+  ],
+  "publicado": false,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 7
+}

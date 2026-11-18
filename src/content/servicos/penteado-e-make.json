@@ -1,0 +1,41 @@
+{
+  "id": "penteado-e-make",
+  "nome": "Penteado e make",
+  "grupo": "festa",
+  "resumo": "Penteados e maquiagem para eventos.",
+  "especialidades": ["cabelo", "maquiagem"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Conversa sobre o evento, o cabelo e a pele."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Penteado e maquiagem combinados na conversa inicial."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Ajustes finais e fixação."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["dido-rodrigues", "andressa-savaris", "marina-schpanski"]
+  },
+  "midia": ["f-846320909", "f-899604807", "q-dido-sorrindo"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 8
+}

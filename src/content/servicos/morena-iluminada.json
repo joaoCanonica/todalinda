@@ -1,0 +1,62 @@
+{
+  "id": "morena-iluminada",
+  "nome": "Morena iluminada",
+  "grupo": "cor",
+  "resumo": "Pontos de luz mel e caramelo sobre a base morena, desenhados para o seu fio.",
+  "especialidades": ["colorimetria avançada", "mechas"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "teste-de-mecha",
+      "titulo": "Teste de mecha",
+      "texto": "Antes de qualquer química, uma mecha de teste mostra como o fio reage."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Clareamento em mechas finas e tonalização, respeitando a base natural."
+    },
+    {
+      "etapa": "tratamento",
+      "titulo": "Tratamento",
+      "texto": "Cuidado com o fio indicado na avaliação, antes ou depois da técnica."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["isabela-cristina"]
+  },
+  "midia": [
+    "f-749143529",
+    "f-859140964",
+    "f-876662670",
+    "v-morena-iluminada",
+    "v-transformacao",
+    "f-751623903"
+  ],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Por que fazer teste de mecha?",
+      "resposta": "Porque mostra como o seu fio reage à química antes do procedimento completo."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 1
+}

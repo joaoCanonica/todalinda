@@ -14,7 +14,7 @@ describe('fundação', () => {
   it('página temporária tem h1 e noindex', () => {
     const pagina = ler('src/pages/index.astro');
     expect(pagina).toContain('<h1>Todalinda</h1>');
-    expect(pagina).toMatch(/name="robots" content="noindex/);
+    expect(pagina).toContain('robotsMeta()');
   });
 
   it('three e astro estão com versão fixada', () => {

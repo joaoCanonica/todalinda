@@ -1,0 +1,62 @@
+{
+  "id": "loiros",
+  "nome": "Loiros",
+  "grupo": "cor",
+  "resumo": "Loiros perolados, bege e manteiga, do clareamento gradual ao loiro de tinta em fios brancos.",
+  "especialidades": ["colorimetria avançada", "mechas"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "teste-de-mecha",
+      "titulo": "Teste de mecha",
+      "texto": "Antes de qualquer química, uma mecha de teste mostra como o fio reage."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Clareamento ou coloração conforme o fio, com tonalização para chegar ao tom combinado."
+    },
+    {
+      "etapa": "tratamento",
+      "titulo": "Tratamento",
+      "texto": "Cuidado com o fio indicado na avaliação, antes ou depois da técnica."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["isabela-cristina"]
+  },
+  "midia": [
+    "f-753362068",
+    "f-861280514",
+    "f-901881314",
+    "v-dido-loiro",
+    "f-751939719",
+    "f-894460956"
+  ],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Por que fazer teste de mecha?",
+      "resposta": "Porque mostra como o seu fio reage à química antes do procedimento completo."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 2
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ruivo-e-cobre",
+  "nome": "Ruivo e cobre",
+  "grupo": "cor",
+  "resumo": "Ruivos e acobreados, do cobre suave ao ruivo intenso.",
+  "especialidades": ["colorimetria avançada", "mechas"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "teste-de-mecha",
+      "titulo": "Teste de mecha",
+      "texto": "Antes de qualquer química, uma mecha de teste mostra como o fio reage."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Coloração e tonalização nos tons de cobre definidos na avaliação."
+    },
+    {
+      "etapa": "tratamento",
+      "titulo": "Tratamento",
+      "texto": "Cuidado com o fio indicado na avaliação, antes ou depois da técnica."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["isabela-cristina"]
+  },
+  "midia": ["f-754970697", "f-765855000", "v-castanho-acobreado", "f-756641555", "f-887153455"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Por que fazer teste de mecha?",
+      "resposta": "Porque mostra como o seu fio reage à química antes do procedimento completo."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": false,
+  "ordem": 3
+}
