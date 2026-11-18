@@ -22,9 +22,10 @@ const publicavel = (id) => {
 /** Maior derivado de uma imagem, ou o pôster do vídeo. */
 function arquivoDe(id) {
   const i = indice[id];
-  if (i.tipo === 'imagem') return i.variantes.webp.at(-1).src;
+  const sem = (src) => src.replace(/\?v=.*$/, ''); // a URL leva ?v=<hash>; o arquivo, não
+  if (i.tipo === 'imagem') return sem(i.variantes.webp.at(-1).src);
   const t = Object.values(i.trechos)[0];
-  return t.variantes[0].poster.src;
+  return sem(t.variantes[0].poster.src);
 }
 
 // as artes: capa (home e páginas gerais) e uma por serviço publicado

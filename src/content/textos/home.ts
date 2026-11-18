@@ -226,7 +226,7 @@ export const agendar = {
 export const visite = {
   folio: 'Visite',
   titulo: { antes: 'Rua Lauro Müller, ', destaque: '574', depois: '' },
-  linha: 'Centro de Lages/SC. Um sobrado claro, com gramado na frente e a placa "somos TODALINDA".',
+  linha: 'Centro de Lages/SC. Um sobrado claro, com gramado na frente e a placa “somos TODALINDA”.',
   horario: 'Terça a sábado, das 9h às 19h.',
   telefone: 'Recepção (49) 3018-0082',
 };

@@ -19,8 +19,8 @@ const { lat, lng } = contato.geo.valor;
     </figure>
   ) : (
     <div class="mapa__tipo" aria-hidden="true">
-      <span class="numeros">{Math.abs(lat).toFixed(4)}° S</span>
-      <span class="numeros">{Math.abs(lng).toFixed(4)}° O</span>
+      <span class="numeros">{Math.abs(lat).toFixed(4).replace('.', ',')}° S</span>
+      <span class="numeros">{Math.abs(lng).toFixed(4).replace('.', ',')}° O</span>
       <span>{contato.plusCode.valor}</span>
     </div>
   )}

@@ -81,7 +81,7 @@ export const aCasa = {
       id: 'fachada',
       nome: 'Fachada',
       texto:
-        'Sobrado cinza-claro, porta de madeira cor de laranja e um gramado com mureta. A placa diz "somos TODALINDA".',
+        'Sobrado cinza-claro, porta de madeira cor de laranja e um gramado com mureta. A placa diz “somos TODALINDA”.',
       fonte: 'captura de tela do Instagram (media-originais/fotos/capturas, 12-24-16)',
     },
     {
@@ -137,7 +137,7 @@ export const agendar = {
   rotulo: 'Agendar',
   titulo: { antes: 'Escolha. A gente ', destaque: 'confirma', depois: '.' },
   resposta:
-    'Para agendar na Todalinda, salão no Centro de Lages/SC, escolha o serviço, a profissional (ou "sem preferência"), o dia e o período. A mensagem chega pronta no WhatsApp da recepção, que confirma o horário. A casa atende de terça a sábado, das 9h às 19h.',
+    'Para agendar na Todalinda, salão no Centro de Lages/SC, escolha o serviço, a profissional (ou “sem preferência”), o dia e o período. A mensagem chega pronta no WhatsApp da recepção, que confirma o horário. A casa atende de terça a sábado, das 9h às 19h.',
   passos: [
     {
       titulo: 'O serviço',
@@ -178,7 +178,7 @@ export const avaliarQr = {
   titulo: 'Sua opinião ajuda outra mulher a nos encontrar.',
   linha: 'Aponte a câmera para o código e conte como foi, do jeito que foi.',
   rodape: 'Todalinda · Rua Lauro Müller, 574 · Centro · Lages/SC',
-  /** "ou acesse <domínio>/avaliar": o domínio é PENDENTE; a página monta a linha com seo.siteUrl quando existir. */
+  /** “ou acesse <domínio>/avaliar”: o domínio é PENDENTE; a página monta a linha com seo.siteUrl quando existir. */
   link: (dominio: string) => `ou acesse ${dominio}/avaliar`,
   imprimir: 'Imprimir cartão',
 };
@@ -193,7 +193,7 @@ export const comoChegar = {
   titulo: { antes: 'Rua Lauro Müller, ', destaque: '574', depois: '' },
   resposta:
     'A Todalinda fica na Rua Lauro Müller, 574, no Centro de Lages/SC (CEP 88501-000), num sobrado claro com gramado na frente. Atende de terça a sábado, das 9h às 19h.',
-  referencia: 'Procure a placa "somos TODALINDA" e a porta de madeira cor de laranja.',
+  referencia: 'Procure a placa “somos TODALINDA” e a porta de madeira cor de laranja.',
   apps: 'Abrir no aplicativo de mapas',
   horario: 'Horário',
   feriados: 'Em feriados, confirme o horário pelo WhatsApp antes de vir.',
@@ -330,7 +330,7 @@ export const privacidade = {
     {
       titulo: 'Cookies e medição',
       texto:
-        'A medição de visitas só liga se você tocar em "Aceitar" no aviso de privacidade. Ela conta cliques (agendar, avaliar, como chegar, Instagram, telefone) e a página de origem, sem nome, sem telefone e sem a sua mensagem. O site não usa ferramentas de publicidade. Você muda a escolha quando quiser em "Preferências de privacidade", no rodapé; a escolha fica guardada só no seu aparelho.',
+        'A medição de visitas só liga se você tocar em “Aceitar” no aviso de privacidade. Ela conta cliques (agendar, avaliar, como chegar, Instagram, telefone) e a página de origem, sem nome, sem telefone e sem a sua mensagem. O site não usa ferramentas de publicidade. Você muda a escolha quando quiser em “Preferências de privacidade”, no rodapé; a escolha fica guardada só no seu aparelho.',
     },
     {
       titulo: 'Mapa',
@@ -375,7 +375,7 @@ export const servicosIndice = {
   } satisfies Meta,
 };
 
-/** Fala da Thaynara para a esmalteria (história de caso, sem a promessa de "garanto"). */
+/** Fala da Thaynara para a esmalteria (história de caso, sem a promessa de “garanto”). */
 export const casoEsmalteria = real(
   'Eu tenho uma cliente que chegou até a minha mesa acreditando que as unhas fracas e quebradiças não teriam solução. Ela tentou resolver de várias formas, com esmaltação tradicional, fortalecedores. Aceitou a minha proposta, e aplicamos a blindagem com a esmaltação em gel.',
   F.thaynara,

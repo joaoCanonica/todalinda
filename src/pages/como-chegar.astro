@@ -110,8 +110,8 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
       <div class="mapa__palco" data-mapa={embed}>
         <div class="mapa__cartao" aria-hidden="true">
           <span class="mapa__rosa">N</span>
-          <span class="numeros">{Math.abs(lat).toFixed(4)}° S</span>
-          <span class="numeros">{Math.abs(lng).toFixed(4)}° O</span>
+          <span class="numeros">{Math.abs(lat).toFixed(4).replace('.', ',')}° S</span>
+          <span class="numeros">{Math.abs(lng).toFixed(4).replace('.', ',')}° O</span>
           <span class="mapa__plus">{contato.plusCode.valor}</span>
         </div>
         <div class="mapa__consentimento" data-mapa-aviso hidden>

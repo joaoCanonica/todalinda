@@ -1,0 +1,101 @@
+{
+  "lcp": {
+    "comAbertura": {
+      "rodadasMs": [
+        1592,
+        1601,
+        1614
+      ],
+      "medianaMs": 1601
+    },
+    "semAbertura": {
+      "rodadasMs": [
+        1604,
+        1606,
+        1613
+      ],
+      "medianaMs": 1606
+    }
+  },
+  "fps": {
+    "desktop-1440": {
+      "amostras": [
+        37,
+        52,
+        42,
+        46,
+        47,
+        44
+      ],
+      "voo": [
+        48,
+        55
+      ],
+      "media": 46,
+      "minimo": 42
+    },
+    "android-390-cpu4x": {
+      "amostras": [
+        42,
+        60,
+        59,
+        59,
+        60,
+        60
+      ],
+      "voo": [
+        59,
+        56
+      ],
+      "media": 60,
+      "minimo": 56
+    }
+  },
+  "memoria": [
+    {
+      "fase": "capa (antes)",
+      "heapMb": 0.9,
+      "nos": 2242,
+      "ouvintes": 43
+    },
+    {
+      "fase": "tour aberto (1)",
+      "heapMb": 4.6,
+      "nos": 808,
+      "ouvintes": 92
+    },
+    {
+      "fase": "tour fechado (1)",
+      "heapMb": 3.3,
+      "nos": 2232,
+      "ouvintes": 36
+    },
+    {
+      "fase": "tour aberto (2)",
+      "heapMb": 5.7,
+      "nos": 3009,
+      "ouvintes": 92
+    },
+    {
+      "fase": "tour fechado (2)",
+      "heapMb": 4.1,
+      "nos": 2232,
+      "ouvintes": 36
+    },
+    {
+      "fase": "tour aberto (3)",
+      "heapMb": 6.3,
+      "nos": 808,
+      "ouvintes": 92
+    },
+    {
+      "fase": "tour fechado (3)",
+      "heapMb": 4.9,
+      "nos": 2232,
+      "ouvintes": 36
+    }
+  ],
+  "contextoAposDestruir": {
+    "contextoPerdido": true
+  }
+}

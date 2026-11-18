@@ -95,7 +95,7 @@ export interface ServicoLd {
 const pessoa = (m: MembroLd, emprego = true): Person => ({
   '@type': 'Person',
   '@id': abs(`/equipe/${m.slug}#pessoa`),
-  name: m.nome.replace(/\s*"[^"]*"/, ''),
+  name: m.nome.replace(/\s*[“"][^”"]*[”"]/, ''),
   jobTitle: m.funcao,
   url: abs(`/equipe/${m.slug}`),
   ...(m.sameAs ? { sameAs: m.sameAs } : {}),

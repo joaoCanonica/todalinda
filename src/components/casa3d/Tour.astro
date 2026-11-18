@@ -3,7 +3,8 @@
 //  A) maquete 3D (esquemática até a planta; GLB quando existir) — ilha carregada depois do LCP;
 //  B) "Ver de verdade": splat do ambiente sob demanda (até existir, fotos/vídeo do ambiente);
 //  C) fallback: a lista de ambientes (tablist) + painéis com fotos funciona sem WebGL e sem JS.
-import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { getCollection } from 'astro:content';
 import { EM_PREVIEW } from '../../config/ambiente.ts';
@@ -22,8 +23,10 @@ const ambientes = (await getCollection('ambientes'))
   .map((a) => a.data)
   .sort((a, b) => a.ordem - b.ordem);
 const servicos = new Map((await getCollection('servicos')).map((s) => [s.data.id, s.data]));
-const glb = existsSync(join(process.cwd(), 'public/modelos/maquete.glb'))
-  ? '/modelos/maquete.glb'
+// a URL leva o hash do conteúdo (?v=): o deploy serve /modelos com cache de 1 ano, imutável
+const arqGlb = join(process.cwd(), 'public/modelos/maquete.glb');
+const glb = existsSync(arqGlb)
+  ? `/modelos/maquete.glb?v=${createHash('sha1').update(readFileSync(arqGlb)).digest('hex').slice(0, 10)}`
   : null;
 // esquemática: sempre no preview (com selo); em produção só com aprovação do João
 const mostra3d = Boolean(glb) || EM_PREVIEW || maqueteEsquematica.aprovadaPeloJoao;
@@ -100,6 +103,17 @@ const midiaDe = (ids: string[]) => ids.filter((m) => liberada(m));
         Arraste para girar um pouco. Os ambientes estão na lista.
       </p>
     </div>
+    {/* sem JS, o palco 3D nunca carregaria: mostra a foto da fachada e a lista no lugar */}
+    <noscript>
+      <style>
+        [data-palco] {
+          display: none !important;
+        }
+        [data-fallback] {
+          display: block !important;
+        }
+      </style>
+    </noscript>
     <figure class="tour__fallback" data-fallback hidden={mostra3d}>
       <Poster
         imagem="cap-12-24-16"
@@ -116,7 +130,7 @@ const midiaDe = (ids: string[]) => ids.filter((m) => liberada(m));
         const midia = midiaDe(a.midia);
         const servs = a.servicos.map((s) => servicos.get(s)).filter((s) => s?.publicado);
         return (
-          <article
+          <div
             role="tabpanel"
             id={`painel-${a.id}`}
             aria-labelledby={`aba-${a.id}`}
@@ -193,7 +207,7 @@ const midiaDe = (ids: string[]) => ids.filter((m) => liberada(m));
             <button type="button" class="tour__fechar versalete" data-fechar-gaveta>
               Fechar
             </button>
-          </article>
+          </div>
         );
       })}
     </div>

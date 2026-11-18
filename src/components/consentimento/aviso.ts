@@ -12,6 +12,7 @@ if (aviso) {
   for (const b of aviso.querySelectorAll<HTMLButtonElement>('[data-consentir]'))
     b.addEventListener('click', () => {
       gravarConsentimento(b.dataset.consentir as Escolha);
+      document.documentElement.removeAttribute('data-consentir');
       aviso.hidden = true;
     });
   window.addEventListener('todalinda:abrir-consentimento', () => mostrar(true));

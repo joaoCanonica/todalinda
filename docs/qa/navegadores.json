@@ -1,0 +1,58 @@
+{
+  "semWebgl": {
+    "motivo": "sem-webgl",
+    "fotoVisivel": true,
+    "abas": 8
+  },
+  "semJs": {
+    "/": {
+      "h1": "Cor, corte e cuidado com quem entende de",
+      "textoVisivel": 9258,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    },
+    "/agendar": {
+      "h1": "Escolha. A gente confirma.",
+      "textoVisivel": 2216,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    },
+    "/servicos/loiros": {
+      "h1": "Loiros",
+      "textoVisivel": 3326,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    },
+    "/trabalhos": {
+      "h1": "Técnica + cor",
+      "textoVisivel": 2222,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    },
+    "/a-casa": {
+      "h1": "Por dentro da casa",
+      "textoVisivel": 1415,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 8
+    },
+    "/como-chegar": {
+      "h1": "Rua Lauro Müller, 574",
+      "textoVisivel": 1782,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    },
+    "/equipe/dido-rodrigues": {
+      "h1": "Dido Rodrigues",
+      "textoVisivel": 1211,
+      "enviar": "Olá! Vim pelo site da Todalinda e quero agendar um horário.",
+      "ctaAgendar": "https://wa.me/5549991772089?text=Ol%C3%A",
+      "abas": 0
+    }
+  }
+}

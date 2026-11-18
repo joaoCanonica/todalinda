@@ -29,6 +29,8 @@ interface Props {
   tipoOg?: 'website' | 'article' | 'profile';
   jsonld?: object[];
   trilha?: { nome: string; url: string }[];
+  /** Pré-carrega o Playfair itálico quando o maior texto da página (o LCP) é itálico. */
+  italico?: boolean;
 }
 const {
   titulo,
@@ -41,6 +43,7 @@ const {
   tipoOg,
   jsonld = [],
   trilha,
+  italico = false,
 } = Astro.props;
 const grafo = [
   ...jsonld,
@@ -85,6 +88,15 @@ const externo = hrefAgendar.startsWith('http');
       crossorigin
     />
     <link rel="preload" href="/fonts/manrope-wght.woff2" as="font" type="font/woff2" crossorigin />
+    {italico && (
+      <link
+        rel="preload"
+        href="/fonts/playfair-display-wght-italico.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin
+      />
+    )}
     <slot name="head" />
   </head>
   <body>

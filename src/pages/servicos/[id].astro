@@ -61,7 +61,8 @@ interface Props {
 const { s, capa, galeria, trabalhos, equipe } = Astro.props;
 const t = textos[s.id] as TextoServico;
 const zap = linkWhatsApp(t.whatsapp);
-const SIZES_CAPA = '(min-width: 60rem) 46vw, 100vw';
+// 85vw no celular: com DPR 1,75 cai na variante de 640 px (a de 800 pesava no LCP)
+const SIZES_CAPA = '(min-width: 60rem) 46vw, 85vw';
 const motivoCapa = provisoria(capa);
 const posterCapa = posterDe(capa, '720x1280') ?? { imagem: capa, alt: alt[capa] ?? '' };
 const pares = paresDe(s.id, trabalhos, EM_PREVIEW).slice(0, 2);

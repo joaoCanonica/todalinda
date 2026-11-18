@@ -66,7 +66,7 @@ export const alt: Record<string, string> = {
   'f-851041550':
     'A equipe Todalinda reunida no salão; Edna Antoniolli ao centro, com uma orquídea.',
   'cap-12-24-16':
-    'Fachada da Todalinda: sobrado claro com porta de madeira cor de laranja, gramado e a placa "somos TODALINDA".',
+    'Fachada da Todalinda: sobrado claro com porta de madeira cor de laranja, gramado e a placa “somos TODALINDA”.',
   'cap-12-25-23': 'Fachada da Todalinda vista de outro ângulo, com a escada lateral.',
   'cap-12-24-33': 'Esmalteria: prateleiras de esmaltes com espelhos e uma planta pendente.',
   'cap-12-24-52': 'Salão: bancadas brancas, espelhos iluminados e cadeiras pretas.',

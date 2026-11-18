@@ -164,3 +164,10 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Plausible:** padrão do site (decisão do João). Liga sozinho com o domínio; só depois do "Aceitar".
 - **LCP simulado das matérias:** oscila entre ~0,9 e ~2,9 s (em /servicos/loiros e /corte) porque o elemento LCP alterna entre o parágrafo-resposta e a foto da capa; a versão anterior oscila igual (A/B no mesmo servidor). Rever na sessão 9 (ex.: `sizes` menor na capa do celular).
 - **Checklist fora do site** (ficha do Google, 57 respostas, NAP no Facebook/Instagram/WhatsApp Business/Apple/Bing, teste mensal no Modo IA): `docs/SEO_GEO.md` §2.
+
+## Sessão 9 — QA, conferência e deploy (18/11/2026)
+- **Produção bloqueada (correto):** 5 travas `midia-crianca`. São as mídias com idade a confirmar: `f-859140964`, `f-860153001`, `v-transformacao` (e o trecho `iluminada` do `v-filme`, só na capa B de revisão). O João confirma ou a mídia sai. Detalhes em `docs/CONFERENCIA_FINAL.md`.
+- **Deploy:** `vercel.json` gerado do build (`pnpm deploy:headers`, conferido no pós-build) e `.github/workflows/deploy.yml` (build com ffmpeg e Chromium no GitHub, `vercel deploy --prebuilt`). Faltam a conta e o projeto na Vercel, os segredos `VERCEL_TOKEN`, `VERCEL_ORG_ID` e `VERCEL_PROJECT_ID` no GitHub e as variáveis por ambiente. Nada foi publicado.
+- **Safari iOS e Firefox:** este ambiente só tem Chromium. Roteiro manual em `docs/QA.md` §3.
+- **fps do 3D medidos com WebGL por software** (SwiftShader). Falta medir num Android intermediário real.
+- **Volta pelo histórico (bfcache):** o tour recria a cena ao voltar (`pageshow`). O Chromium automatizado daqui não usa o bfcache, então esse caminho está coberto pelo código, não por teste.

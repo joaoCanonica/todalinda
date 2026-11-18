@@ -25,7 +25,7 @@ const VERSAO = 3; // muda quando os parâmetros de codificação mudam
 const RAIZ = new URL('..', import.meta.url).pathname;
 const SAIDA = join(RAIZ, 'public/media');
 const CACHE = join(SAIDA, '.cache.json');
-const LARGURAS = [480, 800, 1200, 1600, 2400];
+const LARGURAS = [480, 640, 800, 1200, 1600, 2400]; // 640: a foto de capa no celular (≈ 350 px CSS × DPR 1,75)
 const pexec = promisify(execFile);
 
 if (process.env.SEM_MIDIA) {
@@ -401,6 +401,29 @@ if (!filtroIds.length && !soImagens && !soVideos) {
   };
   varrer(SAIDA);
   if (removidos) console.log(`[midia] ${removidos} arquivo(s) órfão(s) removido(s)`);
+  // cache longo (1 ano, immutable) no deploy: cada URL leva o hash do conteúdo (?v=), então
+  // um arquivo refeito com o mesmo nome nunca fica velho no navegador
+  const versoes = new Map();
+  const versionar = (no) => {
+    if (Array.isArray(no)) return no.forEach(versionar);
+    if (!no || typeof no !== 'object') return;
+    for (const [k, v] of Object.entries(no)) {
+      if ((k === 'src' || k === 'legenda') && typeof v === 'string' && v.startsWith('/media/')) {
+        const limpo = v.replace(/\?v=.*$/, '');
+        if (!versoes.has(limpo)) {
+          const arq = join(SAIDA, limpo.slice('/media/'.length));
+          versoes.set(
+            limpo,
+            existsSync(arq)
+              ? createHash('sha1').update(readFileSync(arq)).digest('hex').slice(0, 10)
+              : '',
+          );
+        }
+        no[k] = versoes.get(limpo) ? `${limpo}?v=${versoes.get(limpo)}` : limpo;
+      } else versionar(v);
+    }
+  };
+  versionar(indice);
   writeFileSync(
     join(SAIDA, 'midia.json'),
     JSON.stringify({ gerado: new Date().toISOString(), versao: VERSAO, itens: indice }, null, 2),

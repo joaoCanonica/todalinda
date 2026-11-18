@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 import Botao from '../../components/base/Botao.astro';
 import Citacao from '../../components/base/Citacao.astro';
 import Poster from '../../components/base/Poster.astro';
-import Rotulo from '../../components/base/Rotulo.astro';
+import Etiqueta from '../../components/edicao/Etiqueta.astro';
 import Capitular from '../../components/edicao/Capitular.astro';
 import Folio from '../../components/edicao/Folio.astro';
 import Pagina from '../../components/edicao/Pagina.astro';
@@ -60,7 +60,7 @@ const pessoaLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': abs(`/equipe/${m.slug}#pessoa`),
-  name: m.nome.replace(/\s*"[^"]*"/, ''),
+  name: m.nome.replace(/\s*[“"][^”"]*[”"]/, ''),
   jobTitle: m.slug === 'edna-antoniolli' ? 'Fundadora' : m.funcao,
   url: abs(`/equipe/${m.slug}`),
   description: p.bio.join(' '),
@@ -83,10 +83,11 @@ const iniciais = m.nome
   titulo={p.meta.title}
   descricao={p.meta.description}
   tipoOg="profile"
+  italico
   jsonld={[pessoaLd, ...(ldVideo ? [ldVideo] : [])]}
   trilha={[
     { nome: 'Equipe', url: '/equipe' },
-    { nome: m.nome.replace(/\s*"[^"]*"/, ''), url: `/equipe/${m.slug}` },
+    { nome: m.nome.replace(/\s*[“"][^”"]*[”"]/, ''), url: `/equipe/${m.slug}` },
   ]}
   agendar={zap}
   {...(ehAgendavel ? { agendarCom: { profissional: m.slug } } : {})}
@@ -113,7 +114,7 @@ const iniciais = m.nome
       )}
     </div>
     <div class="perfil__texto">
-      <Rotulo tom="acento">#TalentoTodalinda</Rotulo>
+      <Etiqueta hashtag="#TalentoTodalinda" />
       <h1 id="nome" class="perfil__nome">
         {primeiro} {resto.length > 0 && <em>{resto.join(' ')}</em>}
       </h1>

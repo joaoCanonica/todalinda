@@ -64,11 +64,7 @@ const temFotoEquipe = liberada(FOTO_EQUIPE);
         const motivo = foto ? provisoria(foto) : null;
         return (
           <li class="grade__item">
-            <a
-              class="grade__retrato"
-              href={`/equipe/${m.slug}`}
-              aria-label={`${m.nome}: ver perfil`}
-            >
+            <a class="grade__retrato" href={`/equipe/${m.slug}`} tabindex="-1" aria-hidden="true">
               {foto ? (
                 <Poster
                   imagem={foto}
@@ -160,6 +156,7 @@ const temFotoEquipe = liberada(FOTO_EQUIPE);
     font-size: clamp(1.15rem, 13cqi, 4.5rem);
     overflow-wrap: normal;
   }
+  /* o retrato repete o link do nome (logo abaixo): fica fora do teclado e do leitor de tela */
   .grade__retrato {
     display: block;
     color: inherit;

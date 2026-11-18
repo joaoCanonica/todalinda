@@ -1,5 +1,5 @@
 // /equipe e /equipe/<slug>. Função e anos: confirmados pelo João (src/content/equipe).
-// "Quem faz o quê" (serviços de cada pessoa) só aparece quando a casa confirmar.
+// “Quem faz o quê” (serviços de cada pessoa) só aparece quando a casa confirmar.
 import { F, real, type Meta, type Real } from './fontes.ts';
 
 export const meta: Meta = {

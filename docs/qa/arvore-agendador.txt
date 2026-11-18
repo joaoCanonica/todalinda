@@ -1,0 +1,89 @@
+- form "Agendador":
+  - group "Qual serviço?":
+    - text: Qual serviço?
+    - radio "Morena iluminada"
+    - text: Morena iluminada
+    - radio "Loiros"
+    - text: Loiros
+    - radio "Ruivo e cobre"
+    - text: Ruivo e cobre
+    - radio "Castanho e mocha"
+    - text: Castanho e mocha
+    - radio "Mechas" [checked]
+    - text: Mechas
+    - radio "Corte"
+    - text: Corte
+    - radio "Penteado e make"
+    - text: Penteado e make
+    - radio "Esmalteria"
+    - text: Esmalteria
+    - radio "Avaliação capilar"
+    - text: Avaliação capilar
+    - radio "Não sei ainda"
+    - text: Não sei ainda
+  - group "Com quem?":
+    - text: Com quem?
+    - radio "Sem preferência" [checked]
+    - text: Sem preferência
+    - radio "Isabela Cristina provisório"
+    - text: Isabela Cristina provisório
+    - paragraph: "Sugestão pelas especialidades: a casa ainda vai confirmar quem faz este serviço."
+  - group "Quando?":
+    - text: Quando?
+    - paragraph: Que dia? Terça a sábado, nos próximos 14 dias.
+    - radiogroup:
+      - radio "qui 19/11"
+      - text: qui 19/11
+      - 'radio "sex 20/11, indisponível: feriado: Dia Nacional de Zumbi e da Consciência Negra" [disabled]'
+      - text: "sex 20/11 feriado: Dia Nacional de Zumbi e da Consciência Negra"
+      - radio "sáb 21/11"
+      - text: sáb 21/11
+      - 'radio "dom 22/11, indisponível: fechado às domingos" [disabled]'
+      - text: dom 22/11 fechado às domingos
+      - 'radio "seg 23/11, indisponível: fechado às segundas" [disabled]'
+      - text: seg 23/11 fechado às segundas
+      - radio "ter 24/11"
+      - text: ter 24/11
+      - radio "qua 25/11"
+      - text: qua 25/11
+      - radio "qui 26/11"
+      - text: qui 26/11
+      - radio "sex 27/11"
+      - text: sex 27/11
+      - radio "sáb 28/11"
+      - text: sáb 28/11
+      - 'radio "dom 29/11, indisponível: fechado às domingos" [disabled]'
+      - text: dom 29/11 fechado às domingos
+      - 'radio "seg 30/11, indisponível: fechado às segundas" [disabled]'
+      - text: seg 30/11 fechado às segundas
+      - radio "ter 01/12"
+      - text: ter 01/12
+      - radio "qua 02/12"
+      - text: qua 02/12
+    - paragraph: Que período?
+    - radio "Manhã (9h–12h)"
+    - text: Manhã (9h–12h)
+    - radio "Tarde (13h–19h)"
+    - text: Tarde (13h–19h)
+    - radio "Qualquer horário"
+    - text: Qualquer horário
+  - group "Fez química (coloração, mechas, alisamento) nos últimos 6 meses?":
+    - text: Fez química (coloração, mechas, alisamento) nos últimos 6 meses?
+    - radio "Sim"
+    - text: Sim
+    - radio "Não"
+    - text: Não
+  - group "É a sua primeira vez na Todalinda?":
+    - text: É a sua primeira vez na Todalinda?
+    - radio "Sim, primeira vez"
+    - text: Sim, primeira vez
+    - radio "Já sou cliente"
+    - text: Já sou cliente
+  - text: Seu nome (opcional)
+  - textbox "Seu nome (opcional)"
+  - paragraph: A mensagem que vai
+  - status "A mensagem que vai": Olá! Vim pelo site e quero agendar Mechas.
+  - paragraph: O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa.
+  - link "Enviar pelo WhatsApp (abre o WhatsApp em nova aba)":
+    - /url: https://wa.me/5549991772089?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20Mechas.
+  - paragraph: "Nada do que você escolhe aqui fica guardado no site: a mensagem é montada no seu aparelho e enviada por você no WhatsApp."

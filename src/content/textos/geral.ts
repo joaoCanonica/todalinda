@@ -54,7 +54,7 @@ export const botoes = {
   voltarInicio: 'Voltar ao início',
 } as const;
 
-/** Mensagens do WhatsApp por contexto ("Vim pelo site" no início; ver src/lib/whatsapp.ts). */
+/** Mensagens do WhatsApp por contexto (“Vim pelo site” no início; ver src/lib/whatsapp.ts). */
 export const whatsapp = {
   geral: 'Olá! Vim pelo site da Todalinda e quero agendar um horário.',
   servico: (servico: string) => `Olá! Vim pelo site e quero agendar ${servico}.`,
@@ -67,7 +67,7 @@ export const whatsapp = {
   comoChegar: 'Olá! Vim pelo site e quero confirmar como chegar à Todalinda.',
 } as const;
 
-/** Bloco "Avaliar no Google": sem estrelas, sem nota, sem incentivo. */
+/** Bloco “Avaliar no Google”: sem estrelas, sem nota, sem incentivo. */
 export const avaliar = {
   titulo: 'Sua opinião ajuda outra mulher a nos encontrar.',
   linha: 'Leva 1 minuto. Conte como foi, do jeito que foi.',

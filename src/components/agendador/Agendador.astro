@@ -30,7 +30,7 @@ const equipe = (await getCollection('equipe'))
   .map((m) => m.data)
   .filter((m) => perfis[m.slug]?.agendar.startsWith('Agendar'))
   .sort((a, b) => a.ordem - b.ordem)
-  .map((m) => ({ slug: m.slug, nome: m.nome.replace(/\s*"[^"]*"/, '') }));
+  .map((m) => ({ slug: m.slug, nome: m.nome.replace(/\s*[“"][^”"]*[”"]/, '') }));
 const servicos = [
   ...colecao.map(paraAgenda),
   { ...EXTRAS.avaliacao, profissionaisConfirmados: null },

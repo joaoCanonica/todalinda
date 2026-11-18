@@ -9,9 +9,11 @@ import Poster from '../base/Poster.astro';
 import Rotulo from '../base/Rotulo.astro';
 import StatusHorario from '../base/StatusHorario.astro';
 import TabelaHorario from '../base/TabelaHorario.astro';
+import { comoChegar } from '../../content/textos/paginas.ts';
 import Pagina from '../edicao/Pagina.astro';
 
 const e = contato.endereco.valor;
+const feriadosTexto = comoChegar.feriados; // "Em feriados, confirme o horário pelo WhatsApp antes de vir."
 const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - ${e.uf}, ${e.cep}`;
 ---
 
@@ -44,7 +46,8 @@ const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - $
     <div class="vis__horario">
       <h3 class="versalete vis__subtitulo">Horário</h3>
       <StatusHorario />
-      <TabelaHorario />
+      <TabelaHorario semNotaFeriados />
+      <p class="vis__feriados">{feriadosTexto}</p>
       <h3 class="versalete vis__subtitulo">Contato</h3>
       <ul class="vis__contato" role="list">
         <li>
@@ -146,5 +149,10 @@ const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - $
       grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
       gap: var(--e-7);
     }
+  }
+  .vis__feriados {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
   }
 </style>

@@ -41,10 +41,15 @@ const chamadas = [
         <Logo variante="palavra" titulo="" />
       </a>
       <p class="capa-home__faixa versalete">
-        {faixa.map((f, i) => (
+        {/* dois grupos que não se quebram por dentro: no celular, cada um numa linha (sem "·" órfão) */}
+        {[faixa.slice(0, 2), faixa.slice(2)].map((g, i) => (
           <>
-            {i > 0 && <span aria-hidden="true">·</span>}
-            <span>{f}</span>
+            {i > 0 && (
+              <span class="capa-home__ponto" aria-hidden="true">
+                ·
+              </span>
+            )}
+            <span class="capa-home__grupo">{g.join(' · ')}</span>
           </>
         ))}
       </p>
@@ -142,6 +147,14 @@ const chamadas = [
   .capa-home__logo {
     display: block;
     color: var(--cor-papel);
+  }
+  .capa-home__grupo {
+    white-space: nowrap;
+  }
+  @media (max-width: 40rem) {
+    .capa-home__ponto {
+      display: none;
+    }
   }
   .capa-home__faixa {
     display: flex;

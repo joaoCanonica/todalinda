@@ -141,8 +141,15 @@ function iniciar(tour: HTMLElement) {
   const carregar = async () => {
     try {
       const { criarCena } = await import('../../tres/cena.ts');
-      const canvas = palco.querySelector<HTMLCanvasElement>('[data-canvas]');
+      let canvas = palco.querySelector<HTMLCanvasElement>('[data-canvas]');
       if (!canvas) throw new Error('sem canvas');
+      // canvas cujo contexto já foi destruído (volta pelo histórico): troca por um novo
+      if (canvas.dataset.usado) {
+        const novo = canvas.cloneNode(false) as HTMLCanvasElement;
+        canvas.replaceWith(novo);
+        canvas = novo;
+      }
+      canvas.dataset.usado = '1';
       const hotspots = new Map(
         [...palco.querySelectorAll<HTMLElement>('[data-hotspot]')].map((h) => [
           h.dataset.hotspot ?? '',
@@ -166,12 +173,23 @@ function iniciar(tour: HTMLElement) {
       tour.querySelector<HTMLElement>('[data-dica]')?.removeAttribute('hidden');
       (window as Window & { __tour3d?: unknown }).__tour3d = cena; // medição (fps) nas capturas
       medir('tour_3d_aberto', { ambiente: atual });
-      addEventListener('pagehide', () => cena?.destruir(), { once: true });
+      // ao sair, libera a GPU; se a página voltar do cache de voltar/avançar (bfcache), recria a cena
+      addEventListener(
+        'pagehide',
+        () => {
+          cena?.destruir();
+          cena = null;
+        },
+        { once: true },
+      );
     } catch (erro) {
       console.warn('[tour 3D] fallback:', erro);
       usarFallback('erro');
     }
   };
+  addEventListener('pageshow', (e) => {
+    if (e.persisted && !cena && palco.dataset.estado === 'pronto') void carregar();
+  });
   // depois do LCP + quando o palco aparece + quando o navegador estiver ocioso
   void depoisDoLcp().then(() => {
     const io = new IntersectionObserver(

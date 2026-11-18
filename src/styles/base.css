@@ -159,3 +159,38 @@ a {
   opacity: 1;
   transform: none;
 }
+
+/* Botão de pausa dos vídeos em loop (src/scripts/video.ts). Ícone desenhado em CSS. */
+.video-pausa {
+  position: absolute;
+  inset-block-end: var(--e-3);
+  inset-inline-end: var(--e-3);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: var(--fio) solid color-mix(in srgb, var(--cor-papel) 70%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--cor-noite) 70%, transparent);
+  cursor: pointer;
+}
+.video-pausa::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 12px;
+  height: 14px;
+  border-inline: 4px solid var(--cor-papel);
+}
+.video-pausa[data-estado='parado']::before {
+  width: 0;
+  height: 0;
+  border-inline: 0;
+  border-block: 7px solid transparent;
+  border-inline-start: 12px solid var(--cor-papel);
+  translate: 2px 0;
+}
+.video-pausa:focus-visible {
+  outline: 2px solid var(--cor-ouro);
+  outline-offset: 2px;
+}

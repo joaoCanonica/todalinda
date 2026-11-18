@@ -1,0 +1,427 @@
+[
+  {
+    "rota": "/",
+    "perf": 84,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 2182,
+    "cls": 0,
+    "tbt": 562,
+    "falhas": [
+      "total-blocking-time",
+      "max-potential-fid",
+      "mainthread-work-breakdown",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/404",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1881,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "mainthread-work-breakdown",
+      "bootup-time",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/a-casa",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 774,
+    "cls": 0.008,
+    "tbt": 140,
+    "falhas": [
+      "max-potential-fid",
+      "mainthread-work-breakdown",
+      "unused-javascript",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/agendar",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 619,
+    "cls": 0.015,
+    "tbt": 27,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/avaliar/qr",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 63,
+    "lcp": 608,
+    "cls": 0.008,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/como-chegar",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 767,
+    "cls": 0.006,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/dois-reais-ou-um-cabelo",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 643,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 622,
+    "cls": 0.007,
+    "tbt": 27,
+    "falhas": [
+      "label-content-name-mismatch",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/andressa-savaris",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1879,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/dido-rodrigues",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1954,
+    "cls": 0.002,
+    "tbt": 45,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/edna-antoniolli",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 2029,
+    "cls": 0,
+    "tbt": 19,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/isabela-cristina",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1878,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/karine",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1954,
+    "cls": 0.002,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/marina-schpanski",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1880,
+    "cls": 0.002,
+    "tbt": 16,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/thaynara-colombo",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 1956,
+    "cls": 0.002,
+    "tbt": 74,
+    "falhas": [
+      "max-potential-fid",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/nossa-historia",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 780,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/perguntas-frequentes",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 615,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/privacidade",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 642,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/revista",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 634,
+    "cls": 0.007,
+    "tbt": 16,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/castanho-e-mocha",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 775,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/corte",
+    "perf": 97,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 2630,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/esmalteria",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 806,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/loiros",
+    "perf": 97,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 2554,
+    "cls": 0.007,
+    "tbt": 28,
+    "falhas": [
+      "largest-contentful-paint",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/mechas",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 817,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "total-byte-weight",
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/morena-iluminada",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 811,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/penteado-e-make",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 769,
+    "cls": 0.007,
+    "tbt": 37,
+    "falhas": [
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/ruivo-e-cobre",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 773,
+    "cls": 0.007,
+    "tbt": 2,
+    "falhas": [
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/trabalhos",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 837,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/tratamentos",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 66,
+    "lcp": 796,
+    "cls": 0.006,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "network-dependency-tree-insight"
+    ]
+  }
+]

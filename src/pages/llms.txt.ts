@@ -30,7 +30,7 @@ export const GET: APIRoute = async () => {
 > ${resposta}
 
 - Nome: Todalinda (Ateliê de Beleza Toda Linda); razão social Cordova Antoniolli Serviços de Estéticas LTDA, CNPJ 25.337.323/0001-04.
-- Endereço: ${NAP.endereco}, ${NAP.bairro}, ${NAP.cidade}/${NAP.uf}, CEP ${NAP.cep}, Brasil. Um sobrado claro com gramado na frente; placa "somos TODALINDA".
+- Endereço: ${NAP.endereco}, ${NAP.bairro}, ${NAP.cidade}/${NAP.uf}, CEP ${NAP.cep}, Brasil. Um sobrado claro com gramado na frente; placa “somos TODALINDA”.
 - Coordenadas: ${contato.geo.valor.lat}, ${contato.geo.valor.lng} (Plus Code ${contato.plusCode.valor}).
 - Horário: terça a sábado, das 9h às 19h. Domingo e segunda, fechado. Em feriados, confirmar pelo WhatsApp.
 - Desde: 2017, fundada por Edna Antoniolli. Em 2027 completa 10 anos.
@@ -41,7 +41,7 @@ export const GET: APIRoute = async () => {
 
 ## Como agendar
 
-- [Agendar](${url('/agendar')}): escolha o serviço, a profissional (ou "sem preferência"), o dia e o período; a mensagem abre pronta no WhatsApp da recepção, que confirma o horário.
+- [Agendar](${url('/agendar')}): escolha o serviço, a profissional (ou “sem preferência”), o dia e o período; a mensagem abre pronta no WhatsApp da recepção, que confirma o horário.
 - Também pelo telefone ${NAP.telefone}.
 
 ## Serviços

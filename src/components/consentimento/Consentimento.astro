@@ -4,6 +4,16 @@
 // mudada no rodapé ("Preferências de privacidade"). Sem JS, nada de terceiro carrega e o aviso não aparece.
 ---
 
+<script is:inline>
+  // desenha o aviso já no 1º quadro quando ainda não há escolha (sem esperar o script do aviso):
+  // aparecer tarde faria dele o maior elemento da tela e atrasaria o LCP
+  try {
+    if (!localStorage.getItem('todalinda:consentimento'))
+      document.documentElement.setAttribute('data-consentir', 'pendente');
+  } catch {
+    /* sem armazenamento: o aviso aparece quando o script carregar */
+  }
+</script>
 <section class="cs tom-capa" aria-labelledby="cs-titulo" data-consentimento hidden>
   <div class="cs__texto">
     <h2 id="cs-titulo" class="versalete">
@@ -47,6 +57,9 @@
   }
   .cs[hidden] {
     display: none;
+  }
+  :global(html[data-consentir='pendente']) .cs[hidden] {
+    display: grid;
   }
   .cs h2 {
     margin: 0 0 var(--e-1);

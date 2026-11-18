@@ -1,5 +1,5 @@
 // Páginas /servicos/<id> (só os publicados: os que têm mídia). Sem preço, sem promessa, sem duração
-// (a casa não confirmou tempos: o campo fica fora até confirmar). "Quem faz" só quando confirmado.
+// (a casa não confirmou tempos: o campo fica fora até confirmar). “Quem faz” só quando confirmado.
 import { F, real, type Meta, type Real } from './fontes.ts';
 
 export interface Passo {
