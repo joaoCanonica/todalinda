@@ -3,8 +3,14 @@
 // razão social e CNPJ, privacidade, "Avaliar no Google".
 import { contato } from '../../config/contato.ts';
 import { rodape as r } from '../../content/textos/geral.ts';
-import { linkAvaliar } from '../../lib/avaliar.ts';
+import Gaveta from '../agendador/Gaveta.astro';
+import Consentimento from '../consentimento/Consentimento.astro';
 import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+interface Props {
+  /** A home já tem o agendador na página (#agendar): sem gaveta (HTML menor, LCP). */
+  gaveta?: boolean;
+}
+const { gaveta = true } = Astro.props;
 ---
 
 <footer class="rodape tom-capa">
@@ -41,21 +47,35 @@ import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
     <div class="rodape__bloco">
       <span class="versalete rodape__titulo">Horário</span>
       <span>{r.horario}</span>
-      <a href={linkAvaliar().url} rel="noopener" target="_blank">
-        {r.avaliar}
-        <span class="sr-only"> (abre em nova aba)</span>
-      </a>
+      <a href="/avaliar?o=site">{r.avaliar}</a>
     </div>
   </div>
   <div class="rodape__legal">
     <p>{r.legal}</p>
     <p>
-      <a href="/privacidade">{r.privacidade}</a> · {r.credito}
+      <a href="/privacidade">{r.privacidade}</a> ·
+      <button type="button" class="rodape__preferencias" data-consentimento-abrir>
+        Preferências de privacidade
+      </button>
+      · {r.credito}
     </p>
   </div>
 </footer>
+{gaveta && <Gaveta />}
+<Consentimento />
 
 <style>
+  .rodape__preferencias {
+    padding: 0.6em 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: var(--fio);
+    text-underline-offset: 0.22em;
+    cursor: pointer;
+  }
   .rodape {
     padding: var(--e-8) var(--margem) calc(var(--e-6) + env(safe-area-inset-bottom));
     border-top: var(--fio) solid var(--fio-cor);

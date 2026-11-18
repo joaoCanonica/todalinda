@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   DIAS,
   ErroAgenda,
+  EXTRAS,
   montarPedido,
+  proximosDias,
   opcoesProfissional,
   paraAgenda,
   perguntaQuimica,
@@ -153,6 +155,7 @@ describe('destinos', () => {
         texto: 'Olá! Vim pelo site e quero agendar Corte, de preferência sexta de manhã.',
         servico: 'corte',
         profissional: null,
+        data: null,
         dia: 'sexta',
         periodo: 'manha',
       },
@@ -186,5 +189,50 @@ describe('whatsapp', () => {
       `https://wa.me/5549991772089?text=${encodeURIComponent(MENSAGENS.geral())}`,
     );
     expect(() => linkWhatsApp('oi', null)).toThrow(/WhatsApp ausente/);
+  });
+});
+
+describe('agendador por data (sessão 7)', () => {
+  it('data + período, data em qualquer horário', () => {
+    expect(montarPedido({ servico: corte, data: '2026-11-24', periodo: 'tarde' })).toBe(
+      'Olá! Vim pelo site e quero agendar Corte, de preferência terça, 24/11, à tarde.',
+    );
+    expect(montarPedido({ servico: corte, data: '2026-11-28', periodo: 'qualquer' })).toBe(
+      'Olá! Vim pelo site e quero agendar Corte, de preferência sábado, 28/11, em qualquer horário.',
+    );
+  });
+  it('recusa domingo, segunda e feriado', () => {
+    expect(() => montarPedido({ servico: corte, data: '2026-11-23' })).toThrow(ErroAgenda);
+    expect(() => montarPedido({ servico: corte, data: '2026-11-22' })).toThrow(ErroAgenda);
+    expect(() => montarPedido({ servico: corte, data: '2026-12-25' })).toThrow(/feriado/);
+  });
+  it('"Não sei ainda" e "Avaliação capilar"', () => {
+    expect(montarPedido({ servico: { ...EXTRAS.naoSei, profissionaisConfirmados: null } })).toBe(
+      'Olá! Vim pelo site e quero agendar um horário (ainda não sei qual serviço).',
+    );
+    expect(montarPedido({ servico: { ...EXTRAS.avaliacao, profissionaisConfirmados: null } })).toBe(
+      'Olá! Vim pelo site e quero agendar Avaliação capilar.',
+    );
+  });
+  it('profissional escolhida pela cliente (perfil) passa sem confirmação da casa', () => {
+    expect(
+      montarPedido({
+        servico: corte,
+        profissional: { slug: 'dido-rodrigues', nome: 'Dido Rodrigues' },
+        profissionalLivre: true,
+      }),
+    ).toBe('Olá! Vim pelo site e quero agendar Corte com Dido Rodrigues.');
+  });
+  it('próximos 14 dias: dom/seg e feriados indisponíveis, com motivo', () => {
+    const dias = proximosDias('2026-11-18', 14);
+    expect(dias).toHaveLength(14);
+    expect(dias[0]?.data).toBe('2026-11-19');
+    const dom = dias.find((d) => d.data === '2026-11-22');
+    expect(dom?.disponivel).toBe(false);
+    expect(dom?.motivo).toMatch(/domingo/);
+    const consciencia = dias.find((d) => d.data === '2026-11-20');
+    expect(consciencia?.disponivel).toBe(false);
+    expect(consciencia?.motivo).toMatch(/feriado/);
+    expect(dias.find((d) => d.data === '2026-11-21')?.disponivel).toBe(true);
   });
 });

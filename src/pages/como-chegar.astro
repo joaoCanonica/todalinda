@@ -155,6 +155,8 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
 </Interna>
 
 <script>
+  import { abrirAviso, aceito, quandoAceitar } from '../components/consentimento/consentimento.ts';
+
   // copiar endereço
   for (const b of document.querySelectorAll<HTMLButtonElement>('[data-copiar]')) {
     if (!navigator.clipboard) continue;
@@ -192,12 +194,12 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
       }),
     );
   }
-  // mapa interativo: só depois do clique
+  // mapa interativo: só depois do clique E do "Aceitar" no aviso de privacidade
   const palco = document.querySelector<HTMLElement>('[data-mapa]');
   const aviso = palco?.querySelector<HTMLElement>('[data-mapa-aviso]');
   if (palco && aviso) {
     aviso.hidden = false;
-    aviso.querySelector('[data-mapa-carregar]')?.addEventListener('click', () => {
+    const carregarMapa = () => {
       const f = document.createElement('iframe');
       f.src = palco.dataset.mapa ?? '';
       f.title = 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)';
@@ -206,6 +208,11 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
       f.className = 'mapa__iframe';
       palco.replaceChildren(f);
       f.focus();
+    };
+    aviso.querySelector('[data-mapa-carregar]')?.addEventListener('click', () => {
+      if (aceito()) return carregarMapa();
+      abrirAviso(); // pede o aceite; o mapa carrega se a pessoa aceitar
+      quandoAceitar(carregarMapa);
     });
   }
 </script>

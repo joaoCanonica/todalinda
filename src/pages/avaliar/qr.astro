@@ -1,0 +1,240 @@
+---
+// /avaliar/qr — o cartão de balcão para imprimir (A6 ou A5): o selo da marca, a frase, as instruções e um
+// QR gerado no build (SVG, sem serviço externo) que aponta para /avaliar?o=qr. noindex.
+// Sem o domínio definitivo (PUBLIC_SITE_URL), o QR aponta direto para o link do Google e o preview avisa.
+import QRCode from 'qrcode';
+import '../../styles/global.css';
+import Logo from '../../components/marca/Logo.astro';
+import { EM_PREVIEW } from '../../config/ambiente.ts';
+import { cores } from '../../config/tema.ts';
+import { seo } from '../../config/seo.ts';
+import { valorDe } from '../../config/tipos.ts';
+import { avaliarQr as t } from '../../content/textos/paginas.ts';
+import { linkAvaliar } from '../../lib/avaliar.ts';
+
+const site = valorDe(seo.siteUrl);
+const alvo = site ? `${site}/avaliar?o=qr` : linkAvaliar().url;
+const dominio = site ? site.replace(/^https?:\/\//, '') : null;
+const qr = (
+  await QRCode.toString(alvo, {
+    type: 'svg',
+    errorCorrectionLevel: 'M',
+    margin: 0,
+    color: { dark: cores.noite, light: '#0000' },
+  })
+)
+  .replace(
+    '<svg ',
+    '<svg role="img" aria-label="Código QR para avaliar a Todalinda no Google" class="qr__svg" ',
+  )
+  .replace(/ width="\d+" height="\d+"/, '');
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta name="theme-color" content={cores.noite} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="tela">
+    <div class="controles" data-controles>
+      <p class="versalete">Cartão para o balcão e o espelho</p>
+      <div class="controles__botoes">
+        <button type="button" class="versalete" data-imprimir="a6">
+          Imprimir A6
+        </button>
+        <button type="button" class="versalete" data-imprimir="a5">
+          Imprimir A5
+        </button>
+      </div>
+      {EM_PREVIEW && !site && (
+        <p class="controles__aviso" role="note">
+          Provisório: sem o domínio definitivo, o QR aponta direto para a página do Google (sem
+          medir a origem). Com PUBLIC_SITE_URL, ele passa a apontar para /avaliar?o=qr.
+        </p>
+      )}
+    </div>
+
+    <main class="cartao" data-cartao>
+      <div class="cartao__selo">
+        <Logo variante="selo" titulo="Todalinda" />
+      </div>
+      <h1 class="cartao__frase">{t.titulo}</h1>
+      <div class="qr">
+        <Fragment set:html={qr} />
+      </div>
+      <p class="cartao__linha">{t.linha}</p>
+      <ol class="cartao__passos">
+        <li>Abra a câmera do celular.</li>
+        <li>Aponte para o código e toque no link.</li>
+        <li>Conte como foi, do jeito que foi.</li>
+      </ol>
+      {dominio && <p class="cartao__link">{t.link(dominio)}</p>}
+      <p class="cartao__rodape versalete">{t.rodape}</p>
+    </main>
+
+    <script>
+      for (const b of document.querySelectorAll<HTMLButtonElement>('[data-imprimir]'))
+        b.addEventListener('click', () => {
+          document.body.dataset.formato = b.dataset.imprimir ?? 'a6';
+          window.print();
+        });
+      const f = new URLSearchParams(location.search).get('formato');
+      if (f === 'a5' || f === 'a6') document.body.dataset.formato = f;
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* medidas em mm: o Chromium não reconhece a palavra "A6" */
+  @page {
+    size: 105mm 148mm;
+    margin: 0;
+  }
+  @page a5 {
+    size: 148mm 210mm;
+    margin: 0;
+  }
+  body.tela {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: var(--e-5);
+    padding: var(--e-5) var(--margem) var(--e-8);
+    background: var(--cor-noite);
+  }
+  .controles {
+    display: grid;
+    gap: var(--e-3);
+    justify-items: center;
+    color: var(--cor-papel);
+    text-align: center;
+  }
+  .controles p {
+    margin: 0;
+  }
+  .controles__botoes {
+    display: flex;
+    gap: var(--e-2);
+  }
+  .controles button {
+    min-height: 44px;
+    padding: 0 1.1em;
+    border: var(--fio) solid var(--cor-papel);
+    background: transparent;
+    color: var(--cor-papel);
+    cursor: pointer;
+  }
+  .controles__aviso {
+    max-width: 30rem;
+    color: var(--cor-ouro-claro);
+    font-size: var(--fs-pequeno);
+  }
+
+  /* o cartão: A6 (105 × 148 mm) na tela e na impressão; A5 escala tudo 1,414× */
+  .cartao {
+    --u: 1mm;
+    box-sizing: border-box;
+    width: calc(105 * var(--u));
+    height: calc(148 * var(--u));
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto auto auto;
+    justify-items: center;
+    align-items: center;
+    padding: calc(9 * var(--u)) calc(9 * var(--u)) calc(7 * var(--u));
+    background: var(--cor-papel);
+    color: var(--cor-tinta);
+    text-align: center;
+    outline: calc(0.35 * var(--u)) solid var(--cor-ouro);
+    outline-offset: calc(-4 * var(--u));
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @media screen and (max-width: 30rem) {
+    .cartao {
+      --u: calc((100vw - 2 * var(--margem)) / 105);
+    }
+  }
+  [data-formato='a5'] .cartao {
+    --u: 1.41421mm;
+    page: a5;
+  }
+  .cartao__selo {
+    width: calc(14 * var(--u));
+  }
+  .cartao__selo svg {
+    width: 100%;
+    height: auto;
+  }
+  .cartao__frase {
+    margin: calc(4 * var(--u)) 0 0;
+    font-size: calc(6.4 * var(--u));
+    line-height: 1.12;
+    max-width: 20ch;
+  }
+  .qr {
+    width: calc(44 * var(--u));
+    padding: calc(2.5 * var(--u));
+    background: #fff;
+  }
+  .qr__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .cartao__linha {
+    margin: 0;
+    font-size: calc(3.3 * var(--u));
+    line-height: 1.35;
+    max-width: 30ch;
+  }
+  .cartao__passos {
+    margin: calc(2 * var(--u)) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: p;
+    font-size: calc(2.7 * var(--u));
+    line-height: 1.5;
+    color: var(--cor-pedra);
+  }
+  .cartao__passos li {
+    counter-increment: p;
+  }
+  .cartao__passos li::before {
+    content: counter(p) '. ';
+    color: var(--cor-mocha);
+    font-weight: 600;
+  }
+  .cartao__link {
+    margin: calc(1.5 * var(--u)) 0 0;
+    font-size: calc(2.7 * var(--u));
+  }
+  .cartao__rodape {
+    margin: calc(2 * var(--u)) 0 0;
+    font-size: calc(1.9 * var(--u));
+    letter-spacing: 0.12em;
+    color: var(--cor-pedra);
+  }
+
+  @media print {
+    body.tela {
+      display: block;
+      min-height: 0;
+      padding: 0;
+      background: none;
+    }
+    .controles {
+      display: none;
+    }
+    .cartao {
+      break-inside: avoid;
+    }
+  }
+</style>

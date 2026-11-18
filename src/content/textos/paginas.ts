@@ -203,7 +203,7 @@ export const comoChegar = {
   mapa: {
     titulo: 'O mapa',
     aviso:
-      'O mapa interativo vem do OpenStreetMap. Ao carregar, o seu navegador se conecta a ele, que recebe o seu endereço IP. Nada é carregado antes do clique.',
+      'O mapa interativo vem do OpenStreetMap. Ao carregar, o seu navegador se conecta a ele, que recebe o seu endereço IP. Nada é carregado antes do clique e do seu aceite no aviso de privacidade.',
     botao: 'Carregar o mapa interativo',
     moldura: 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)',
   },
@@ -330,12 +330,12 @@ export const privacidade = {
     {
       titulo: 'Cookies e medição',
       texto:
-        'Hoje o site não usa cookies de terceiros nem ferramentas de publicidade. Se isso mudar, esta página será atualizada e você poderá escolher antes.',
+        'A medição de visitas só liga se você tocar em "Aceitar" no aviso de privacidade. Ela conta cliques (agendar, avaliar, como chegar, Instagram, telefone) e a página de origem, sem nome, sem telefone e sem a sua mensagem. O site não usa ferramentas de publicidade. Você muda a escolha quando quiser em "Preferências de privacidade", no rodapé; a escolha fica guardada só no seu aparelho.',
     },
     {
       titulo: 'Mapa',
       texto:
-        'Na página Como chegar, o mapa interativo do OpenStreetMap só carrega se você clicar para carregá-lo. A partir daí, o seu navegador se conecta ao OpenStreetMap, que recebe o seu endereço IP, conforme a política de privacidade dele.',
+        'Na página Como chegar, o mapa interativo do OpenStreetMap só carrega se você aceitar no aviso de privacidade e clicar para carregá-lo. A partir daí, o seu navegador se conecta ao OpenStreetMap, que recebe o seu endereço IP, conforme a política de privacidade dele.',
     },
     {
       titulo: 'Links para outros sites',

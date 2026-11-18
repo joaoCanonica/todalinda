@@ -1,5 +1,5 @@
 // Lógica do agendador (sem UI). Monta o pedido e resolve o destino. Nada é guardado.
-import { horario } from '../config/horario.ts';
+import { feriados, horario } from '../config/horario.ts';
 import type { Grupo, IdServico } from '../content/schemas.ts';
 import { linkWhatsApp } from './whatsapp.ts';
 
@@ -34,8 +34,15 @@ export const PERIODOS: { id: Periodo; rotulo: string; frase: string }[] = [
   { id: 'qualquer', rotulo: 'Qualquer horário', frase: 'em qualquer horário' },
 ];
 
+/** Opções do agendador que não são serviços da coleção. */
+export const EXTRAS = {
+  avaliacao: { id: 'avaliacao-capilar', nome: 'Avaliação capilar', grupo: 'tratamento' },
+  naoSei: { id: 'nao-sei', nome: 'Não sei ainda', grupo: 'tratamento' },
+} as const;
+export type IdAgenda = IdServico | 'avaliacao-capilar' | 'nao-sei';
+
 export interface ServicoAgenda {
-  id: IdServico;
+  id: IdAgenda;
   nome: string;
   grupo: Grupo;
   /** slugs confirmados pela casa; null = pendente (só "Sem preferência") */
@@ -49,7 +56,14 @@ export interface Pedido {
   servico: ServicoAgenda;
   profissional?: ProfissionalAgenda | null;
   dia?: Dia | null;
+  /** Data preferida (AAAA-MM-DD). Quando existe, vale mais que `dia`. */
+  data?: string | null;
   periodo?: Periodo | null;
+  /**
+   * A cliente escolheu a pessoa por conta própria (no perfil dela, ou na sugestão do preview):
+   * é um pedido da cliente, não uma afirmação da casa sobre quem faz o serviço.
+   */
+  profissionalLivre?: boolean;
   quimicaRecente?: boolean | null;
   primeiraVez?: boolean | null;
   nome?: string | null;
@@ -73,6 +87,64 @@ export function opcoesProfissional(
 export const perguntaQuimica = (s: Pick<ServicoAgenda, 'id' | 'grupo'>): boolean =>
   s.grupo === 'cor' || s.id === 'mechas';
 
+const DIA_POR_NUMERO: (Dia | null)[] = [null, null, 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+const pad = (n: number) => String(n).padStart(2, '0');
+
+export interface DiaAgenda {
+  data: string; // AAAA-MM-DD
+  rotulo: string; // "ter 25/11"
+  semana: string; // "terça"
+  disponivel: boolean;
+  motivo?: string; // por que não dá
+}
+
+/** Data de hoje em Lages (AAAA-MM-DD), independente do fuso do aparelho. */
+export const hojeEmLages = (agora: Date = new Date()): string =>
+  agora.toLocaleDateString('sv-SE', { timeZone: horario.fuso });
+
+/** Os próximos `n` dias a partir de amanhã, com domingo/segunda e feriados indisponíveis (com motivo). */
+export function proximosDias(hoje: string = hojeEmLages(), n = 14): DiaAgenda[] {
+  const base = new Date(`${hoje}T12:00:00Z`);
+  const NOMES = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  const CURTOS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+  const fechaFeriado = horario.fechaNosFeriados.valor === true;
+  return Array.from({ length: n }, (_, i) => {
+    const d = new Date(base);
+    d.setUTCDate(d.getUTCDate() + i + 1);
+    const data = d.toISOString().slice(0, 10);
+    const w = d.getUTCDay();
+    const feriado = fechaFeriado ? feriados.find((f) => f.data === data) : undefined;
+    const aberto = Boolean(horario.semana.valor[w]);
+    const motivo = !aberto
+      ? `fechado às ${NOMES[w]}s`
+      : feriado
+        ? `feriado: ${feriado.nome}`
+        : undefined;
+    return {
+      data,
+      rotulo: `${CURTOS[w]} ${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}`,
+      semana: NOMES[w] ?? '',
+      disponivel: !motivo,
+      ...(motivo ? { motivo } : {}),
+    };
+  });
+}
+
+function validarData(data: string): { dia: Dia; frase: string } {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) throw new ErroAgenda(`data inválida: ${data}`);
+  const d = new Date(`${data}T12:00:00Z`);
+  const dia = DIA_POR_NUMERO[d.getUTCDay()];
+  if (!dia || !DIAS.some((x) => x.id === dia))
+    throw new ErroAgenda(
+      `dia indisponível: ${data} (a casa atende ${DIAS.map((x) => x.rotulo).join(', ')})`,
+    );
+  if (horario.fechaNosFeriados.valor === true) {
+    const f = feriados.find((x) => x.data === data);
+    if (f) throw new ErroAgenda(`feriado: ${f.nome} (${data})`);
+  }
+  return { dia, frase: `${NOME_DIA[dia]}, ${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}` };
+}
+
 const limparNome = (n: string) =>
   n
     .replace(/[\r\n\t]+/g, ' ')
@@ -88,14 +160,29 @@ export function montarPedido(p: Pedido): string {
     );
   if (p.periodo && !PERIODOS.some((x) => x.id === p.periodo))
     throw new ErroAgenda(`período inválido: ${p.periodo}`);
-  if (p.profissional && !servico.profissionaisConfirmados?.includes(p.profissional.slug)) {
+  if (
+    p.profissional &&
+    !p.profissionalLivre &&
+    !servico.profissionaisConfirmados?.includes(p.profissional.slug)
+  ) {
     throw new ErroAgenda(`${p.profissional.nome} não está confirmada(o) para ${servico.nome}`);
   }
 
-  let texto = `Olá! Vim pelo site e quero agendar ${servico.nome}`;
+  let texto =
+    servico.id === 'nao-sei'
+      ? 'Olá! Vim pelo site e quero agendar um horário (ainda não sei qual serviço)'
+      : `Olá! Vim pelo site e quero agendar ${servico.nome}`;
   if (p.profissional) texto += ` com ${p.profissional.nome}`;
   const periodo = PERIODOS.find((x) => x.id === p.periodo);
-  if (p.dia && periodo)
+  if (p.data) {
+    const { frase } = validarData(p.data);
+    texto +=
+      periodo && periodo.id !== 'qualquer'
+        ? `, de preferência ${frase}, ${periodo.frase}`
+        : periodo
+          ? `, de preferência ${frase}, em qualquer horário`
+          : `, de preferência ${frase}`;
+  } else if (p.dia && periodo)
     texto +=
       periodo.id === 'qualquer'
         ? `, de preferência ${NOME_DIA[p.dia]}, em qualquer horário`
@@ -125,8 +212,9 @@ export type Acao =
       endpoint: string;
       corpo: {
         texto: string;
-        servico: IdServico;
+        servico: IdAgenda;
         profissional: string | null;
+        data: string | null;
         dia: Dia | null;
         periodo: Periodo | null;
       };
@@ -153,7 +241,8 @@ export function resolverDestino(p: Pedido, destino: Destino = { tipo: 'whatsapp'
           texto,
           servico: p.servico.id,
           profissional: p.profissional?.slug ?? null,
-          dia: p.dia ?? null,
+          data: p.data ?? null,
+          dia: p.data ? validarData(p.data).dia : (p.dia ?? null),
           periodo: p.periodo ?? null,
         },
       };

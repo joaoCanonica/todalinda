@@ -110,7 +110,7 @@ const tecnicas = [...new Set(itens.map((x) => x.tecnica))];
       <p class="lead">
         Conte qual foto te chamou atenção. Na avaliação, a casa vê se o seu fio chega lá e como.
       </p>
-      <Botao href={linkWhatsApp(whatsapp.geral)} externo>
+      <Botao href={linkWhatsApp(whatsapp.geral)} externo agendar={{}}>
         {t.cta}
       </Botao>
     </div>

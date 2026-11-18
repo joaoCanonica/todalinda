@@ -138,7 +138,7 @@ const tituloCta = cta.titulo.split('fio'); // "Qual o seu fio pede?": a palavra 
         {tituloCta[1]}
       </h2>
       <p class="lead">{cta.texto}</p>
-      <Botao href={zap} externo>
+      <Botao href={zap} externo agendar={{ servico: 'avaliacao-capilar' }}>
         {cta.botao}
       </Botao>
     </div>

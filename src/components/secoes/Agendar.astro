@@ -1,19 +1,10 @@
 ---
-// 12 · AGENDAR (página): até o agendador da sessão 7, um botão por serviço que abre o WhatsApp
-// com a mensagem pronta. O id #agendar é o ponto onde o agendador vai entrar.
-import { getCollection } from 'astro:content';
+// 12 · AGENDAR (página): o agendador (sessão 7) direto na página da edição.
 import { agendar as a } from '../../content/textos/home.ts';
-import { servicos as textos } from '../../content/textos/servicos.ts';
 import { contato } from '../../config/contato.ts';
-import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
-import Botao from '../base/Botao.astro';
+import Agendador from '../agendador/Agendador.astro';
 import Rotulo from '../base/Rotulo.astro';
 import Pagina from '../edicao/Pagina.astro';
-
-const servicos = (await getCollection('servicos'))
-  .map((s) => s.data)
-  .filter((s) => s.publicado)
-  .sort((x, y) => x.ordem - y.ordem);
 ---
 
 <Pagina tom="pagina" secao={a.folio} id="agendar" rotulo="Agendar">
@@ -31,36 +22,13 @@ const servicos = (await getCollection('servicos'))
       </p>
       <p class="ag__nota">{a.preco}</p>
     </div>
-    <div class="ag__servicos" data-agendador>
-      <p class="versalete ag__rotulo" id="ag-rotulo">
-        Escolha o serviço
-      </p>
-      <ul role="list" aria-labelledby="ag-rotulo">
-        {servicos.map((s) => (
-          <li>
-            <a
-              class="ag__servico"
-              href={linkWhatsApp(textos[s.id]?.whatsapp ?? MENSAGENS.servico(s.nome))}
-              rel="noopener"
-              target="_blank"
-            >
-              <span>{s.nome}</span>
-              <span class="ag__seta" aria-hidden="true">
-                →
-              </span>
-              <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div class="ag__outros">
-        <Botao href={linkWhatsApp(MENSAGENS.geral())} externo>
-          Agendar outro horário
-        </Botao>
+    <div class="ag__servicos">
+      <Agendador id="home" titulo={false} />
+      <p class="ag__outros">
         <a class="ag__tel" href={`tel:${contato.telefone.valor.tel}`}>
           Prefere ligar? {contato.telefone.valor.exibir}
         </a>
-      </div>
+      </p>
     </div>
   </div>
 </Pagina>

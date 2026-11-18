@@ -92,6 +92,8 @@ const temFotoEquipe = liberada(FOTO_EQUIPE);
             </p>
             <a
               class="grade__agendar versalete"
+              data-agendar={p?.agendar.startsWith('Agendar') ? '' : undefined}
+              data-agendar-profissional={p?.agendar.startsWith('Agendar') ? m.slug : undefined}
               href={linkWhatsApp(p?.whatsapp)}
               rel="noopener"
               target="_blank"

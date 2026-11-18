@@ -1,0 +1,89 @@
+---
+// Aviso de privacidade (LGPD): "Aceitar" e "Recusar" com o mesmo peso. Até a escolha, nada de terceiro
+// carrega (medição com cookie, mapa interativo, embeds). A escolha fica só no aparelho e pode ser
+// mudada no rodapé ("Preferências de privacidade"). Sem JS, nada de terceiro carrega e o aviso não aparece.
+---
+
+<section class="cs tom-capa" aria-labelledby="cs-titulo" data-consentimento hidden>
+  <div class="cs__texto">
+    <h2 id="cs-titulo" class="versalete">
+      Privacidade
+    </h2>
+    <p>
+      Podemos medir as visitas e carregar o mapa interativo? A medição só conta cliques (sem nome,
+      sem telefone, sem a sua mensagem) e o mapa vem do OpenStreetMap. Se recusar, o site funciona
+      igual. <a href="/privacidade">Saiba mais</a>.
+    </p>
+  </div>
+  <div class="cs__botoes">
+    <button type="button" class="cs__botao versalete" data-consentir="recusado">
+      Recusar
+    </button>
+    <button type="button" class="cs__botao versalete" data-consentir="aceito">
+      Aceitar
+    </button>
+  </div>
+</section>
+
+<script>
+  // o aviso e a medição só carregam depois do LCP (nada de terceiro antes do aceite, de qualquer jeito)
+  import { depoisDoLcp } from '../../scripts/depois-do-lcp.ts';
+  void depoisDoLcp().then(() => import('./aviso.ts'));
+</script>
+
+<style>
+  .cs {
+    position: fixed;
+    inset-inline: var(--margem);
+    inset-block-end: calc(var(--e-3) + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: grid;
+    gap: var(--e-3);
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: var(--e-4);
+    border: var(--fio) solid var(--fio-cor);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.35);
+  }
+  .cs[hidden] {
+    display: none;
+  }
+  .cs h2 {
+    margin: 0 0 var(--e-1);
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+  }
+  .cs p {
+    margin: 0;
+    font-size: var(--fs-pequeno);
+    color: var(--texto);
+  }
+  .cs__botoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-2);
+  }
+  /* mesmo peso: mesma cor, mesmo tamanho, mesma borda */
+  .cs__botao {
+    min-height: 48px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--cor-papel);
+    background: transparent;
+    color: var(--cor-papel);
+    cursor: pointer;
+  }
+  .cs__botao:hover {
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+  }
+  @media (min-width: 48rem) {
+    .cs {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--e-5);
+    }
+    .cs__botoes {
+      grid-template-columns: repeat(2, 8rem);
+    }
+  }
+</style>

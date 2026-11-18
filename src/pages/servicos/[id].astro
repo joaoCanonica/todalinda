@@ -80,6 +80,7 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
   titulo={t.meta.title}
   descricao={t.meta.description}
   agendar={zap}
+  agendarCom={{ servico: s.id }}
   {...(ehVideo(capa) ? {} : { preload: preloadDe(capa, SIZES_CAPA) })}
 >
   <!-- CAPA DA MATÉRIA -->
@@ -99,7 +100,7 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
         <p class="lead">{t.resposta}</p>
       </Capitular>
       <div class="mc__acoes">
-        <Botao href={zap} externo>
+        <Botao href={zap} externo agendar={{ servico: s.id }}>
           {t.cta}
         </Botao>
         <Botao href="#processo" variante="secundario">
@@ -293,8 +294,15 @@ const videoFala = fala ? videoDaFala(fala.fonte) : null;
   </Pagina>
 
   <!-- CTA fixo: gruda no pé da tela enquanto a matéria está aberta e para antes do rodapé -->
-  <div class="cta-fixo" data-agendar-servico={s.id}>
-    <a class="cta-fixo__botao versalete" href={zap} rel="noopener" target="_blank">
+  <div class="cta-fixo">
+    <a
+      class="cta-fixo__botao versalete"
+      href={zap}
+      rel="noopener"
+      target="_blank"
+      data-agendar
+      data-agendar-servico={s.id}
+    >
       {t.cta}
       <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
     </a>

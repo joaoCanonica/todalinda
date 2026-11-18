@@ -16,12 +16,14 @@ interface Props {
   descricao: string;
   /** href do botão Agendar do cabeçalho (padrão: WhatsApp geral). */
   agendar?: string;
+  /** Preenche a gaveta do agendador ao clicar em "Agendar" no cabeçalho. */
+  agendarCom?: { servico?: string; profissional?: string };
   /** Imagem a pré-carregar (a capa da matéria), para o LCP. */
   preload?: { srcset: string; sizes: string; tipo?: string };
   /** Página que não deve ser indexada mesmo em produção (404). */
   noindex?: boolean;
 }
-const { titulo, descricao, agendar, preload, noindex = false } = Astro.props;
+const { titulo, descricao, agendar, agendarCom, preload, noindex = false } = Astro.props;
 const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
 const hrefAgendar = agendar ?? linkWhatsApp(MENSAGENS.geral());
 const externo = hrefAgendar.startsWith('http');
@@ -102,6 +104,9 @@ const externo = hrefAgendar.startsWith('http');
       <a
         href={hrefAgendar}
         class="topo__agendar versalete"
+        data-agendar
+        data-agendar-servico={agendarCom?.servico}
+        data-agendar-profissional={agendarCom?.profissional}
         {...(externo ? { rel: 'noopener', target: '_blank' } : {})}
       >
         {navegacao.agendar}

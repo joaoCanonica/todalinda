@@ -1,24 +1,16 @@
 ---
 // 10 · AVALIAR NO GOOGLE (página, bloco cheio). Sem estrelas, sem nota, sem incentivo.
 import { avaliar as a } from '../../content/textos/geral.ts';
-import { linkAvaliar } from '../../lib/avaliar.ts';
 import Pagina from '../edicao/Pagina.astro';
-
-const link = linkAvaliar();
+// passa pela rota curta /avaliar (mede o clique e redireciona para o link oficial)
 ---
 
 <Pagina tom="pagina" secao="Avaliar" id="avaliar" rotulo="Avaliar no Google" class="avaliar-bloco">
   <div class="avaliar">
     <h2 class="avaliar__titulo">{a.titulo}</h2>
-    <a
-      class="avaliar__botao"
-      href={link.url}
-      rel="noopener"
-      target="_blank"
-      data-origem={link.origem}
-    >
+    <a class="avaliar__botao" href="/avaliar?o=site">
       {a.botao}
-      <span class="sr-only"> (abre o Google em nova aba)</span>
+      <span class="sr-only"> (vai para a página da Todalinda no Google)</span>
     </a>
     <p class="avaliar__linha">{a.linha}</p>
   </div>

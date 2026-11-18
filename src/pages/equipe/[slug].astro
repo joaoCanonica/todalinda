@@ -39,6 +39,9 @@ interface Props {
 const { m, proximo } = Astro.props;
 const p = perfis[m.slug] as Perfil;
 const zap = linkWhatsApp(p.whatsapp);
+// "Agendar com {nome}" abre o agendador; "Falar com a Edna" (fundadora) segue direto para o WhatsApp
+const ehAgendavel = p.agendar.startsWith('Agendar');
+const agendavel = ehAgendavel ? { agendar: { profissional: m.slug } } : {};
 const foto = m.foto && liberada(m.foto) ? m.foto : null;
 const motivo = foto ? provisoria(foto) : null;
 const assinados = (await getCollection('trabalhos'))
@@ -60,7 +63,12 @@ const iniciais = m.nome
   .join('');
 ---
 
-<Interna titulo={p.meta.title} descricao={p.meta.description} agendar={zap}>
+<Interna
+  titulo={p.meta.title}
+  descricao={p.meta.description}
+  agendar={zap}
+  {...(ehAgendavel ? { agendarCom: { profissional: m.slug } } : {})}
+>
   <section class="perfil tom-capa" aria-labelledby="nome">
     <Folio secao="Equipe" />
     <div class="perfil__retrato">
@@ -99,7 +107,7 @@ const iniciais = m.nome
           <li class="versalete">{e}</li>
         ))}
       </ul>
-      <Botao href={zap} externo>
+      <Botao href={zap} externo {...agendavel}>
         {p.agendar}
       </Botao>
     </div>
@@ -191,7 +199,7 @@ const iniciais = m.nome
         Ou fale com a recepção pelo telefone{' '}
         <a href={`tel:${contato.telefone.valor.tel}`}>{contato.telefone.valor.exibir}</a>.
       </p>
-      <Botao href={zap} externo>
+      <Botao href={zap} externo {...agendavel}>
         {p.agendar}
       </Botao>
       <ul class="fim__prox" role="list">

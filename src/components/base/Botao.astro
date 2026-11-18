@@ -6,14 +6,24 @@ interface Props {
   variante?: 'primario' | 'secundario';
   externo?: boolean;
   class?: string;
+  /** Abre a gaveta do agendador (com JS), já preenchida. Sem JS, segue o href. */
+  agendar?: { servico?: string; profissional?: string };
 }
-const { href, variante = 'primario', externo = false, class: classe = '' } = Astro.props;
+const { href, variante = 'primario', externo = false, class: classe = '', agendar } = Astro.props;
+const dadosAgendar = agendar
+  ? {
+      'data-agendar': '',
+      ...(agendar.servico ? { 'data-agendar-servico': agendar.servico } : {}),
+      ...(agendar.profissional ? { 'data-agendar-profissional': agendar.profissional } : {}),
+    }
+  : {};
 ---
 
 <a
   class:list={['botao', `botao--${variante}`, classe]}
   href={href}
   {...(externo ? { rel: 'noopener', target: '_blank' } : {})}
+  {...dadosAgendar}
 >
   <span class="botao__texto">
     <slot />

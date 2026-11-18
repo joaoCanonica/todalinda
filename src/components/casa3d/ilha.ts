@@ -1,6 +1,7 @@
 // Comportamento do tour: abas (setas/Home/End trocam, Enter abre o painel), URL ?ambiente=,
 // gaveta no celular, "Ver de verdade" e a ilha 3D carregada depois do LCP, só quando o palco
 // aparece e o aparelho pode (WebGL, sem Save-Data/2g, sem movimento reduzido).
+import { medir } from '../../lib/medicao.ts';
 import { depoisDoLcp } from '../../scripts/depois-do-lcp.ts';
 
 const tour = document.querySelector<HTMLElement>('[data-tour]');
@@ -164,6 +165,7 @@ function iniciar(tour: HTMLElement) {
       requestAnimationFrame(() => requestAnimationFrame(() => (palco.dataset.estado = 'pronto')));
       tour.querySelector<HTMLElement>('[data-dica]')?.removeAttribute('hidden');
       (window as Window & { __tour3d?: unknown }).__tour3d = cena; // medição (fps) nas capturas
+      medir('tour_3d_aberto', { ambiente: atual });
       addEventListener('pagehide', () => cena?.destruir(), { once: true });
     } catch (erro) {
       console.warn('[tour 3D] fallback:', erro);

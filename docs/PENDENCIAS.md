@@ -145,3 +145,12 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Estacionamento:** opcional e não confirmado: `/como-chegar` não fala de estacionamento.
 - **Feriados:** a lista de próximos feriados sai do calendário em `src/config/horario.ts`; a frase "confirme pelo WhatsApp" continua com PROVISÓRIO até a casa dizer se fecha nos feriados. Aniversário de Lages (22/11) com lei municipal a confirmar.
 - **/a-casa** mantém o cabeçalho próprio da sessão 6B; as demais internas usam `src/layouts/Interna.astro` (sumário no desktop, menu nativo `<details>` no celular).
+
+## Sessão 7 — Agendar e avaliar (18/11/2026)
+- **Depende do João — ferramenta de medição:** proposta em `docs/FUNIL.md` §4: **Plausible** (sem cookie, sem dado pessoal, ~1 KB). Definir `PUBLIC_MEDICAO=plausible` e `PUBLIC_MEDICAO_ID=<domínio>` (ou Umami). Sem isso, a medição fica desligada (eventos só em `window.__medicao` no preview). Não testado contra o serviço real (rede bloqueada aqui).
+- **Domínio definitivo:** o QR de `/avaliar/qr` aponta para `{SITE}/avaliar?o=qr` só com `PUBLIC_SITE_URL`; até lá, aponta direto para a ficha do Google (sem medir a origem). **Reimprimir o cartão quando o domínio existir.** A mensagem pós-atendimento também usa `{SITE}`.
+- **Link "Pedir avaliações":** `/avaliar` usa a ficha (cid) até chegar `PUBLIC_GOOGLE_REVIEW_URL`.
+- **Quem faz:** com nenhuma profissional confirmada, o passo "Com quem?" some em produção. No preview aparece a sugestão (selo provisório). A pessoa escolhida no perfil (`?profissional=`) sempre aparece: é pedido da cliente, não afirmação da casa.
+- **Feriados:** o agendador desabilita os feriados porque `horario.fechaNosFeriados` está presumido como `true` (aviso). Se a casa abrir em algum, mudar a config.
+- **Edna:** "Falar com a Edna" vai direto ao WhatsApp; a fundadora não aparece como opção de horário. Confirmar se ela atende.
+- **LCP da home:** com a 4G aplicada (Lighthouse/devtools), segue em 1,6 s. Na simulação (Lantern), passou de 2,0–2,1 s para 2,2 s, pelo HTML do agendador na seção Agendar. Os scripts do agendador e do aviso já carregam depois do LCP.
