@@ -1,0 +1,15 @@
+{
+  "id": "lounge-mezanino",
+  "nome": "Lounge e mezanino",
+  "andar": "superior",
+  "ordem": 8,
+  "descricao": "No andar de cima, um sofá caramelo, almofada com o logo e piso de taco.",
+  "servicos": [],
+  "midia": ["cap-12-25-37"],
+  "camera": {
+    "posicao": [4.5, 8.4, 4.5],
+    "alvo": [1, 3.2, -3.8]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

@@ -113,3 +113,25 @@ export const trabalhoSchema = z.object({
 export type Membro = z.infer<typeof equipeSchema>;
 export type Servico = z.infer<typeof servicoSchema>;
 export type Trabalho = z.infer<typeof trabalhoSchema>;
+
+// ---------- ambientes (tour 3D) ----------
+const vec3 = z.tuple([z.number(), z.number(), z.number()]);
+export const ambienteSchema = z.object({
+  id: slug,
+  nome: z.string().min(2),
+  /** "pendente" até a planta: o tour não afirma em que andar fica. */
+  andar: z.enum(['terreo', 'superior', 'externo', 'pendente']),
+  descricao: z.string().min(10),
+  /** Serviços feitos ali (ids da coleção servicos). Só o evidente; o resto, vazio. */
+  servicos: z.array(z.enum(SERVICOS)),
+  /** Ids de mídia do manifesto (capturas: no máximo 480 px). */
+  midia: z.array(idMidia),
+  /** Pose da câmera na maquete atual (esquemática até a planta). */
+  camera: z.object({ posicao: vec3, alvo: vec3 }),
+  /** De onde vem o layout: planta (medidas), captura (scan 3D), foto, pendente (esquemático). */
+  fonteLayout: z.enum(['planta', 'captura', 'foto', 'pendente']),
+  /** Splat comprimido deste ambiente (public/modelos/…), quando a captura existir. */
+  splat: z.string().nullable().default(null),
+  ordem: z.number().int(),
+});
+export type Ambiente = z.infer<typeof ambienteSchema>;

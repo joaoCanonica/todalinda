@@ -220,7 +220,8 @@ async function iniciar(ab: HTMLElement) {
   anima(logoLink, [{ opacity: 0 }, { opacity: 1 }], 2950, 50, 'linear');
   anima(fundo, [{ opacity: 1 }, { opacity: 0 }], 2600, 350, PRECISA);
   anima(quadro, [{ opacity: 1 }, { opacity: 0 }], 2650, 350, PRECISA);
-  anima(pular, [{ opacity: 1 }, { opacity: 0, visibility: 'hidden' }], 2600, 250, PRECISA);
+  // sai sem meio-termo: translúcido, o texto do botão reprovaria o contraste (axe mede no meio do fade)
+  anima(pular, [{ visibility: 'hidden' }, { visibility: 'hidden' }], 2600, 1, 'linear');
   // entrada por recorte (sem opacidade parcial: o texto nunca fica translúcido, o contraste é sempre o final)
   entram.forEach((el, i) =>
     anima(

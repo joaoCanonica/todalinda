@@ -1,0 +1,15 @@
+{
+  "id": "lavatorios",
+  "nome": "Lavatórios",
+  "andar": "pendente",
+  "ordem": 4,
+  "descricao": "Onde a lavagem e os tratamentos acontecem. Ainda sem foto: o ambiente entra quando a casa enviar as imagens.",
+  "servicos": [],
+  "midia": [],
+  "camera": {
+    "posicao": [5.8, 4.6, 4.5],
+    "alvo": [4.2, 0.4, -1.9]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

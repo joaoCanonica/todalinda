@@ -1,7 +1,7 @@
 // Fonte única de dados do site. Tudo que não está confirmado aparece em pendencias().
 import { MODO } from './ambiente.ts';
 import { exibirNota, googleReviewUrl } from './avaliacoes.ts';
-import { ambientes3d } from './casa3d.ts';
+import { maqueteEsquematica } from './casa3d.ts';
 import { contato } from './contato.ts';
 import { horario } from './horario.ts';
 import { marca } from './marca.ts';
@@ -14,7 +14,7 @@ export const config = {
   horario,
   seo,
   avaliacoes: { exibirNota, googleReviewUrl },
-  ambientes3d,
+  maqueteEsquematica,
 } as const;
 export { MODO };
 

@@ -1,9 +1,13 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { equipeSchema, servicoSchema, trabalhoSchema } from './content/schemas.ts';
+import { ambienteSchema, equipeSchema, servicoSchema, trabalhoSchema } from './content/schemas.ts';
 
 // Dados em src/content/<coleção>/*.json; schemas em src/content/schemas.ts.
 export const collections = {
+  ambientes: defineCollection({
+    loader: glob({ pattern: '*.json', base: './src/content/ambientes' }),
+    schema: ambienteSchema,
+  }),
   equipe: defineCollection({
     loader: glob({ pattern: '*.json', base: './src/content/equipe' }),
     schema: equipeSchema,

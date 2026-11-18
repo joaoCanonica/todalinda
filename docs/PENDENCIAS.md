@@ -122,3 +122,13 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Rodapé:** o logo mono oficial (em Ouro) entra como arquivo carregado tarde (`public/marca/`), não inline: inline somava 84 KB ao HTML de toda visita.
 - **Tabela de horário** ainda diz "Feriados: fechado" (PROVISÓRIO, componente da sessão 3); alinhar com o texto "confirme pelo WhatsApp" quando a casa responder.
 - **LCP simulado** do Lighthouse: 2,03–2,10 s (a simulação espera o HTML inteiro, 26 KB comprimidos); medido com 4G real: 1,58–1,64 s.
+
+## Sessão 6B — A casa 3D (18/11/2026)
+- **Depende do João — maquete esquemática em produção:** `/a-casa` mostra no preview uma maquete esquemática (volume do sobrado com proporções das fotos da fachada; ambientes como blocos com nome) **sempre com o selo** "Representação esquemática — em breve, a casa real". Em produção ela só aparece com `maqueteEsquematica.aprovadaPeloJoao = true` (`src/config/casa3d.ts`); sem isso, a página mostra foto da fachada + lista de ambientes, e o `validate-config` avisa (`3d-esquematica`).
+- **Planta e medidas:** nenhum layout interno foi inventado. Os 8 ambientes estão com `fonteLayout: "pendente"` (fachada: `"foto"`); a disposição dos blocos é só uma grade de leitura. Com o GLB da planta em `public/modelos/maquete.glb`, a trava `3d-inventado` exige fonte para cada ambiente. Como entregar: `docs/3d/README.md`.
+- **Andares:** só fachada (fora) e lounge/mezanino (andar de cima) são conhecidos; os outros 6 aparecem como "Andar a confirmar".
+- **Lavatórios:** sem foto no repositório (painel diz "Fotos deste ambiente em breve").
+- **Captura real ("Ver de verdade"):** nenhuma ainda; o botão abre as fotos do ambiente. Roteiro de captura com celular em `docs/3d/README.md`. Spark (2.4.0, MIT) pesa ~0,95 MB gzip e só baixa ao clicar num ambiente que tenha splat.
+- **KTX2:** `toktx` não está instalado neste ambiente; o `model:prepare` comprime texturas em WebP e anota no relatório. Instalar KTX-Software antes de processar um GLB com texturas.
+- **FPS medidos em renderização por software** (SwiftShader, sem GPU): 53–58 fps em 1440 px e 44–60 fps em 390 px com CPU 4× mais lenta. Falta medir num Android intermediário de verdade.
+- **Abertura:** o botão "Pular" agora some sem fade (o Lighthouse media o contraste no meio do fade e dava 97 em acessibilidade de forma intermitente).

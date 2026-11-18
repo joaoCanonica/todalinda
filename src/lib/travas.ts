@@ -86,8 +86,21 @@ export function checarCapturas(manifesto: ItemManifesto[]): Achado[] {
     }));
 }
 
-/** Ambientes do 3D sem fonte só com aprovação do João. */
-export function checar3D(ambientes: Ambiente3D[]): Achado[] {
+/**
+ * Ambientes do 3D sem fonte só com aprovação do João.
+ * `exibe3D` = em produção o 3D aparece (há GLB da planta ou a esquemática foi aprovada).
+ * Sem 3D, /a-casa mostra fotos + lista e não há layout publicado: só um aviso.
+ */
+export function checar3D(ambientes: Ambiente3D[], exibe3D = true): Achado[] {
+  if (!exibe3D)
+    return [
+      {
+        nivel: 'aviso',
+        regra: '3d-esquematica',
+        mensagem:
+          'sem public/modelos/maquete.glb e sem aprovação da maquete esquemática: em produção /a-casa mostra fotos + lista (o preview mostra a esquemática com selo)',
+      },
+    ];
   return ambientes
     .filter((a) => !a.fonte && !a.aprovadoPeloJoao)
     .map((a) => ({

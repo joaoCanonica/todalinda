@@ -63,6 +63,12 @@ describe('travas (funções)', () => {
     expect(
       checar3D([{ id: 'm', nome: 'M', fonte: 'planta 2026', aprovadoPeloJoao: false }]),
     ).toEqual([]);
+    // sem GLB e sem aprovação: o 3D não aparece em produção, só aviso
+    expect(
+      checar3D([{ id: 'm', nome: 'M', fonte: null, aprovadoPeloJoao: false }], false).map(
+        (a) => a.nivel,
+      ),
+    ).toEqual(['aviso']);
     expect(
       checarServicos(
         [

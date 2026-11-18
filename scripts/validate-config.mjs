@@ -3,15 +3,20 @@
 //   MODO=producao  → travas derrubam (saída 1). Padrão: preview (só dados inválidos derrubam).
 //   ESTRITO=1      → avisos também derrubam.
 //   --simular=whatsapp|naoUsar|crianca|captura|3d|servico  → injeta a falha (para provar a trava).
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { MODO } from '../src/config/ambiente.ts';
-import { ambientes3d } from '../src/config/casa3d.ts';
+import { maqueteEsquematica } from '../src/config/casa3d.ts';
 import { contato } from '../src/config/contato.ts';
 import { pendencias } from '../src/config/index.ts';
 import { marca } from '../src/config/marca.ts';
 import { valorDe } from '../src/config/tipos.ts';
-import { equipeSchema, servicoSchema, trabalhoSchema } from '../src/content/schemas.ts';
+import {
+  ambienteSchema,
+  equipeSchema,
+  servicoSchema,
+  trabalhoSchema,
+} from '../src/content/schemas.ts';
 import {
   checar3D,
   checarCapturas,
@@ -53,10 +58,20 @@ const validar = (nome, schema) =>
 const equipe = validar('equipe', equipeSchema);
 const servicos = validar('servicos', servicoSchema);
 const trabalhos = validar('trabalhos', trabalhoSchema);
+const ambientesCol = validar('ambientes', ambienteSchema);
 
 // simulações (só em memória)
 let numero = valorDe(contato.whatsapp);
-let ambientes = ambientes3d;
+// 3D: com GLB, cada ambiente precisa de fonte (planta/captura/foto); sem GLB, a esquemática
+// só aparece em produção com a aprovação do João (que cobre os ambientes "pendente").
+const temGlb = existsSync(join(RAIZ, 'public/modelos/maquete.glb'));
+let exibe3D = temGlb || maqueteEsquematica.aprovadaPeloJoao;
+let ambientes = ambientesCol.map(({ dados: a }) => ({
+  id: a.id,
+  nome: a.nome,
+  fonte: a.fonteLayout === 'pendente' ? null : a.fonteLayout,
+  aprovadoPeloJoao: !temGlb && maqueteEsquematica.aprovadaPeloJoao,
+}));
 const manifestoSim = manifesto.map((i) => ({ ...i }));
 if (simular === 'whatsapp') numero = null;
 if (simular === 'naoUsar')
@@ -66,8 +81,10 @@ if (simular === 'naoUsar')
   });
 if (simular === 'crianca') manifestoSim.find((i) => i.id === 'f-749143529').crianca = 'sim';
 if (simular === 'captura') manifestoSim.find((i) => i.id === 'cap-12-24-16').resolucaoMax = 682;
-if (simular === '3d')
+if (simular === '3d') {
+  exibe3D = true;
   ambientes = [{ id: 'mezanino', nome: 'Mezanino', fonte: null, aprovadoPeloJoao: false }];
+}
 if (simular === 'servico')
   servicos.push({
     arquivo: '(simulado)',
@@ -89,7 +106,7 @@ achados.push(
   ),
 );
 achados.push(...checarCapturas(manifestoSim));
-achados.push(...checar3D(ambientes));
+achados.push(...checar3D(ambientes, exibe3D));
 
 // 3. referências de mídia (só do que pode ser publicado)
 const refs = [
@@ -102,6 +119,7 @@ const refs = [
     { id: t.dados.midia, onde: t.arquivo },
     ...(t.dados.parAntesDepois?.com ?? []).map((id) => ({ id, onde: `${t.arquivo} (par)` })),
   ]),
+  ...ambientesCol.flatMap((a) => a.dados.midia.map((id) => ({ id, onde: a.arquivo }))),
 ];
 achados.push(...checarMidias(refs, manifestoSim, MODO));
 for (const t of trabalhos) {

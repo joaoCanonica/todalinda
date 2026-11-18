@@ -1,0 +1,113 @@
+---
+// /a-casa: o tour da casa (sessão 6B). Introdução, o tour (3D + lista + fotos) e o rodapé.
+import '../styles/global.css';
+import Botao from '../components/base/Botao.astro';
+import Tour from '../components/casa3d/Tour.astro';
+import Logo from '../components/marca/Logo.astro';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import Rodape from '../components/secoes/Rodape.astro';
+import { cores } from '../config/tema.ts';
+import { robotsMeta } from '../config/seo.ts';
+import { aCasa } from '../content/textos/paginas.ts';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const t = aCasa;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content={robotsMeta()} />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta name="theme-color" content={cores.noite} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/manrope-wght.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <PreviewBanner />
+    <header class="topo tom-capa">
+      <a href="/" class="topo__logo" aria-label="Todalinda, voltar à capa">
+        <Logo variante="palavra" titulo="" />
+      </a>
+      <a href="/#agendar" class="topo__agendar versalete">
+        Agendar
+      </a>
+    </header>
+    <main id="conteudo">
+      <div class="intro tom-capa">
+        <p class="versalete intro__rotulo">{t.rotulo}</p>
+        <h1>
+          {t.titulo.antes}
+          <em>{t.titulo.destaque}</em>
+          {t.titulo.depois}
+        </h1>
+        <p class="lead intro__resposta">{t.resposta}</p>
+        <p class="intro__aviso">{t.aviso3d}</p>
+      </div>
+      <Tour />
+      <div class="cta tom-pagina">
+        <h2>{t.cta.titulo}</h2>
+        <Botao href={linkWhatsApp(t.cta.whatsapp)} externo>
+          {t.cta.botao}
+        </Botao>
+      </div>
+    </main>
+    <Rodape />
+  </body>
+</html>
+
+<style>
+  .topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    padding: var(--e-4) var(--margem);
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .topo__logo {
+    display: block;
+    width: min(13rem, 52vw);
+    color: var(--cor-papel);
+  }
+  .topo__agendar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1.1em;
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    text-decoration: none;
+  }
+  .intro {
+    padding: var(--e-7) var(--margem) var(--e-4);
+  }
+  .intro__rotulo {
+    color: var(--acento);
+    margin: 0 0 var(--e-3);
+  }
+  .intro__resposta {
+    margin-top: var(--e-4);
+  }
+  .intro__aviso {
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-5);
+    padding: var(--e-8) var(--margem);
+  }
+</style>

@@ -46,7 +46,8 @@ async function esperarServidor(url, ms = 30_000) {
 async function esperarIlha3D(pagina) {
   const ilha = await pagina.$('[data-ilha-3d]');
   if (!ilha) return 'ausente';
-  await ilha.scrollIntoViewIfNeeded();
+  // no fallback o palco fica oculto: rolar até ele não é possível nem necessário
+  await ilha.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
   try {
     await pagina.waitForFunction(
       () => {
@@ -98,7 +99,10 @@ process.on('exit', encerrar);
 let falhas = 0;
 try {
   await esperarServidor(BASE);
-  const navegador = await chromium.launch();
+  // WebGL por software (SwiftShader) no headless, para a ilha 3D renderizar nas capturas
+  const navegador = await chromium.launch({
+    args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
+  });
   for (const rota of rotas) {
     for (const { largura, altura } of larguras) {
       for (const { sufixo, reducedMotion } of movimentos) {
