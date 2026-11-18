@@ -111,7 +111,11 @@ try {
         const pagina = await contexto.newPage();
         const arquivo = join(destino, `${nomeDaRota(rota)}__${largura}${sufixo}.png`);
         try {
-          const resp = await pagina.goto(BASE + rota, { waitUntil: 'networkidle' });
+          // a abertura tem captura própria (scripts/capturar-abertura.mjs): aqui, sempre o estado final
+          const resp = await pagina.goto(
+            `${BASE}${rota}${rota.includes('?') ? '&' : '?'}abertura=0`,
+            { waitUntil: 'networkidle' },
+          );
           if (!resp || resp.status() >= 400) throw new Error(`HTTP ${resp?.status()}`);
           await pagina.evaluate(() => document.fonts.ready);
           // rola até o fim (dispara lazy-load e as entradas animadas) e volta ao topo

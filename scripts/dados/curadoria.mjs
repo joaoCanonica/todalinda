@@ -421,7 +421,7 @@ export const videos = {
     pessoa: 'Andressa (provável), Dido, clientes',
     tecnica: 'institucional',
     uso: ['abertura', 'hero', 'a-casa', 'equipe'],
-    crianca: 'verificar',
+    // a idade a confirmar vale só para os trechos com a cliente de 29–37 s (iluminada, logo-final)
     problemas: [
       'Cliente de 29–36 s (a mesma do vídeo 936752395) parece muito jovem: confirmar maioridade antes de usar "iluminada".',
       'Música de fundo: direitos desconhecidos; usar só mudo.',
@@ -453,6 +453,7 @@ export const videos = {
       },
       {
         nome: 'iluminada',
+        crianca: 'verificar',
         in: 29.2,
         out: 35.9,
         loop: true,
@@ -462,6 +463,7 @@ export const videos = {
       },
       {
         nome: 'logo-final',
+        crianca: 'verificar',
         in: 36.3,
         out: 37.2,
         sizes: ['720x1280'],

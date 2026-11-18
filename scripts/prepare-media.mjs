@@ -266,6 +266,9 @@ async function video(item, fila) {
       }
     }
     const saidaTrecho = {
+      ...(trecho.crianca && trecho.crianca !== 'nao'
+        ? { bloqueio: `crianca:${trecho.crianca}` }
+        : {}),
       in: trecho.in,
       out: trecho.out,
       duracao: +(trecho.out - trecho.in).toFixed(2),

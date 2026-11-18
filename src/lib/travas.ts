@@ -18,6 +18,7 @@ export interface ItemManifesto {
   resolucaoMax: number | null;
   confirmarIdentidade?: boolean;
   parAntesDepois: { confirmado: boolean } | null;
+  trechos?: { nome: string; crianca?: 'nao' | 'verificar' | 'sim' }[];
 }
 
 export interface Referencia {
@@ -217,10 +218,26 @@ export function checarHtml(
         mensagem: `${arquivo}: captura "${id}" em ${w} px`,
       });
   }
-  for (const m of html.matchAll(/\/media\/video\/([a-z0-9-]+?)--/g))
-    refs.set(m[1] ?? '', { id: m[1] ?? '', onde: arquivo });
+  for (const m of html.matchAll(/\/media\/video\/([a-z0-9-]+?)--([a-z0-9-]+?)-\d+x\d+/g)) {
+    const [, id = '', nome = ''] = m;
+    refs.set(id, { id, onde: arquivo });
+    const t = manifesto.find((i) => i.id === id)?.trechos?.find((x) => x.nome === nome);
+    if (t?.crianca === 'sim')
+      achados.push({
+        nivel: 'trava',
+        regra: 'midia-crianca',
+        mensagem: `${arquivo}: trecho "${id}/${nome}" tem criança`,
+      });
+    if (t?.crianca === 'verificar') {
+      achados.push({
+        nivel: modo === 'producao' ? 'trava' : 'aviso',
+        regra: 'midia-crianca',
+        mensagem: `${arquivo}: trecho "${id}/${nome}" com idade a confirmar (pode ser menor)`,
+      });
+    }
+  }
   achados.push(...checarMidias([...refs.values()], manifesto, modo));
-  return achados;
+  return [...new Map(achados.map((a) => [`${a.regra}|${a.mensagem}`, a])).values()];
 }
 
 /** Saída: em produção, travas e erros derrubam; no preview, só erros (dados inválidos). */

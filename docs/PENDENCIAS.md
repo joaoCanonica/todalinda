@@ -81,3 +81,10 @@ Lista viva gerada pela config: `pnpm validate-config --tudo`. Resumo do que depe
 - **Ouro oficial:** tokens Ouro e Ouro claro continuam PROVISÓRIOS.
 - **Pedra recalibrada** para #756B64 (AA sobre Papel); o tom original virou "Pedra clara" (só sobre Noite). Ajuste do CLAUDE.md fica a critério do João.
 - **Aspas da citação na página clara** usam Mocha, não Ouro (ouro sobre Papel reprova o contraste).
+
+## Sessão 4 — Abertura e capa (18/11/2026)
+- **Alternativa B** (loop "iluminada") usa a cliente com **idade a confirmar**: /_capa-b avisa e a auditoria trava em produção. A home usa a A ("ondas"), liberada. A marcação de idade agora é por trecho de vídeo (só "iluminada" e "logo-final").
+- **Links das chamadas** (/trabalhos, /dois-reais-ou-um-cabelo, /a-casa) apontam para páginas das sessões 6A–6C; até lá dão 404 no preview.
+- **"Agendar horário"** abre o WhatsApp geral; o agendador entra na sessão 7 (o botão fica igual, troca só o destino).
+- **Meta description** da home: sessão 8 (SEO). Hoje o Lighthouse SEO dá 54 só por noindex + falta de description (esperado no preview).
+- O quadro "revelação no espelho" e o loop "ondas" são do filme institucional com música de direitos desconhecidos: usados mudos.

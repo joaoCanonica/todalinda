@@ -1,19 +1,6 @@
 ---
-// Página temporária da fundação. Substituída na sessão 6A.
-import PreviewBanner from '../components/PreviewBanner.astro';
-import { robotsMeta } from '../config/seo.ts';
+// Home: por enquanto, só a abertura e a capa (sessão 4). O restante entra na sessão 6A.
+import DocumentoCapa from '../components/capa/DocumentoCapa.astro';
 ---
 
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content={robotsMeta()} />
-    <title>Todalinda</title>
-  </head>
-  <body>
-    <PreviewBanner />
-    <h1>Todalinda</h1>
-  </body>
-</html>
+<DocumentoCapa variante="a" />

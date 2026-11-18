@@ -11,10 +11,10 @@ describe('fundação', () => {
     expect(ler('docs/CONTEXTO.md')).toBe(claude);
   });
 
-  it('página temporária tem h1 e noindex', () => {
+  it('home usa a capa e o robots da config', () => {
     const pagina = ler('src/pages/index.astro');
-    expect(pagina).toContain('<h1>Todalinda</h1>');
-    expect(pagina).toContain('robotsMeta()');
+    expect(pagina).toContain('DocumentoCapa');
+    expect(ler('src/components/capa/DocumentoCapa.astro')).toContain('robotsMeta()');
   });
 
   it('three e astro estão com versão fixada', () => {

@@ -91,7 +91,11 @@
                 "items": { "type": "string", "pattern": "^\\d+x\\d+$" },
                 "minItems": 1
               },
-              "nota": { "type": "string" }
+              "nota": { "type": "string" },
+              "crianca": {
+                "enum": ["nao", "verificar", "sim"],
+                "description": "Idade a confirmar só neste trecho."
+              }
             }
           }
         },

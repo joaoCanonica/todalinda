@@ -254,6 +254,7 @@ for (const f of lista(`${ORIG}/videos`)) {
         hero: !!t.hero,
         referencia: !!t.referencia,
         tamanhos: t.sizes,
+        crianca: t.crianca ?? 'nao',
         ...(t.nota ? { nota: t.nota } : {}),
       })),
       audioLiberado: !!c.audioLiberado,

@@ -1,0 +1,127 @@
+---
+// "A capa se abre": a abertura da home (≤ 3,0 s, uma vez por sessão).
+// Camada fixa sobre a capa já renderizada. Sem JS, com movimento reduzido ou já vista na sessão:
+// nunca aparece (o estado final é o HTML normal). Decorativa; o botão "Pular" é a única peça interativa.
+import { imagem } from '../../lib/midia.ts';
+import Logo from '../marca/Logo.astro';
+
+const revelacao = imagem('q-revelacao-espelho');
+---
+
+<div class="abertura" data-ab-camada>
+  <div class="abertura__fundo" data-ab-fundo></div>
+  <div class="abertura__palco" data-ab-palco aria-hidden="true">
+    <div class="abertura__camada abertura__filigrana" data-ab-filigrana></div>
+    <div class="abertura__camada abertura__logo" data-ab-logo></div>
+  </div>
+  <div class="abertura__quadro" data-ab-quadro aria-hidden="true">
+    <picture class="abertura__foto" data-ab-foto>
+      <source
+        type="image/avif"
+        data-srcset={revelacao.srcsetAvif}
+        sizes="(min-width: 60rem) 42vw, 100vw"
+      />
+      <img
+        data-src={revelacao.src}
+        data-srcset={revelacao.srcsetWebp}
+        sizes="(min-width: 60rem) 42vw, 100vw"
+        alt=""
+        width={revelacao.largura}
+        height={revelacao.altura}
+        decoding="async"
+        fetchpriority="low"
+        data-ab-revelacao
+      />
+    </picture>
+  </div>
+  <div class="abertura__palavra" data-ab-palavra aria-hidden="true">
+    <Logo variante="palavra" titulo="" />
+  </div>
+  <button class="abertura__pular versalete" type="button" data-ab-pular>
+    Pular abertura
+  </button>
+</div>
+
+<script>
+  import './abertura.ts';
+</script>
+
+<style>
+  .abertura {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+  }
+  :global(html[data-abertura='tocar']) .abertura {
+    display: block;
+  }
+  .abertura__fundo {
+    position: absolute;
+    inset: 0;
+    background: var(--cor-noite);
+  }
+  .abertura__palco {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(64vmin, 26rem);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+  }
+  .abertura__camada {
+    position: absolute;
+    inset: 0;
+  }
+  .abertura__camada :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+  .abertura__filigrana {
+    clip-path: circle(0% at 50% 50%);
+  }
+  .abertura__logo {
+    opacity: 0;
+  }
+  .abertura__quadro {
+    position: fixed;
+    overflow: hidden;
+    opacity: 0;
+    background: linear-gradient(135deg, #c9a869 0%, #e2c88c 35%, #a2824d 60%, #7e5c32 100%);
+  }
+  .abertura__foto {
+    position: absolute;
+    display: block;
+  }
+  .abertura__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+  .abertura__palavra {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: min(56vmin, 22rem);
+    translate: -50% -50%;
+    color: var(--cor-papel);
+    opacity: 0;
+    transform-origin: 0 0;
+  }
+  .abertura__pular {
+    position: absolute;
+    inset-block-end: max(var(--e-5), env(safe-area-inset-bottom));
+    inset-inline-end: var(--margem);
+    min-height: 44px;
+    padding: 0 1.1em;
+    border: var(--fio) solid color-mix(in srgb, var(--cor-papel) 45%, transparent);
+    background: transparent;
+    color: var(--cor-papel);
+    cursor: pointer;
+  }
+  .abertura__pular:focus-visible {
+    outline: 2px solid var(--cor-ouro);
+    outline-offset: 3px;
+  }
+</style>

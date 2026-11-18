@@ -155,3 +155,33 @@ describe('validate-config (CLI)', () => {
     expect(rodar('preview', '--simular=whatsapp').status).toBe(0);
   });
 });
+
+describe('idade a confirmar por trecho de vídeo', () => {
+  const m = [
+    item('v-x', {
+      natureza: 'video',
+      trechos: [
+        { nome: 'ondas', crianca: 'nao' },
+        { nome: 'iluminada', crianca: 'verificar' },
+      ],
+    }),
+  ];
+  it('só o trecho marcado acusa', () => {
+    expect(
+      checarHtml(
+        '<source src="/media/video/v-x--ondas-720x900-4x5.webm">',
+        'x.html',
+        m,
+        'producao',
+      ),
+    ).toEqual([]);
+    expect(
+      checarHtml(
+        '<source src="/media/video/v-x--iluminada-720x900-4x5.webm">',
+        'x.html',
+        m,
+        'producao',
+      ).map((a) => a.nivel),
+    ).toEqual(['trava']);
+  });
+});
