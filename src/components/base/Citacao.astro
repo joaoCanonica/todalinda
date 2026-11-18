@@ -1,0 +1,75 @@
+---
+// Citação literal (avaliação do Google ou fala da Edna). Aspas grandes: Ouro na capa, Mocha na página
+// (ouro sobre Papel reprova contraste). data-avaliacao-literal libera elogio forte só aqui (audit-compliance).
+interface Props {
+  autor: string;
+  fonte?: string; // "Avaliação no Google", "Edna Antoniolli, em vídeo"
+  link?: string;
+  literal?: boolean;
+}
+const { autor, fonte, link, literal = true } = Astro.props;
+---
+
+<figure class="citacao">
+  <blockquote {...(literal ? { 'data-avaliacao-literal': '' } : {})}>
+    <p>
+      <slot />
+    </p>
+  </blockquote>
+  <figcaption class="versalete">
+    {autor}
+    {fonte && (
+      <span>
+        {' '}
+        ·{' '}
+        {link ? (
+          <a href={link} rel="noopener" target="_blank">
+            {fonte}
+            <span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        ) : (
+          fonte
+        )}
+      </span>
+    )}
+  </figcaption>
+</figure>
+
+<style>
+  .citacao {
+    margin: 0;
+    max-width: 38rem;
+  }
+  blockquote {
+    position: relative;
+    margin: 0;
+    padding-top: 0.55em;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    line-height: 1.25;
+    font-weight: 400;
+  }
+  blockquote::before {
+    content: '“';
+    position: absolute;
+    inset-block-start: -0.18em;
+    inset-inline-start: -0.04em;
+    font-size: 3.2em;
+    line-height: 1;
+    color: var(--acento);
+  }
+  :global(.tom-capa) blockquote::before {
+    color: var(--cor-ouro-claro);
+  }
+  blockquote p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+  figcaption {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  figcaption a {
+    color: inherit;
+  }
+</style>

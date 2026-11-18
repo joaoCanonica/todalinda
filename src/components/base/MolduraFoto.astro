@@ -1,0 +1,49 @@
+---
+// Foto com moldura fina (1 px Papel) e legenda em caixa alta espaçada: técnica · profissional.
+// Profissional só aparece se a casa confirmou quem fez.
+import Poster from './Poster.astro';
+
+interface Props {
+  imagem: string;
+  alt: string;
+  tecnica: string;
+  profissional?: string;
+  sizes?: string;
+  proporcao?: string;
+}
+const { imagem, alt, tecnica, profissional, sizes, proporcao = '4 / 5' } = Astro.props;
+---
+
+<figure class="moldura">
+  <div class="moldura__quadro">
+    <Poster
+      imagem={imagem}
+      alt={alt}
+      sizes={sizes ?? '(min-width: 60rem) 33vw, 100vw'}
+      proporcao={proporcao}
+    />
+  </div>
+  <figcaption class="versalete">
+    {tecnica}
+    {profissional && <span> · {profissional}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .moldura {
+    margin: 0;
+  }
+  .moldura__quadro {
+    padding: 6px;
+    border: var(--fio) solid var(--cor-papel);
+    outline: var(--fio) solid var(--fio-cor);
+  }
+  :global(.tom-pagina) .moldura__quadro {
+    border-color: var(--cor-papel);
+    outline-color: color-mix(in srgb, var(--cor-tinta) 22%, transparent);
+  }
+  figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+</style>

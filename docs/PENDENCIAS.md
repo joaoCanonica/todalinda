@@ -74,3 +74,10 @@ Lista viva gerada pela config: `pnpm validate-config --tudo`. Resumo do que depe
 - **Limpeza de pele** fica `opcional` e não publicada (arte de terceira; confirmar se a Marianne Turossi atende na casa).
 - Textos de `resumo`, `processo` e `faq` dos serviços são rascunho funcional (`textoRevisado: false`); a sessão 5 reescreve.
 - `especialidades` da equipe vêm da função informada pelo João; `servicos[]` de cada pessoa ficou vazio até a casa confirmar.
+
+## Sessão 3 — Design system (18/11/2026)
+- **Fonte da revista:** não foi possível abrir o Linktree/Flipsnack deste ambiente. Playfair Display segue como hipótese; João, confirmar no PDF da revista (se for outra, troca só `--fonte-titulo`).
+- **Mapa estático:** sem imagem de mapa por ora (rede restrita, e nada de iframe de terceiros). O "Como chegar" mostra o cartão tipográfico com coordenadas, plus code e os três apps. Gerar uma imagem estática (OpenStreetMap, com atribuição) quando houver acesso.
+- **Ouro oficial:** tokens Ouro e Ouro claro continuam PROVISÓRIOS.
+- **Pedra recalibrada** para #756B64 (AA sobre Papel); o tom original virou "Pedra clara" (só sobre Noite). Ajuste do CLAUDE.md fica a critério do João.
+- **Aspas da citação na página clara** usam Mocha, não Ouro (ouro sobre Papel reprova o contraste).

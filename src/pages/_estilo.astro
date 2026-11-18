@@ -1,0 +1,396 @@
+---
+// /_estilo: o design system da Edição Todalinda em uma página (noindex). Publicada por [interna].astro.
+import '../styles/global.css';
+import Botao from '../components/base/Botao.astro';
+import CartaoTipografico from '../components/base/CartaoTipografico.astro';
+import Citacao from '../components/base/Citacao.astro';
+import ComparadorAntesDepois from '../components/base/ComparadorAntesDepois.astro';
+import Link from '../components/base/Link.astro';
+import MapaEstatico from '../components/base/MapaEstatico.astro';
+import MolduraFoto from '../components/base/MolduraFoto.astro';
+import Rotulo from '../components/base/Rotulo.astro';
+import StatusHorario from '../components/base/StatusHorario.astro';
+import TabelaHorario from '../components/base/TabelaHorario.astro';
+import Capa from '../components/edicao/Capa.astro';
+import Capitular from '../components/edicao/Capitular.astro';
+import Etiqueta from '../components/edicao/Etiqueta.astro';
+import Filigrana from '../components/edicao/Filigrana.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import Logo from '../components/marca/Logo.astro';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import Provisorio from '../components/Provisorio.astro';
+import { citacoes } from '../config/avaliacoes.ts';
+import { cores, paresDeContraste } from '../config/tema.ts';
+import { linkWhatsApp, MENSAGENS } from '../lib/whatsapp.ts';
+
+const lum = (hex: string) => {
+  const c = [1, 3, 5]
+    .map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * (c[0] ?? 0) + 0.7152 * (c[1] ?? 0) + 0.0722 * (c[2] ?? 0);
+};
+const razao = (a: string, b: string) => {
+  const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m);
+  return ((x ?? 0) + 0.05) / ((y ?? 0) + 0.05);
+};
+const citacao = citacoes.find((c) => c.id === 4);
+const escala = [
+  ['Capa', 'var(--fs-capa)', 'Cor e <em>fio</em>'],
+  ['H1', 'var(--fs-h1)', 'A Arte do <em>Corte</em>'],
+  ['H2', 'var(--fs-h2)', 'Morena <em>iluminada</em>'],
+  ['H3', 'var(--fs-h3)', 'Teste de mecha antes da química'],
+] as const;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Estilo · Edição Todalinda</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/manrope-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content={cores.noite} />
+  </head>
+  <body>
+    <PreviewBanner />
+
+    <Capa
+      chamadas={[
+        'Morena iluminada: a luz desenhada para o seu fio',
+        'Loiros perolados, com teste de mecha antes',
+        'A Arte do Corte, com quem tem 26 anos de profissão',
+      ]}
+      midia={{
+        video: 'v-filme',
+        trecho: 'ondas',
+        rotulo: '720x900-4x5',
+        alt: 'Profissional ajeita as ondas escuras com reflexo de uma cliente sorridente, no salão.',
+      }}
+    >
+      <Fragment slot="manchete">
+        Cor, corte e cuidado com quem <em>entende</em> de fio.
+      </Fragment>
+      <Fragment slot="acoes">
+        <Botao href={linkWhatsApp(MENSAGENS.geral())} externo>
+          Agendar
+        </Botao>
+      </Fragment>
+    </Capa>
+
+    <Pagina tom="pagina" secao="cores" rotulo="Cores">
+      <Rotulo>Tokens</Rotulo>
+      <h2>
+        Cores <em>calibradas</em>
+      </h2>
+      <p class="lead">
+        Medidas nos stills (luz de janela, o caramelo das morenas) e no ouro do logo. Cada par de
+        uso passa no AA.
+      </p>
+      <ul class="amostras" role="list">
+        {Object.entries(cores).map(([nome, hex]) => (
+          <li>
+            <span class="amostras__cor" style={`background:${hex}`} />
+            <strong>{nome}</strong>
+            <span class="numeros">{hex}</span>
+          </li>
+        ))}
+      </ul>
+      <table class="pares">
+        <caption class="sr-only">Contraste dos pares de cor</caption>
+        <thead>
+          <tr>
+            <th scope="col">Texto</th>
+            <th scope="col">Fundo</th>
+            <th scope="col">Razão</th>
+            <th scope="col">Uso</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paresDeContraste.map((p) => (
+            <tr>
+              <td>
+                <span class="par" style={`background:${cores[p.fundo]};color:${cores[p.texto]}`}>
+                  Aa
+                </span>{' '}
+                {p.texto}
+              </td>
+              <td>{p.fundo}</td>
+              <td class="numeros">
+                {razao(cores[p.texto], cores[p.fundo]).toFixed(2)}:1 (mín. {p.minimo})
+              </td>
+              <td>{p.uso}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Pagina>
+
+    <Pagina tom="capa" secao="tipografia" rotulo="Tipografia">
+      <Rotulo tom="acento">Tipografia</Rotulo>
+      <ul class="escala" role="list">
+        {escala.map(([n, tam, txt]) => (
+          <li>
+            <span class="versalete">{n}</span>
+            <p class="escala__amostra" style={`font-size:${tam}`} set:html={txt} />
+          </li>
+        ))}
+      </ul>
+      <p class="lead">
+        Playfair Display nos títulos, com o itálico pesado em uma palavra só. Manrope no texto, a
+        17–18 px, com números tabulares: <span class="numeros">2017 · 26 · 9h–19h</span>.
+      </p>
+      <p class="versalete">Rótulo em caixa alta espaçada · Todalinda · 07 · Cor</p>
+    </Pagina>
+
+    <Pagina tom="pagina" secao="matéria" rotulo="Capitular">
+      <Rotulo>Abertura de matéria</Rotulo>
+      <h2>
+        Clientes que viram <em>história</em>
+      </h2>
+      <Capitular>
+        <p>
+          Tem clientes que eu olho e penso: meu Deus, você está aqui há quanto tempo? A gente
+          acompanhou mudança de cabelo, trabalho, namoro, casamento, filhos. E no meio disso tudo,
+          continuou se encontrando aqui. Por isso eu digo: salão tem uma coisa muito especial, a
+          gente não cuida só do cabelo de alguém.
+        </p>
+        <p>
+          De alguma forma, a gente acaba acompanhando fases da vida. Talvez por isso algumas
+          clientes deixam de ser apenas clientes e começam a fazer parte da nossa história.
+        </p>
+      </Capitular>
+      <p class="versalete" style="color:var(--texto-2)">
+        Edna Antoniolli, em vídeo
+      </p>
+    </Pagina>
+
+    <Pagina tom="capa" secao="voz" rotulo="Citação e etiquetas">
+      <Rotulo tom="acento">Capitular na capa, citação, etiquetas</Rotulo>
+      <Capitular>
+        <p>
+          Talvez uma das partes mais bonitas de empreender seja essa: ver um sonho se tornar um
+          lugar. O que um dia foi uma ideia hoje faz parte da rotina de muitas pessoas.
+        </p>
+      </Capitular>
+      {citacao && (
+        <Citacao autor={citacao.autor} fonte={citacao.selo} link={citacao.link}>
+          {citacao.texto}
+        </Citacao>
+      )}
+      <div class="etiquetas">
+        <Etiqueta hashtag="#TalentoTodalinda" />
+        <Etiqueta hashtag="#MomentoTodalinda" />
+        <Etiqueta hashtag="#EquipeTodalinda" />
+        <Etiqueta hashtag="#TodaMake" />
+      </div>
+    </Pagina>
+
+    <Pagina tom="pagina" secao="ações" rotulo="Ações e horário">
+      <Rotulo>Ações, links, horário</Rotulo>
+      <div class="linha">
+        <Botao href={linkWhatsApp(MENSAGENS.geral())} externo>
+          Agendar
+        </Botao>
+        <Botao href="#trabalhos" variante="secundario">
+          Ver trabalhos
+        </Botao>
+      </div>
+      <p>
+        Link no texto: <Link href="/avaliar">avaliar no Google</Link> e{' '}
+        <Link href="https://www.instagram.com/somostodalinda/">@somostodalinda</Link>.
+      </p>
+      <StatusHorario />
+      <TabelaHorario />
+    </Pagina>
+
+    <Pagina tom="capa" secao="ações" rotulo="Ações no tom capa">
+      <div class="linha">
+        <Botao href={linkWhatsApp(MENSAGENS.geral())} externo>
+          Agendar
+        </Botao>
+        <Botao href="#trabalhos" variante="secundario">
+          Ver trabalhos
+        </Botao>
+      </div>
+      <StatusHorario />
+    </Pagina>
+
+    <Pagina tom="capa" secao="marca" rotulo="Logo e filigrana">
+      <Rotulo tom="acento">Marca</Rotulo>
+      <div class="logos">
+        <div class="logos__item" style="width:24px">
+          <Logo variante="selo" titulo="" />
+        </div>
+        <div class="logos__item" style="width:32px">
+          <Logo variante="selo" titulo="" />
+        </div>
+        <div class="logos__item" style="width:48px">
+          <Logo variante="selo-mono" titulo="" />
+        </div>
+        <div class="logos__item" style="width:96px">
+          <Logo variante="selo" titulo="" />
+        </div>
+        <div class="logos__item" style="width:160px">
+          <Logo variante="completo" titulo="" />
+        </div>
+        <div class="logos__item" style="width:160px;color:var(--cor-ouro-claro)">
+          <Logo variante="mono" titulo="" />
+        </div>
+      </div>
+      <div style="max-width:28rem;margin-top:var(--e-6)">
+        <Logo variante="palavra" titulo="" />
+      </div>
+      <div class="filigrana-demo">
+        <Filigrana />
+      </div>
+      <p class="versalete" style="color:var(--texto-2)">
+        Filigrana: só na abertura e no selo. Revela do centro para fora em 1,2 s.
+      </p>
+    </Pagina>
+
+    <Pagina tom="pagina" secao="trabalhos" id="trabalhos" rotulo="Fotos">
+      <Rotulo>Fotos e retratos</Rotulo>
+      <div class="grade" data-revelar>
+        <MolduraFoto
+          imagem="f-876662670"
+          alt="Cabelo longo morena iluminada mel, de costas, em luz de janela."
+          tecnica="Morena iluminada"
+        />
+        <MolduraFoto
+          imagem="f-753362068"
+          alt="Loiro ondulado de costas, em luz de janela."
+          tecnica="Loiros"
+        />
+        <MolduraFoto
+          imagem="f-902586035"
+          alt="Retrato de cliente com loiro em camadas, capa preta, luz de janela."
+          tecnica="Corte"
+        />
+      </div>
+      <div class="grade" data-revelar>
+        <CartaoTipografico nome="Dido Rodrigues" funcao="Cabeleireiro" anos={26} />
+        <CartaoTipografico nome="Karine “Kah”" funcao="Manicure e pedicure" />
+        <CartaoTipografico nome="Marina Schpanski" funcao="Maquiadora" />
+      </div>
+    </Pagina>
+
+    <Pagina tom="capa" secao="antes e depois" rotulo="Antes e depois">
+      <Rotulo tom="acento">
+        <Provisorio motivo="par provável; confirmar com a casa">Antes e depois</Provisorio>
+      </Rotulo>
+      <div style="max-width:36rem">
+        <ComparadorAntesDepois
+          antes="f-756143696"
+          depois="f-754970697"
+          altAntes="Antes: cliente com cabelo castanho, de roupão, no salão."
+          altDepois="Depois: a mesma cliente com ruivo cobre e franja cortina."
+          tecnica="Ruivo e cobre"
+        />
+      </div>
+    </Pagina>
+
+    <Pagina tom="pagina" secao="como chegar" rotulo="Como chegar">
+      <Rotulo>Como chegar</Rotulo>
+      <MapaEstatico />
+    </Pagina>
+
+    <script>
+      import '../scripts/revelar.ts';
+    </script>
+
+    <style>
+      .amostras {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+        gap: var(--e-4);
+        margin: var(--e-6) 0;
+        padding: 0;
+        list-style: none;
+      }
+      .amostras li {
+        display: grid;
+        gap: var(--e-1);
+        font-size: var(--fs-pequeno);
+      }
+      .amostras__cor {
+        aspect-ratio: 3 / 2;
+        border: var(--fio) solid var(--fio-cor);
+      }
+      .pares {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--fs-pequeno);
+      }
+      .pares th,
+      .pares td {
+        padding: 0.5em 0.6em 0.5em 0;
+        border-bottom: var(--fio) solid var(--fio-cor);
+        text-align: left;
+        vertical-align: middle;
+      }
+      .par {
+        display: inline-grid;
+        place-items: center;
+        width: 2.2em;
+        height: 2.2em;
+        font-family: var(--fonte-titulo);
+        font-weight: 600;
+      }
+      .escala {
+        display: grid;
+        gap: var(--e-5);
+        margin: 0 0 var(--e-6);
+        padding: 0;
+        list-style: none;
+      }
+      .escala__amostra {
+        margin: 0;
+        max-width: none;
+        font-family: var(--fonte-titulo);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+      }
+      .escala__amostra :global(em) {
+        font-weight: 800;
+      }
+      .etiquetas,
+      .linha {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--e-3) var(--e-5);
+        align-items: center;
+        margin-block: var(--e-6);
+      }
+      .logos {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        gap: var(--e-6);
+      }
+      .filigrana-demo {
+        width: min(100%, 22rem);
+        margin-block: var(--e-6) var(--e-3);
+      }
+      .grade {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+        gap: var(--e-5);
+        margin-top: var(--e-6);
+      }
+      :global(.pagina) > :global(h2) {
+        margin-bottom: var(--e-5);
+      }
+    </style>
+  </body>
+</html>

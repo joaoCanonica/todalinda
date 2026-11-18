@@ -72,6 +72,10 @@ if (!process.env.SEM_BUILD || !existsSync(join(RAIZ, 'dist'))) {
   if (b.status !== 0) process.exit(b.status ?? 1);
 }
 
+// O Astro 7 mantém um preview em segundo plano e recusa abrir outro: pare o anterior antes e depois.
+const pararPreview = () =>
+  spawnSync('pnpm', ['exec', 'astro', 'preview', 'stop'], { cwd: RAIZ, stdio: 'ignore' });
+pararPreview();
 const preview = spawn(
   'pnpm',
   ['exec', 'astro', 'preview', '--port', String(PORTA), '--host', '127.0.0.1'],
@@ -82,6 +86,7 @@ const preview = spawn(
   },
 );
 const encerrar = () => {
+  pararPreview();
   try {
     process.kill(-preview.pid, 'SIGTERM');
   } catch {
@@ -107,7 +112,28 @@ try {
         const arquivo = join(destino, `${nomeDaRota(rota)}__${largura}${sufixo}.png`);
         try {
           const resp = await pagina.goto(BASE + rota, { waitUntil: 'networkidle' });
+          if (!resp || resp.status() >= 400) throw new Error(`HTTP ${resp?.status()}`);
           await pagina.evaluate(() => document.fonts.ready);
+          // rola até o fim (dispara lazy-load e as entradas animadas) e volta ao topo
+          await pagina.evaluate(async () => {
+            for (let y = 0; y < document.body.scrollHeight; y += Math.round(innerHeight * 0.8)) {
+              scrollTo(0, y);
+              await new Promise((ok) => setTimeout(ok, 120));
+            }
+            scrollTo(0, 0);
+            await Promise.all(
+              [...document.images]
+                .filter((i) => !i.complete)
+                .map(
+                  (i) =>
+                    new Promise(
+                      (ok) =>
+                        i.addEventListener('load', ok, { once: true }) || setTimeout(ok, 3000),
+                    ),
+                ),
+            );
+          });
+          await pagina.waitForTimeout(800);
           const ilha = await esperarIlha3D(pagina);
           await pagina.screenshot({ path: arquivo, fullPage: true });
           console.log(

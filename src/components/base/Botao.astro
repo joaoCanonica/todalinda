@@ -1,0 +1,68 @@
+---
+// Botão/link de ação. "primario" = Agendar (Noite + fio Ouro; no tom capa, Papel com texto Noite).
+// "secundario" = sublinhado editorial.
+interface Props {
+  href: string;
+  variante?: 'primario' | 'secundario';
+  externo?: boolean;
+  class?: string;
+}
+const { href, variante = 'primario', externo = false, class: classe = '' } = Astro.props;
+---
+
+<a
+  class:list={['botao', `botao--${variante}`, classe]}
+  href={href}
+  {...(externo ? { rel: 'noopener', target: '_blank' } : {})}
+>
+  <span class="botao__texto">
+    <slot />
+  </span>
+  {externo && <span class="sr-only"> (abre em nova aba)</span>}
+</a>
+
+<style>
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-2);
+    min-height: 44px;
+    font-family: var(--fonte-texto);
+    font-weight: 600;
+    font-size: var(--fs-pequeno);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .botao--primario {
+    padding: 0.85em 1.6em 0.8em;
+    background: var(--cor-noite);
+    color: var(--cor-papel);
+    border: var(--fio) solid var(--cor-ouro);
+    transition:
+      background-color var(--dur-2) var(--curva-precisa),
+      color var(--dur-2) var(--curva-precisa);
+  }
+  .botao--primario:hover {
+    background: var(--cor-cafe);
+  }
+  :global(.tom-capa) .botao--primario {
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    border-color: var(--cor-papel);
+  }
+  :global(.tom-capa) .botao--primario:hover {
+    background: var(--cor-ouro-claro);
+    border-color: var(--cor-ouro-claro);
+  }
+  .botao--secundario {
+    padding-block: 0.6em;
+    color: var(--texto);
+    background: linear-gradient(currentColor, currentColor) left bottom / 100% var(--fio) no-repeat;
+    transition: background-size var(--dur-3) var(--curva-entrada);
+  }
+  .botao--secundario:hover {
+    background-size: 35% var(--fio);
+  }
+</style>

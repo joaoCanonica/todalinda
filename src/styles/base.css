@@ -1,0 +1,161 @@
+/* Base: reset mínimo, tons de página e tipografia editorial. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-synthesis-small-caps: none; /* nenhuma das fontes tem versalete real: nada de versalete sintético */
+}
+body {
+  margin: 0;
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: var(--fonte-texto);
+  font-size: var(--fs-texto);
+  line-height: var(--entrelinha-texto);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tons: capa (Noite) × página (Papel). Troca seca, sem degradê. */
+.tom-capa {
+  --fundo: var(--cor-noite);
+  --texto: var(--cor-papel);
+  --texto-2: var(--cor-pedra-clara);
+  --acento: var(--cor-ouro);
+  --acento-forte: var(--cor-ouro-claro);
+  --foco: var(--cor-ouro);
+  --fio-cor: color-mix(in srgb, var(--cor-papel) 22%, transparent);
+  background: var(--fundo);
+  color: var(--texto);
+}
+.tom-pagina,
+:root {
+  --fundo: var(--cor-papel);
+  --texto: var(--cor-tinta);
+  --texto-2: var(--cor-pedra);
+  --acento: var(--cor-mocha);
+  --acento-forte: var(--cor-noite);
+  --foco: var(--cor-mocha);
+  --fio-cor: color-mix(in srgb, var(--cor-tinta) 18%, transparent);
+}
+.tom-pagina {
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  line-height: var(--entrelinha-titulo);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--fs-h1);
+}
+h2 {
+  font-size: var(--fs-h2);
+}
+h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+}
+/* Itálico pesado: uma palavra por título, marcada com <em>. */
+:is(h1, h2, h3, .manchete) em {
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+p {
+  margin: 0 0 1em;
+  max-width: var(--largura-texto);
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+}
+.versalete {
+  font-family: var(--fonte-texto);
+  font-size: var(--fs-versalete);
+  font-weight: 600;
+  letter-spacing: var(--espaco-versalete);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.numeros,
+time,
+table {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+a {
+  color: inherit;
+  text-decoration-thickness: var(--fio);
+  text-underline-offset: 0.22em;
+}
+:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 3px;
+}
+::selection {
+  background: var(--cor-ouro-claro);
+  color: var(--cor-noite);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.recuo {
+  padding-inline: var(--margem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Entrada editorial (src/scripts/revelar.ts). Sem JS ou com movimento reduzido: estado final. */
+.js-revelar [data-revelar] {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity var(--dur-4) var(--curva-entrada),
+    transform var(--dur-4) var(--curva-entrada);
+}
+.js-revelar [data-revelar].revelado {
+  opacity: 1;
+  transform: none;
+}

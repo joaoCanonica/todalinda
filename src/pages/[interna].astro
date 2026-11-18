@@ -1,0 +1,11 @@
+---
+// Páginas internas de trabalho (prefixo "_"): o Astro não roteia arquivos com "_",
+// então elas são publicadas por aqui. Sempre noindex.
+import Estilo from './_estilo.astro';
+
+export function getStaticPaths() {
+  return [{ params: { interna: '_estilo' } }];
+}
+---
+
+<Estilo />

@@ -1,0 +1,40 @@
+---
+// Logo oficial (SVG inline, otimizado por scripts/otimizar-logos.mjs). Nunca redesenhar.
+// Tamanho mínimo: selo ≥ 24 px (ideal 32+); completo/mono ≥ 96 px (a filigrana some abaixo disso).
+import completo from './svg/todalinda-logo.svg?raw';
+import mono from './svg/todalinda-logo-mono.svg?raw';
+import palavra from './svg/todalinda-palavra.svg?raw';
+import seloMono from './svg/todalinda-selo-mono.svg?raw';
+import selo from './svg/todalinda-selo.svg?raw';
+
+interface Props {
+  variante?: 'completo' | 'mono' | 'selo' | 'selo-mono' | 'palavra';
+  /** Nome acessível; vazio = decorativo (aria-hidden). */
+  titulo?: string;
+  class?: string;
+}
+const { variante = 'palavra', titulo = 'Todalinda', class: classe = '' } = Astro.props;
+const fontes = { completo, mono, selo, 'selo-mono': seloMono, palavra };
+const sufixo = Math.random().toString(36).slice(2, 7); // ids únicos por instância (degradê)
+const acessivel = titulo
+  ? `role="img" aria-label="${titulo}"`
+  : 'aria-hidden="true" focusable="false"';
+const svg = fontes[variante]
+  .replace(/id="tl-folha"/g, `id="tl-folha-${sufixo}"`)
+  .replace(/url\(#tl-folha\)/g, `url(#tl-folha-${sufixo})`)
+  .replace(/\sid="(filigrana|moldura|quadro|texto)"/g, '')
+  .replace('<svg ', `<svg ${acessivel} class="logo logo--${variante} ${classe}" `);
+---
+
+<Fragment set:html={svg} />
+
+<style is:global>
+  .logo {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+  .logo--palavra {
+    width: 100%;
+  }
+</style>

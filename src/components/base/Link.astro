@@ -1,0 +1,29 @@
+---
+// Link de texto. Externo: nova aba anunciada para leitor de tela.
+interface Props {
+  href: string;
+  externo?: boolean;
+}
+const { href, externo = /^https?:\/\//.test(Astro.props.href) } = Astro.props;
+---
+
+<a class="link" href={href} {...(externo ? { rel: 'noopener', target: '_blank' } : {})}>
+  <slot />
+  {externo && <span class="sr-only"> (abre em nova aba)</span>}
+</a>
+
+<style>
+  .link {
+    color: var(--acento);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--fio);
+    text-underline-offset: 0.22em;
+    transition: text-underline-offset var(--dur-2) var(--curva-entrada);
+  }
+  :global(.tom-capa) .link {
+    color: var(--cor-ouro-claro);
+  }
+  .link:hover {
+    text-underline-offset: 0.34em;
+  }
+</style>

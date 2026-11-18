@@ -1,0 +1,35 @@
+---
+// Status ao vivo ("Aberto agora · até 19h", "Fecha em 20 min", "Fechado · abre terça às 9h").
+// Sem JS, mostra o horário fixo. Não é região "live": muda a cada minuto e não deve interromper.
+import { horarioResumo } from '../../lib/horario.ts';
+---
+
+<p class="status versalete" data-status-horario>
+  <span class="status__ponto" aria-hidden="true"></span>
+  <span data-status-texto>{horarioResumo()}</span>
+</p>
+
+<script>
+  import '../../scripts/horario-vivo.ts';
+</script>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin: 0;
+    color: var(--texto);
+    letter-spacing: 0.12em;
+  }
+  .status__ponto {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    border: var(--fio) solid currentColor;
+  }
+  .status[data-aberto='true'] .status__ponto {
+    background: var(--acento);
+    border-color: var(--acento);
+  }
+</style>

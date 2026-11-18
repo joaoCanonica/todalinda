@@ -1,0 +1,31 @@
+---
+// Fólio "TODALINDA · 07 · COR". Numeração automática por ordem na página (contador CSS, sem JS).
+// Decorativo: leitores de tela ignoram (a seção já tem título).
+interface Props {
+  secao: string;
+}
+const { secao } = Astro.props;
+---
+
+<p class="folio versalete" aria-hidden="true" data-secao={secao.toUpperCase()}></p>
+
+<style is:global>
+  body {
+    counter-reset: folio;
+  }
+  .folio {
+    counter-increment: folio;
+    position: absolute;
+    inset-block-start: var(--e-5);
+    inset-inline-end: var(--margem);
+    margin: 0;
+    color: var(--acento);
+    font-variant-numeric: tabular-nums;
+  }
+  .folio::before {
+    content: 'Todalinda · ' counter(folio, decimal-leading-zero) ' · ' attr(data-secao);
+  }
+  .tom-pagina .folio {
+    color: var(--cor-pedra);
+  }
+</style>

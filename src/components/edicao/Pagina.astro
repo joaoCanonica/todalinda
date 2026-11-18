@@ -1,0 +1,29 @@
+---
+// Uma "página" da edição. Tom capa (Noite) ou página (Papel); a troca é um corte seco.
+// O fólio desta página entra pelo slot "folio" (ou pela prop secao).
+import Folio from './Folio.astro';
+
+interface Props {
+  tom?: 'capa' | 'pagina';
+  secao?: string;
+  id?: string;
+  rotulo?: string;
+  class?: string;
+}
+const { tom = 'pagina', secao, id, rotulo, class: classe = '' } = Astro.props;
+---
+
+<section class:list={['pagina', `tom-${tom}`, classe]} id={id} aria-label={rotulo}>
+  {secao && <Folio secao={secao} />}
+  <slot />
+</section>
+
+<style>
+  .pagina {
+    position: relative;
+    padding-block: var(--e-9);
+    padding-inline: var(--margem);
+    /* corte seco entre tons: nenhuma sombra, nenhum degradê, nenhuma borda */
+    isolation: isolate;
+  }
+</style>

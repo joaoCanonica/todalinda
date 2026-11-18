@@ -24,7 +24,7 @@
     "audit-a11y": "node scripts/pendente.mjs audit-a11y 9",
     "audit-lighthouse": "node scripts/pendente.mjs audit-lighthouse 9",
     "audit-seo": "node scripts/pendente.mjs audit-seo 8",
-    "audit-contraste": "node scripts/pendente.mjs audit-contraste 3",
+    "audit-contraste": "node scripts/audit-contraste.mjs",
     "audit-pesos": "node scripts/pendente.mjs audit-pesos 9",
     "media:prepare": "node scripts/prepare-media.mjs",
     "model:prepare": "node scripts/pendente.mjs model:prepare 6B",
@@ -42,6 +42,10 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@eslint/js": "10.0.1",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/onest": "5.3.1",
+    "@fontsource-variable/playfair-display": "5.3.0",
+    "@fontsource/prata": "5.3.0",
     "@types/node": "^22.20.5",
     "@types/three": "0.187.0",
     "ajv": "^8.20.0",
@@ -52,6 +56,7 @@
     "playwright": "1.63.0",
     "prettier": "3.10.1",
     "prettier-plugin-astro": "1.1.2",
+    "svgo": "4.1.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "8.73.0",
     "vitest": "5.1.0"

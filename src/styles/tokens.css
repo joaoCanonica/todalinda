@@ -1,0 +1,70 @@
+/* Tokens da Edição Todalinda. Cores: src/config/tema.ts (fonte única; AA em audit-contraste). */
+@property --revelar {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+:root {
+  --cor-noite: #121013;
+  --cor-cafe: #2a1e19;
+  --cor-papel: #f7f3ec;
+  --cor-tinta: #1b1715;
+  --cor-pedra: #756b64;
+  --cor-pedra-clara: #8a817a;
+  --cor-ouro: #ae8c55;
+  --cor-ouro-claro: #e2c88c;
+  --cor-mocha: #6b4a3a;
+
+  /* famílias */
+  --fonte-titulo: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
+  --fonte-texto: 'Manrope', 'Manrope Fallback', system-ui, sans-serif;
+
+  /* escala fluida (390 → 1440 px) */
+  --fs-capa: clamp(3.5rem, 1.55rem + 8vw, 9.5rem); /* manchete de capa: 56 → 152 */
+  --fs-h1: clamp(2.75rem, 1.6rem + 4.7vw, 6rem); /* 44 → 96 */
+  --fs-h2: clamp(2.125rem, 1.5rem + 2.6vw, 4rem); /* 34 → 64 */
+  --fs-h3: clamp(1.5rem, 1.25rem + 1vw, 2.25rem); /* 24 → 36 */
+  --fs-lead: clamp(1.1875rem, 1.1rem + 0.35vw, 1.4375rem); /* 19 → 23 */
+  --fs-texto: clamp(1.0625rem, 1.035rem + 0.12vw, 1.125rem); /* 17 → 18 */
+  --fs-pequeno: 0.9375rem; /* 15 */
+  --fs-versalete: 0.75rem; /* 12, caixa alta espaçada */
+  --fs-capitular: 3; /* linhas */
+
+  --entrelinha-titulo: 0.95;
+  --entrelinha-texto: 1.6;
+  --espaco-versalete: 0.18em;
+
+  /* espaços */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-5: 1.5rem;
+  --e-6: 2rem;
+  --e-7: 3rem;
+  --e-8: 4.5rem;
+  --e-9: clamp(4rem, 2rem + 8vw, 9rem);
+  --margem: clamp(1rem, 0.5rem + 2.5vw, 3rem); /* gutter lateral */
+  --largura-texto: 66ch;
+  --largura-max: 90rem;
+  --fio: 1px;
+
+  /* movimento: entrada suave (editorial), saída precisa; sem bounce */
+  --dur-1: 150ms;
+  --dur-2: 300ms;
+  --dur-3: 450ms;
+  --dur-4: 700ms;
+  --curva-entrada: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --curva-saida: cubic-bezier(0.55, 0, 0.75, 0.25);
+  --curva-precisa: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+}
