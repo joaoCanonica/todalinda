@@ -1,0 +1,193 @@
+---
+// 6 · EQUIPE #TalentoTodalinda (capa): fileira horizontal; retrato (ou cartão tipográfico), nome, função, anos;
+// "Agendar com {nome}". Dido: o trecho "dido" do filme em loop mudo ao passar o mouse ou focar.
+import { getCollection } from 'astro:content';
+import { equipe as e } from '../../content/textos/home.ts';
+import { perfis } from '../../content/textos/equipe.ts';
+import { txt } from '../../content/textos/fontes.ts';
+import { alt } from '../../content/textos/midia.ts';
+import { video } from '../../lib/midia.ts';
+import { linkWhatsApp } from '../../lib/whatsapp.ts';
+import CartaoTipografico from '../base/CartaoTipografico.astro';
+import Poster from '../base/Poster.astro';
+import Etiqueta from '../edicao/Etiqueta.astro';
+import Pagina from '../edicao/Pagina.astro';
+import Provisorio from '../Provisorio.astro';
+import { liberada, provisoria } from './util.ts';
+
+const membros = (await getCollection('equipe'))
+  .map((m) => m.data)
+  .sort((a, b) => a.ordem - b.ordem);
+const dido = liberada('v-filme', 'dido') ? video('v-filme', 'dido', '540x960') : null;
+---
+
+<Pagina tom="capa" secao={e.folio} id="equipe" rotulo="Equipe">
+  <div class="eq__cabeca">
+    <Etiqueta hashtag="#TalentoTodalinda" />
+    <h2>
+      {e.titulo.antes}
+      <em>{e.titulo.destaque}</em>
+      {e.titulo.depois}
+    </h2>
+    <p class="eq__fala">“{txt(e.intro)}”</p>
+  </div>
+  <div class="eq__fileira" role="region" aria-label="Equipe Todalinda" tabindex="0">
+    <ul class="eq__lista" role="list">
+      {membros.map((m) => {
+        const p = perfis[m.slug];
+        const foto = m.foto && liberada(m.foto) ? m.foto : null;
+        const motivo = foto ? provisoria(foto) : null;
+        const ehDido = m.slug === 'dido-rodrigues' && dido;
+        return (
+          <li class="eq__item" data-eq-loop={ehDido ? '' : undefined}>
+            <div class="eq__retrato">
+              {foto ? (
+                <Poster
+                  imagem={foto}
+                  alt={alt[foto] ?? m.nome}
+                  proporcao="4 / 5"
+                  sizes="(min-width: 60rem) 18rem, 70vw"
+                />
+              ) : (
+                <CartaoTipografico
+                  nome={m.nome}
+                  funcao={m.funcao}
+                  {...(m.anosDeProfissao ? { anos: m.anosDeProfissao } : {})}
+                />
+              )}
+              {ehDido && (
+                <video class="eq__loop" muted loop playsinline preload="none" aria-hidden="true">
+                  <source src={dido.webm} type="video/webm" />
+                  <source src={dido.mp4} type="video/mp4" />
+                </video>
+              )}
+            </div>
+            <h3 class="eq__nome">
+              <a href={`/equipe/${m.slug}`}>{m.nome}</a>
+            </h3>
+            <p class="eq__funcao">
+              {motivo ? (
+                <Provisorio motivo={motivo}>{p?.linha ?? m.funcao}</Provisorio>
+              ) : (
+                (p?.linha ?? m.funcao)
+              )}
+            </p>
+            <a
+              class="eq__agendar versalete"
+              href={linkWhatsApp(p?.whatsapp)}
+              rel="noopener"
+              target="_blank"
+            >
+              {p?.agendar ?? `Agendar com ${m.nome}`}
+              <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</Pagina>
+
+<script>
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const item of document.querySelectorAll<HTMLElement>('[data-eq-loop]')) {
+    const v = item.querySelector('video');
+    if (!v || reduzir) continue;
+    const mostrar = () => {
+      v.preload = 'auto';
+      item.classList.add('eq__item--loop');
+      void v.play().catch(() => undefined);
+    };
+    const esconder = () => {
+      item.classList.remove('eq__item--loop');
+      v.pause();
+    };
+    item.addEventListener('pointerenter', mostrar);
+    item.addEventListener('pointerleave', esconder);
+    item.addEventListener('focusin', mostrar);
+    item.addEventListener('focusout', esconder);
+  }
+</script>
+
+<style>
+  .eq__cabeca {
+    display: grid;
+    gap: var(--e-4);
+    justify-items: start;
+    max-width: 40rem;
+  }
+  .eq__fala {
+    color: var(--texto-2);
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-size: var(--fs-lead);
+  }
+  .eq__fileira {
+    position: relative; /* prende os .sr-only (absolutos) dentro da rolagem: sem isso vazam a página */
+    margin-top: var(--e-6);
+    margin-inline: calc(var(--margem) * -1);
+    padding-inline: var(--margem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem);
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-pedra-clara) transparent;
+  }
+  .eq__fileira:focus-visible {
+    outline-offset: -2px;
+  }
+  .eq__lista {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(72vw, 17rem);
+    gap: var(--e-5);
+    margin: 0;
+    padding: 0 0 var(--e-4);
+    list-style: none;
+  }
+  .eq__item {
+    scroll-snap-align: start;
+  }
+  .eq__retrato {
+    position: relative;
+  }
+  .eq__retrato :global(.cartao) {
+    background: var(--cor-cafe);
+    --texto-2: var(--cor-papel); /* pedra clara sobre café fica abaixo do AA */
+  }
+  .eq__loop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--dur-3) var(--curva-entrada);
+  }
+  .eq__item--loop .eq__loop {
+    opacity: 1;
+  }
+  .eq__nome {
+    margin-top: var(--e-4);
+    font-size: var(--fs-h3);
+  }
+  .eq__nome a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .eq__nome a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: var(--fio);
+  }
+  .eq__funcao {
+    margin: var(--e-2) 0 var(--e-3);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .eq__agendar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--cor-ouro-claro);
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+// 5 · DOIS REAIS OU UM CABELO (página): o quadro em 3 linhas, um still de transformação, link pro Instagram.
+// Sem embed de terceiros (nada carrega do Instagram antes de a pessoa clicar).
+import { contato } from '../../config/contato.ts';
+import { doisReais as d } from '../../content/textos/home.ts';
+import { alt } from '../../content/textos/midia.ts';
+import Botao from '../base/Botao.astro';
+import Poster from '../base/Poster.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+---
+
+<Pagina tom="pagina" secao={d.folio} id="dois-reais" rotulo="Dois Reais ou um Cabelo">
+  <div class="dr">
+    <div class="dr__texto">
+      <Rotulo>O quadro da casa</Rotulo>
+      <h2>
+        {d.titulo.antes}
+        <em>{d.titulo.destaque}</em>
+        {d.titulo.depois}
+      </h2>
+      <ol class="dr__linhas">
+        {d.linhas.map((l, i) => (
+          <li>
+            <span class="numeros" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span>{l}</span>
+          </li>
+        ))}
+      </ol>
+      <Botao href={contato.instagram.valor.url} externo>
+        {d.botao}
+      </Botao>
+      <p class="dr__mais">
+        <a href="/dois-reais-ou-um-cabelo">Sobre o quadro e as temporadas</a>
+      </p>
+    </div>
+    <figure class="dr__still" data-revelar>
+      <Poster
+        imagem="q-revelacao-espelho"
+        alt={alt['q-revelacao-espelho'] ?? ''}
+        proporcao="4 / 5"
+        sizes="(min-width: 60rem) 36vw, 100vw"
+      />
+    </figure>
+  </div>
+</Pagina>
+
+<style>
+  .dr {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .dr__linhas {
+    display: grid;
+    gap: var(--e-3);
+    margin: var(--e-5) 0 var(--e-6);
+    padding: 0;
+    list-style: none;
+    max-width: 34rem;
+  }
+  .dr__linhas li {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    font-size: var(--fs-lead);
+    line-height: 1.4;
+  }
+  .dr__linhas .numeros {
+    color: var(--acento);
+    font-size: var(--fs-pequeno);
+    padding-top: 0.3em;
+  }
+  .dr__mais {
+    margin-top: var(--e-4);
+  }
+  .dr__mais a {
+    color: var(--acento);
+  }
+  .dr__still {
+    margin: 0;
+  }
+  @media (min-width: 60rem) {
+    .dr {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: center;
+      gap: var(--e-8);
+    }
+  }
+</style>

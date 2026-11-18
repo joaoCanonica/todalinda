@@ -1,0 +1,171 @@
+---
+// 7 · A CASA EM 3D (página → capa: o texto na página, o palco do 3D é um bloco de capa): teaser da ilha 3D (sessão 6B). Antes de carregar: a fachada desenhada
+// em traço Ouro (a partir da captura da fachada) e "Carregar o tour 3D". Nada carrega sozinho.
+// Até a ilha existir, o botão leva ao tour em /a-casa.
+import { casa3d as c } from '../../content/textos/home.ts';
+import { aCasa } from '../../content/textos/paginas.ts';
+import Botao from '../base/Botao.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+
+const ambientes = aCasa.ambientes.filter((a) => ['recepcao', 'salao', 'esmalteria'].includes(a.id));
+---
+
+<Pagina tom="pagina" secao={c.folio} id="a-casa" rotulo="A casa em 3D">
+  <div class="casa">
+    <div class="casa__texto">
+      <Rotulo>{c.folio}</Rotulo>
+      <h2>
+        {c.titulo.antes}
+        <em>{c.titulo.destaque}</em>
+        {c.titulo.depois}
+      </h2>
+      <p>{c.intro}</p>
+      <ol class="casa__ambientes" role="list">
+        {ambientes.map((a, i) => (
+          <li>
+            <span class="numeros" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span>
+              <strong>{a.nome}.</strong> {a.texto}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <figure class="casa__palco tom-capa" data-ilha-3d data-estado="pronto">
+      <!-- Fachada em traço, a partir da captura da fachada (media-originais/fotos/capturas 12-24-16). -->
+      <svg class="casa__fachada" viewBox="0 0 680 300" role="img" aria-labelledby="fachada-t">
+        <title id="fachada-t">Desenho em traço da fachada da Todalinda: sobrado com quatro janelas no alto, porta de madeira, vitrine e gramado.</title>
+        <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+          <rect x="26" y="10" width="474" height="148" />
+          <line x1="26" y1="26" x2="500" y2="26" />
+          <line x1="26" y1="146" x2="500" y2="146" />
+          <g>
+            <path d="M84 72h74l6 28h-86z" />
+            <rect x="88" y="100" width="66" height="22" />
+            <path d="M205 72h66l6 28h-78z" />
+            <rect x="209" y="100" width="58" height="22" />
+            <path d="M315 78h60l5 26h-70z" />
+            <rect x="318" y="104" width="54" height="20" />
+            <path d="M410 80h56l5 25h-66z" />
+            <rect x="413" y="105" width="50" height="19" />
+          </g>
+          <rect x="62" y="166" width="134" height="114" />
+          <rect x="80" y="190" width="98" height="90" />
+          <rect x="114" y="170" width="38" height="14" />
+          <rect x="214" y="196" width="54" height="74" />
+          <g stroke-width="1">
+            <line x1="219" y1="206" x2="263" y2="206" />
+            <line x1="219" y1="216" x2="263" y2="216" />
+            <line x1="219" y1="226" x2="263" y2="226" />
+            <line x1="219" y1="236" x2="263" y2="236" />
+            <line x1="219" y1="246" x2="263" y2="246" />
+            <line x1="219" y1="256" x2="263" y2="256" />
+          </g>
+          <rect x="268" y="166" width="184" height="90" />
+          <line x1="300" y1="166" x2="300" y2="256" />
+          <line x1="348" y1="166" x2="348" y2="256" />
+          <line x1="400" y1="166" x2="400" y2="256" />
+          <rect x="454" y="172" width="100" height="56" />
+          <rect x="530" y="214" width="98" height="40" />
+          <line x1="547" y1="254" x2="547" y2="272" />
+          <line x1="611" y1="254" x2="611" y2="272" />
+          <path d="M290 262h392" />
+          <path d="M290 280h392" />
+          <path d="M200 272h90v10h-90z" />
+          <path d="M206 284h84" />
+          <path d="M8 286h190" />
+        </g>
+        <g
+          fill="currentColor"
+          font-family="Manrope, sans-serif"
+          font-size="11"
+          letter-spacing="2"
+          text-anchor="middle"
+        >
+          <text x="504" y="196" font-size="9">
+            SOMOS
+          </text>
+          <text x="504" y="212">
+            TODALINDA
+          </text>
+          <text x="579" y="238">
+            TODALINDA
+          </text>
+          <text x="470" y="164" font-size="8">
+            3018 0082
+          </text>
+        </g>
+      </svg>
+      <figcaption class="casa__acoes">
+        <Botao href="/a-casa#tour">{c.botao}</Botao>
+        <Botao href="/a-casa" variante="secundario">
+          {c.botaoTour}
+        </Botao>
+        <p class="casa__aviso">{c.aviso}</p>
+      </figcaption>
+    </figure>
+  </div>
+</Pagina>
+
+<style>
+  .casa {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .casa__texto > p {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .casa__ambientes {
+    display: grid;
+    gap: var(--e-3);
+    margin: var(--e-5) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 34rem;
+    font-size: var(--fs-pequeno);
+  }
+  .casa__ambientes li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+  }
+  .casa__ambientes .numeros {
+    color: var(--acento);
+  }
+  .casa__ambientes strong {
+    font-weight: 600;
+  }
+  .casa__palco {
+    margin: 0;
+    padding: var(--e-5);
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .casa__fachada {
+    width: 100%;
+    color: var(--cor-ouro);
+  }
+  .casa__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+    margin-top: var(--e-5);
+  }
+  .casa__aviso {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: var(--fs-pequeno);
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .casa {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: center;
+      gap: var(--e-8);
+    }
+  }
+</style>

@@ -50,3 +50,14 @@ writeFileSync(
   ),
 );
 console.log('public/abertura/: filigrana.svg, logo.svg');
+
+// Logo mono em Ouro como arquivo (rodapé): carregado tarde, fora do HTML (o inline pesa 84 KB).
+mkdirSync(join(RAIZ, 'public/marca'), { recursive: true });
+writeFileSync(
+  join(RAIZ, 'public/marca/todalinda-logo-mono-ouro.svg'),
+  limpar(readFileSync(join(DEST, 'todalinda-logo-mono.svg'), 'utf8')).replace(
+    /currentColor/g,
+    '#AE8C55',
+  ),
+);
+console.log('public/marca/todalinda-logo-mono-ouro.svg');

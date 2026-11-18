@@ -1,0 +1,58 @@
+---
+// 9 · O QUE DIZEM (capa): 3 avaliações literais do Google em citação grande. Sem nota agregada.
+import { citacoes } from '../../config/avaliacoes.ts';
+import { oQueDizem as o } from '../../content/textos/home.ts';
+import Citacao from '../base/Citacao.astro';
+import Link from '../base/Link.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+import { contato } from '../../config/contato.ts';
+
+const escolhidas = o.destaques
+  .map((id) => citacoes.find((c) => c.id === id))
+  .filter((c) => c !== undefined);
+---
+
+<Pagina tom="capa" secao={o.folio} id="o-que-dizem" rotulo="O que dizem">
+  <Rotulo tom="acento">{o.folio}</Rotulo>
+  <h2>
+    {o.titulo.antes}
+    <em>{o.titulo.destaque}</em>
+    {o.titulo.depois}
+  </h2>
+  <ul class="dizem" role="list">
+    {escolhidas.map((c) => (
+      <li data-revelar>
+        <Citacao autor={c.autor} fonte={c.selo} link={c.link}>
+          {c.texto}
+        </Citacao>
+      </li>
+    ))}
+  </ul>
+  <p class="dizem__ficha">
+    <Link href={contato.mapas.google.valor}>{o.linkFicha}</Link>
+  </p>
+</Pagina>
+
+<style>
+  .dizem {
+    display: grid;
+    gap: var(--e-7);
+    margin: var(--e-6) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  @media (min-width: 60rem) {
+    .dizem {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--e-6);
+    }
+    .dizem :global(blockquote) {
+      font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    }
+  }
+  .dizem__ficha {
+    margin-top: var(--e-6);
+  }
+</style>

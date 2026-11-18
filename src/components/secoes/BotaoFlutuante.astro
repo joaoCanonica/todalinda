@@ -1,0 +1,66 @@
+---
+// Botão flutuante "Agendar" (só no mobile). Some quando a seção Agendar (#agendar) ou Visite (#visite)
+// está na tela, e enquanto a capa (que já tem o botão) está visível.
+import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+---
+
+<a class="flutuante" href="#agendar" data-flutuante data-whatsapp={linkWhatsApp(MENSAGENS.geral())}>
+  Agendar
+</a>
+
+<script>
+  const b = document.querySelector<HTMLElement>('[data-flutuante]');
+  const alvos = ['[data-capa]', '#agendar', '#visite']
+    .map((s) => document.querySelector(s))
+    .filter((x): x is Element => !!x);
+  if (b && alvos.length) {
+    b.toggleAttribute('data-oculto', true); // a capa abre a página: começa oculto
+    const visiveis = new Set<Element>();
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) {
+        if (e.isIntersecting) visiveis.add(e.target);
+        else visiveis.delete(e.target);
+      }
+      b.toggleAttribute('data-oculto', visiveis.size > 0);
+    });
+    for (const a of alvos) io.observe(a);
+  }
+</script>
+
+<style>
+  .flutuante {
+    position: fixed;
+    inset-inline: var(--margem);
+    inset-block-end: calc(var(--e-4) + env(safe-area-inset-bottom));
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 52px;
+    background: var(--cor-noite);
+    color: var(--cor-papel);
+    border: var(--fio) solid var(--cor-ouro);
+    font-weight: 600;
+    font-size: var(--fs-pequeno);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      transform var(--dur-3) var(--curva-entrada),
+      opacity var(--dur-2) var(--curva-precisa);
+  }
+  .flutuante[data-oculto] {
+    transform: translateY(calc(100% + var(--e-5)));
+    opacity: 0;
+    visibility: hidden; /* fora do foco do teclado quando oculto */
+    transition:
+      transform var(--dur-3) var(--curva-saida),
+      opacity var(--dur-2) var(--curva-precisa),
+      visibility 0s linear var(--dur-3);
+  }
+  @media (min-width: 60rem) {
+    .flutuante {
+      display: none;
+    }
+  }
+</style>

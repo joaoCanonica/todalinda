@@ -1,0 +1,150 @@
+---
+// 13 · VISITE (capa): fachada (captura pequena, moldura fina), endereço grande com copiar, horário com
+// hoje destacado e status ao vivo, mapa estático, Google Maps / Waze / Apple Mapas, telefone, Instagram.
+import { contato } from '../../config/contato.ts';
+import { visite as v } from '../../content/textos/home.ts';
+import { alt } from '../../content/textos/midia.ts';
+import MapaEstatico from '../base/MapaEstatico.astro';
+import Poster from '../base/Poster.astro';
+import Rotulo from '../base/Rotulo.astro';
+import StatusHorario from '../base/StatusHorario.astro';
+import TabelaHorario from '../base/TabelaHorario.astro';
+import Pagina from '../edicao/Pagina.astro';
+
+const e = contato.endereco.valor;
+const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - ${e.uf}, ${e.cep}`;
+---
+
+<Pagina tom="capa" secao={v.folio} id="visite" rotulo="Visite">
+  <div class="vis">
+    <div class="vis__endereco">
+      <Rotulo tom="acento">{v.folio}</Rotulo>
+      <h2 class="vis__rua">
+        {v.titulo.antes}
+        <em>{v.titulo.destaque}</em>
+        {v.titulo.depois}
+      </h2>
+      <p class="vis__linha">{v.linha}</p>
+      <address class="vis__address">
+        {e.bairro} · {e.cidade}/{e.uf} · <span class="numeros">{e.cep}</span>
+      </address>
+      <button type="button" class="vis__copiar versalete" data-copiar={linhaCopiar} hidden>
+        <span data-copiar-texto>Copiar endereço</span>
+      </button>
+      <figure class="vis__fachada">
+        <div class="vis__moldura">
+          <Poster
+            imagem="cap-12-24-16"
+            alt={alt['cap-12-24-16'] ?? ''}
+            sizes="(min-width: 60rem) 24rem, 90vw"
+          />
+        </div>
+      </figure>
+    </div>
+    <div class="vis__horario">
+      <h3 class="versalete vis__subtitulo">Horário</h3>
+      <StatusHorario />
+      <TabelaHorario />
+      <h3 class="versalete vis__subtitulo">Contato</h3>
+      <ul class="vis__contato" role="list">
+        <li>
+          <a href={`tel:${contato.telefone.valor.tel}`}>Recepção {contato.telefone.valor.exibir}</a>
+        </li>
+        <li>
+          <a href={contato.instagram.valor.url} rel="noopener" target="_blank">
+            Instagram @{contato.instagram.valor.usuario}
+            <span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="vis__mapa">
+      <h3 class="versalete vis__subtitulo">Como chegar</h3>
+      <MapaEstatico />
+    </div>
+  </div>
+</Pagina>
+
+<script>
+  for (const b of document.querySelectorAll<HTMLButtonElement>('[data-copiar]')) {
+    if (!navigator.clipboard) continue;
+    b.hidden = false;
+    const t = b.querySelector('[data-copiar-texto]');
+    b.addEventListener('click', () => {
+      void navigator.clipboard.writeText(b.dataset.copiar ?? '').then(() => {
+        if (t) t.textContent = 'Endereço copiado';
+        setTimeout(() => t && (t.textContent = 'Copiar endereço'), 2500);
+      });
+    });
+  }
+</script>
+
+<style>
+  .vis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .vis__rua {
+    font-size: var(--fs-h1);
+    overflow-wrap: anywhere;
+  }
+  .vis__linha {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .vis__address {
+    font-style: normal;
+    font-size: var(--fs-lead);
+  }
+  .vis__copiar {
+    margin-top: var(--e-4);
+    min-height: 44px;
+    padding: 0 1.1em;
+    background: transparent;
+    color: var(--texto);
+    border: var(--fio) solid var(--fio-cor);
+    cursor: pointer;
+  }
+  .vis__copiar[hidden] {
+    display: none;
+  }
+  .vis__fachada {
+    margin: var(--e-6) 0 0;
+    max-width: 24rem; /* captura: no máximo 480 px reais */
+  }
+  .vis__moldura {
+    padding: 6px;
+    border: var(--fio) solid var(--cor-papel);
+  }
+  .vis__subtitulo {
+    margin: var(--e-6) 0 var(--e-3);
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+  }
+  .vis__horario > .vis__subtitulo:first-child,
+  .vis__mapa > .vis__subtitulo:first-child {
+    margin-top: 0;
+  }
+  .vis__contato {
+    display: grid;
+    gap: var(--e-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .vis__contato a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--cor-ouro-claro);
+  }
+  @media (min-width: 60rem) {
+    .vis {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
+      gap: var(--e-7);
+    }
+  }
+</style>

@@ -1,6 +1,43 @@
 ---
-// Home: por enquanto, só a abertura e a capa (sessão 4). O restante entra na sessão 6A.
+// Home: abertura + capa (sessão 4) e as 13 seções da edição + rodapé (sessão 6A).
+// Ordem e tons: Prompt 6A. O fólio numera sozinho (contador CSS) na ordem em que as seções aparecem.
 import DocumentoCapa from '../components/capa/DocumentoCapa.astro';
+import Agendar from '../components/secoes/Agendar.astro';
+import AntesDepois from '../components/secoes/AntesDepois.astro';
+import AvaliarGoogle from '../components/secoes/AvaliarGoogle.astro';
+import BotaoFlutuante from '../components/secoes/BotaoFlutuante.astro';
+import Casa3D from '../components/secoes/Casa3D.astro';
+import DoisReais from '../components/secoes/DoisReais.astro';
+import Editorial from '../components/secoes/Editorial.astro';
+import Equipe from '../components/secoes/Equipe.astro';
+import Momento from '../components/secoes/Momento.astro';
+import OQueDizem from '../components/secoes/OQueDizem.astro';
+import Revista from '../components/secoes/Revista.astro';
+import Rodape from '../components/secoes/Rodape.astro';
+import Sumario from '../components/secoes/Sumario.astro';
+import Trabalhos from '../components/secoes/Trabalhos.astro';
+import Visite from '../components/secoes/Visite.astro';
+import { home } from '../content/textos/index.ts';
 ---
 
-<DocumentoCapa variante="a" />
+<DocumentoCapa variante="a" titulo={home.meta.title} descricao={home.meta.description}>
+  <Editorial />
+  <Sumario />
+  <AntesDepois />
+  <Trabalhos />
+  <DoisReais />
+  <Equipe />
+  <Casa3D />
+  <Momento />
+  <OQueDizem />
+  <AvaliarGoogle />
+  <Revista />
+  <Agendar />
+  <Visite />
+  <Rodape slot="rodape" />
+  <BotaoFlutuante slot="rodape" />
+</DocumentoCapa>
+
+<script>
+  import '../scripts/revelar.ts';
+</script>

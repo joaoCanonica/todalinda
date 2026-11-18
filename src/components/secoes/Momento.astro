@@ -1,0 +1,87 @@
+---
+// 8 · MOMENTO TODALINDA (página): a fala da Edna sobre clientes que viram história
+// (vídeo sob demanda, com legenda HTML) + a foto da equipe reunida.
+import { momento as m } from '../../content/textos/home.ts';
+import { txt } from '../../content/textos/fontes.ts';
+import { alt } from '../../content/textos/midia.ts';
+import Poster from '../base/Poster.astro';
+import Etiqueta from '../edicao/Etiqueta.astro';
+import Pagina from '../edicao/Pagina.astro';
+import VideoSobDemanda from './VideoSobDemanda.astro';
+---
+
+<Pagina tom="pagina" secao={m.folio} id="momento" rotulo="Momento Todalinda">
+  <div class="momento">
+    <div class="momento__texto">
+      <Etiqueta hashtag="#MomentoTodalinda" />
+      <h2>
+        {m.titulo.antes}
+        <em>{m.titulo.destaque}</em>
+        {m.titulo.depois}
+      </h2>
+      <blockquote class="momento__fala">
+        {m.fala.map((f) => (
+          <p>{txt(f)}</p>
+        ))}
+      </blockquote>
+      <p class="momento__assinatura versalete">{m.assinatura}</p>
+      <VideoSobDemanda
+        id="v-edna-clientes"
+        rotulo={m.botaoVideo}
+        titulo="Edna Antoniolli: clientes que viram história"
+        descricao={m.descricaoVideo}
+      />
+    </div>
+    <figure class="momento__foto" data-revelar>
+      <Poster
+        imagem="f-851041550"
+        alt={alt['f-851041550'] ?? ''}
+        sizes="(min-width: 60rem) 45vw, 100vw"
+      />
+      <figcaption class="versalete">{m.legendaFoto}</figcaption>
+    </figure>
+  </div>
+</Pagina>
+
+<style>
+  .momento {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .momento__texto {
+    display: grid;
+    gap: var(--e-4);
+    justify-items: start;
+  }
+  .momento__fala {
+    margin: var(--e-3) 0 0;
+    padding-inline-start: var(--e-5);
+    border-inline-start: var(--fio) solid var(--cor-mocha);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lead);
+    line-height: 1.45;
+  }
+  .momento__fala p:last-child {
+    font-style: italic;
+    font-weight: 600;
+  }
+  .momento__assinatura {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  .momento__foto {
+    margin: 0;
+  }
+  .momento__foto figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .momento {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: center;
+      gap: var(--e-8);
+    }
+  }
+</style>

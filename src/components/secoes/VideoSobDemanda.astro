@@ -1,0 +1,119 @@
+---
+// Vídeo com som e legenda HTML, carregado só quando a pessoa pede (nada baixa antes do clique).
+// A legenda HTML vem desligada porque o vídeo já tem legenda queimada; liga no menu do player.
+// Sem JS: o botão é um link para o MP4. Com JS: abre num <dialog> nativo, com controles e legenda.
+import { video } from '../../lib/midia.ts';
+
+interface Props {
+  id: string;
+  trecho?: string;
+  rotulo: string;
+  titulo: string;
+  descricao: string;
+}
+const { id, trecho = 'inteiro', rotulo, titulo, descricao } = Astro.props;
+const v = video(id, trecho, '540x960');
+const dialogo = `dlg-${id}`;
+---
+
+<a class="sob-demanda versalete" href={v.mp4} data-sob-demanda={dialogo}>
+  <span class="sob-demanda__icone" aria-hidden="true"></span>
+  {rotulo}
+</a>
+<dialog id={dialogo} class="sob-demanda__dialogo tom-capa" aria-label={titulo}>
+  <div class="sob-demanda__caixa">
+    <p class="versalete sob-demanda__titulo">{titulo}</p>
+    <video
+      controls
+      playsinline
+      preload="none"
+      data-poster={v.poster}
+      width={v.w}
+      height={v.h}
+      aria-describedby={`${dialogo}-d`}
+    >
+      <source data-src={v.webm} type="video/webm" />
+      <source data-src={v.mp4} type="video/mp4" />
+      {v.legenda && <track kind="captions" srclang="pt-BR" label="Português" src={v.legenda} />}
+    </video>
+    <p id={`${dialogo}-d`} class="sob-demanda__descricao">
+      {descricao}
+    </p>
+    <form method="dialog">
+      <button class="versalete sob-demanda__fechar">Fechar</button>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-sob-demanda]')) {
+    const dlg = document.getElementById(a.dataset.sobDemanda ?? '') as HTMLDialogElement | null;
+    const v = dlg?.querySelector('video');
+    if (!dlg || !v || !('showModal' in dlg)) continue;
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      for (const s of v.querySelectorAll<HTMLSourceElement>('source[data-src]')) {
+        s.src = s.dataset.src ?? '';
+        s.removeAttribute('data-src');
+      }
+      if (v.dataset.poster) v.poster = v.dataset.poster;
+      v.load();
+      dlg.showModal();
+      void v.play().catch(() => undefined);
+    });
+    dlg.addEventListener('close', () => v.pause());
+  }
+</script>
+
+<style>
+  .sob-demanda {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7em;
+    min-height: 44px;
+    color: var(--texto);
+    text-decoration: none;
+    border-bottom: var(--fio) solid currentColor;
+  }
+  .sob-demanda__icone {
+    width: 0;
+    height: 0;
+    border-block: 0.4em solid transparent;
+    border-inline-start: 0.65em solid var(--acento);
+  }
+  .sob-demanda__dialogo {
+    width: min(92vw, 26rem);
+    max-height: 94svh;
+    padding: 0;
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .sob-demanda__dialogo::backdrop {
+    background: color-mix(in srgb, var(--cor-noite) 85%, transparent);
+  }
+  .sob-demanda__caixa {
+    display: grid;
+    gap: var(--e-3);
+    padding: var(--e-4);
+  }
+  .sob-demanda__caixa video {
+    width: 100%;
+    max-height: 70svh;
+    background: #000;
+  }
+  .sob-demanda__titulo,
+  .sob-demanda__descricao {
+    margin: 0;
+  }
+  .sob-demanda__descricao {
+    font-size: var(--fs-pequeno);
+    color: var(--texto-2);
+  }
+  .sob-demanda__fechar {
+    min-height: 44px;
+    padding: 0 1.2em;
+    background: transparent;
+    color: var(--texto);
+    border: var(--fio) solid var(--fio-cor);
+    cursor: pointer;
+  }
+</style>

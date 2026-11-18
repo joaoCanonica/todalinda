@@ -112,3 +112,13 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Página do vídeo "Toda Pontual":** a descrição fala do cartão, sem sorteio (o site não divulga sorteio).
 - **Tratamentos**: o texto avisa que tratamento capilar é técnica de salão, não de saúde, e que queda pede dermatologista.
 - **Coleção `servicos`**: processo, FAQ e resumo agora vêm de `src/content/textos/servicos.ts` (teste de sincronia).
+
+## Sessão 6A — Home (18/11/2026)
+- **Idade a confirmar:** o vídeo "transformação" aparece em Antes e depois **só no preview** (com PROVISÓRIO). Em produção, as seções escondem sozinhas a mídia "verificar" (`src/components/secoes/util.ts`) em vez de travar o build; com a confirmação, ela volta.
+- **Pares de foto antes/depois:** prováveis, com PROVISÓRIO até a casa confirmar.
+- **Revista:** capas tipográficas. A captura do flip (Flipsnack) não foi possível daqui (rede) e os links ainda não estão no repositório.
+- **3D:** o bloco "A casa" mostra a fachada em traço Ouro (desenhada a partir da captura) e leva a /a-casa; a ilha 3D entra na sessão 6B.
+- **Agendar:** botões por serviço → WhatsApp, até o agendador da sessão 7 (id #agendar reservado).
+- **Rodapé:** o logo mono oficial (em Ouro) entra como arquivo carregado tarde (`public/marca/`), não inline: inline somava 84 KB ao HTML de toda visita.
+- **Tabela de horário** ainda diz "Feriados: fechado" (PROVISÓRIO, componente da sessão 3); alinhar com o texto "confirme pelo WhatsApp" quando a casa responder.
+- **LCP simulado** do Lighthouse: 2,03–2,10 s (a simulação espera o HTML inteiro, 26 KB comprimidos); medido com 4G real: 1,58–1,64 s.

@@ -1,0 +1,134 @@
+---
+// 12 · AGENDAR (página): até o agendador da sessão 7, um botão por serviço que abre o WhatsApp
+// com a mensagem pronta. O id #agendar é o ponto onde o agendador vai entrar.
+import { getCollection } from 'astro:content';
+import { agendar as a } from '../../content/textos/home.ts';
+import { servicos as textos } from '../../content/textos/servicos.ts';
+import { contato } from '../../config/contato.ts';
+import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+import Botao from '../base/Botao.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+
+const servicos = (await getCollection('servicos'))
+  .map((s) => s.data)
+  .filter((s) => s.publicado)
+  .sort((x, y) => x.ordem - y.ordem);
+---
+
+<Pagina tom="pagina" secao={a.folio} id="agendar" rotulo="Agendar">
+  <div class="ag">
+    <div class="ag__texto">
+      <Rotulo>{a.folio}</Rotulo>
+      <h2>
+        {a.titulo.antes}
+        <em>{a.titulo.destaque}</em>
+        {a.titulo.depois}
+      </h2>
+      <p>{a.intro}</p>
+      <p class="ag__nota">
+        <strong>{a.primeiraVez}</strong>
+      </p>
+      <p class="ag__nota">{a.preco}</p>
+    </div>
+    <div class="ag__servicos" data-agendador>
+      <p class="versalete ag__rotulo" id="ag-rotulo">
+        Escolha o serviço
+      </p>
+      <ul role="list" aria-labelledby="ag-rotulo">
+        {servicos.map((s) => (
+          <li>
+            <a
+              class="ag__servico"
+              href={linkWhatsApp(textos[s.id]?.whatsapp ?? MENSAGENS.servico(s.nome))}
+              rel="noopener"
+              target="_blank"
+            >
+              <span>{s.nome}</span>
+              <span class="ag__seta" aria-hidden="true">
+                →
+              </span>
+              <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="ag__outros">
+        <Botao href={linkWhatsApp(MENSAGENS.geral())} externo>
+          Agendar outro horário
+        </Botao>
+        <a class="ag__tel" href={`tel:${contato.telefone.valor.tel}`}>
+          Prefere ligar? {contato.telefone.valor.exibir}
+        </a>
+      </div>
+    </div>
+  </div>
+</Pagina>
+
+<style>
+  .ag {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .ag__texto > p {
+    margin-top: var(--e-4);
+  }
+  .ag__nota {
+    color: var(--texto-2);
+  }
+  .ag__nota strong {
+    color: var(--texto);
+    font-weight: 600;
+  }
+  .ag__rotulo {
+    margin: 0 0 var(--e-3);
+    color: var(--texto-2);
+  }
+  .ag__servicos ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .ag__servico {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 52px;
+    padding-block: 0.6em;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    color: var(--texto);
+    text-decoration: none;
+  }
+  .ag__seta {
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    transition: transform var(--dur-2) var(--curva-entrada);
+  }
+  .ag__servico:hover .ag__seta,
+  .ag__servico:focus-visible .ag__seta {
+    transform: translateX(4px);
+  }
+  .ag__outros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+    margin-top: var(--e-5);
+  }
+  .ag__tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--acento);
+  }
+  @media (min-width: 60rem) {
+    .ag {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--e-8);
+    }
+  }
+</style>

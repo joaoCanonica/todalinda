@@ -12,6 +12,7 @@ type Props =
       video?: never;
       class?: string;
       proporcao?: string;
+      lqip?: boolean;
     }
   | {
       video: string;
@@ -23,10 +24,12 @@ type Props =
       prioridade?: boolean;
       class?: string;
       proporcao?: string;
+      lqip?: boolean;
     };
 
 const p = Astro.props;
 const classe = p.class ?? '';
+// LQIP (base64 inline, não comprime): por padrão só nas imagens prioritárias; as de baixo ficam no fundo café.
 const prioridade = p.prioridade ?? false;
 const posterImagem = 'posterImagem' in p ? p.posterImagem : undefined;
 const img = p.imagem ? imagem(p.imagem) : posterImagem ? imagem(posterImagem) : null;
@@ -40,7 +43,7 @@ const proporcao = p.proporcao ?? `${w} / ${h}`;
 
 <div
   class:list={['poster', classe]}
-  style={`aspect-ratio: ${proporcao}; background-image: url(${img?.lqip ?? ''})`}
+  style={`aspect-ratio: ${proporcao};${(p.lqip ?? prioridade) && img?.lqip ? ` background-image: url(${img.lqip})` : ''}`}
   data-bloqueio={vid?.bloqueio ?? img?.bloqueio}
 >
   {vid ? (

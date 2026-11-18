@@ -10,13 +10,9 @@ const [primeiro, ...resto] = nome.split(' ');
 ---
 
 <article class="cartao">
-  <p class="cartao__nome" aria-label={nome}>
-    <span aria-hidden="true">{primeiro}</span>
-    {resto.length > 0 && (
-      <span aria-hidden="true" class="cartao__sobrenome">
-        {resto.join(' ')}
-      </span>
-    )}
+  <p class="cartao__nome">
+    <span>{primeiro}</span>
+    {resto.length > 0 && <span class="cartao__sobrenome">{resto.join(' ')}</span>}
   </p>
   <p class="cartao__funcao versalete">{funcao}</p>
   {anos && (

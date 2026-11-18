@@ -1,0 +1,116 @@
+---
+// 14 · RODAPÉ: logo mono, endereço, WhatsApp e telefone escritos, horário, Instagram,
+// razão social e CNPJ, privacidade, "Avaliar no Google".
+import { contato } from '../../config/contato.ts';
+import { rodape as r } from '../../content/textos/geral.ts';
+import { linkAvaliar } from '../../lib/avaliar.ts';
+import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+---
+
+<footer class="rodape tom-capa">
+  <div class="rodape__grade">
+    <div class="rodape__marca">
+      <!-- logo mono oficial (o mesmo SVG, em Ouro), como arquivo carregado tarde: inline pesaria 84 KB no HTML -->
+      <img
+        class="rodape__logo"
+        src="/marca/todalinda-logo-mono-ouro.svg"
+        width="120"
+        height="120"
+        alt="Todalinda"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="rodape__assinatura">{r.assinatura}</p>
+    </div>
+    <address class="rodape__bloco">
+      <span class="versalete rodape__titulo">Endereço</span>
+      <span>{r.endereco}</span>
+    </address>
+    <div class="rodape__bloco">
+      <span class="versalete rodape__titulo">Contato</span>
+      <a href={linkWhatsApp(MENSAGENS.geral())} rel="noopener" target="_blank">
+        {r.whatsapp}
+        <span class="sr-only"> (abre em nova aba)</span>
+      </a>
+      <a href={`tel:${contato.telefone.valor.tel}`}>{r.telefone}</a>
+      <a href={contato.instagram.valor.url} rel="noopener" target="_blank">
+        Instagram {r.instagram}
+        <span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </div>
+    <div class="rodape__bloco">
+      <span class="versalete rodape__titulo">Horário</span>
+      <span>{r.horario}</span>
+      <a href={linkAvaliar().url} rel="noopener" target="_blank">
+        {r.avaliar}
+        <span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </div>
+  </div>
+  <div class="rodape__legal">
+    <p>{r.legal}</p>
+    <p>
+      <a href="/privacidade">{r.privacidade}</a> · {r.credito}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding: var(--e-8) var(--margem) calc(var(--e-6) + env(safe-area-inset-bottom));
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .rodape__grade {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .rodape__logo {
+    width: 7.5rem;
+    height: auto;
+  }
+  .rodape__assinatura {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .rodape__bloco {
+    display: grid;
+    align-content: start;
+    gap: var(--e-1);
+    font-style: normal;
+  }
+  .rodape__titulo {
+    color: var(--acento);
+    margin-bottom: var(--e-1);
+  }
+  .rodape__bloco a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--cor-papel);
+    text-underline-offset: 0.22em;
+  }
+  .rodape__legal {
+    max-width: var(--largura-max);
+    margin-top: var(--e-7);
+    padding-top: var(--e-4);
+    border-top: var(--fio) solid var(--fio-cor);
+    font-size: var(--fs-pequeno);
+    color: var(--texto-2);
+  }
+  .rodape__legal p {
+    margin: 0 0 var(--e-2);
+    max-width: none;
+  }
+  .rodape__legal a {
+    color: inherit;
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 0.7em;
+  }
+  @media (min-width: 60rem) {
+    .rodape__grade {
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    }
+  }
+</style>

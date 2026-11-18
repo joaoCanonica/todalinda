@@ -1,0 +1,115 @@
+---
+// 11 · A REVISTA (capa): as 3 edições como capas. A captura do flip (Flipsnack) não foi possível
+// neste ambiente (rede restrita) e os links ainda não estão no repositório: capa tipográfica + PROVISÓRIO.
+import { paginas } from '../../content/textos/index.ts';
+import { revista as r } from '../../content/textos/home.ts';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+import Provisorio from '../Provisorio.astro';
+
+const edicoes = paginas.revista.edicoes.map((e, i) => ({
+  ...e,
+  numero: String(i + 1).padStart(2, '0'),
+  link: null as string | null,
+}));
+---
+
+<Pagina tom="capa" secao={r.folio} id="revista" rotulo="A revista">
+  <Rotulo tom="acento">{r.folio}</Rotulo>
+  <h2>
+    {r.titulo.antes}
+    <em>{r.titulo.destaque}</em>
+    {r.titulo.depois}
+  </h2>
+  <p class="rev__intro">{r.intro}</p>
+  <ul class="rev" role="list">
+    {edicoes.map((e) => (
+      <li class="rev__item" data-revelar>
+        <article class="rev__capa" aria-label={`Revista Todalinda: ${e.nome}, ${e.data}`}>
+          <p class="rev__cabeca versalete" aria-hidden="true">
+            Todalinda
+          </p>
+          <p class="rev__numero numeros" aria-hidden="true">
+            {e.numero}
+          </p>
+          <h3 class="rev__nome">{e.nome}</h3>
+          <p class="rev__data versalete">
+            {e.data} · {e.paginas} páginas
+          </p>
+        </article>
+        <p class="rev__linha">{e.linha}</p>
+        {e.link ? (
+          <a class="rev__link" href={e.link} rel="noopener" target="_blank">
+            Ler a edição<span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        ) : (
+          <p class="rev__link rev__link--pendente">
+            <Provisorio motivo="link do Flipsnack pendente (está no Linktree)">
+              Edição online em breve
+            </Provisorio>
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+</Pagina>
+
+<style>
+  .rev__intro {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .rev {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--e-6);
+    margin: var(--e-6) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .rev__capa {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    aspect-ratio: 3 / 4;
+    padding: var(--e-5);
+    border: var(--fio) solid var(--fio-cor);
+    background: linear-gradient(var(--cor-cafe), var(--cor-cafe)) padding-box;
+  }
+  .rev__cabeca {
+    margin: 0;
+    padding-bottom: var(--e-2);
+    border-bottom: var(--fio) solid var(--fio-cor);
+    color: var(--cor-papel);
+    letter-spacing: 0.4em;
+  }
+  .rev__numero {
+    align-self: center;
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(4rem, 3rem + 4vw, 6.5rem);
+    line-height: 1;
+    color: var(--cor-ouro-claro);
+  }
+  .rev__nome {
+    font-size: var(--fs-h3);
+    font-style: italic;
+    font-weight: 700;
+  }
+  .rev__data {
+    margin: var(--e-3) 0 0;
+    color: var(--cor-ouro);
+  }
+  .rev__linha {
+    margin: var(--e-4) 0 var(--e-2);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .rev__link {
+    font-size: var(--fs-pequeno);
+    color: var(--cor-ouro-claro);
+  }
+  .rev__link--pendente {
+    color: var(--texto-2);
+  }
+</style>
