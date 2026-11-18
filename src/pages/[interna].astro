@@ -3,18 +3,21 @@
 // então elas são publicadas por aqui. Sempre noindex.
 import DocumentoCapa from '../components/capa/DocumentoCapa.astro';
 import Estilo from './_estilo.astro';
+import Textos from './_textos.astro';
 
 export function getStaticPaths() {
   return [
     { params: { interna: '_estilo' } },
     { params: { interna: '_capa-a' } },
     { params: { interna: '_capa-b' } },
+    { params: { interna: '_textos' } },
   ];
 }
 const { interna } = Astro.params;
 ---
 
 {interna === '_estilo' && <Estilo />}
+{interna === '_textos' && <Textos />}
 {interna === '_capa-a' && <DocumentoCapa variante="a" titulo="Capa A (ondas) · Todalinda" />}
 {interna === '_capa-b' && (
   <DocumentoCapa

@@ -2,33 +2,33 @@
   "id": "loiros",
   "nome": "Loiros",
   "grupo": "cor",
-  "resumo": "Loiros perolados, bege e manteiga, do clareamento gradual ao loiro de tinta em fios brancos.",
+  "resumo": "Loiro é uma família de tons. Perolado é mais frio, bege é neutro, manteiga é mais quente. O tom certo depende da sua pele, da base do fio e do que ele já passou.",
   "especialidades": ["colorimetria avançada", "mechas"],
   "processo": [
     {
       "etapa": "avaliacao",
       "titulo": "Avaliação",
-      "texto": "Olhamos o fio, o histórico de química e o que você quer. É aqui que a técnica e o valor são definidos."
+      "texto": "Antes de qualquer química, a profissional olha o seu fio, pergunta o que já foi feito nele e o que você quer. É aqui que a técnica e o valor são definidos."
     },
     {
       "etapa": "teste-de-mecha",
       "titulo": "Teste de mecha",
-      "texto": "Antes de qualquer química, uma mecha de teste mostra como o fio reage."
+      "texto": "Uma mecha pequena recebe o produto primeiro. Ela mostra como o seu fio reage, e o resultado orienta o resto do trabalho."
     },
     {
       "etapa": "tecnica",
       "titulo": "Técnica",
-      "texto": "Clareamento ou coloração conforme o fio, com tonalização para chegar ao tom combinado."
+      "texto": "Clareamento em mechas ou coloração, conforme o fio, e tonalização para chegar ao tom combinado."
     },
     {
       "etapa": "tratamento",
       "titulo": "Tratamento",
-      "texto": "Cuidado com o fio indicado na avaliação, antes ou depois da técnica."
+      "texto": "O cuidado indicado na avaliação (hidratação, nutrição ou reconstrução) entra antes ou depois da técnica, conforme o fio pede."
     },
     {
       "etapa": "finalizacao",
       "titulo": "Finalização",
-      "texto": "Escova ou modelagem e orientação de manutenção em casa."
+      "texto": "Escova ou modelagem, e a orientação do que fazer em casa até a próxima visita."
     }
   ],
   "profissionais": {
@@ -51,12 +51,24 @@
       "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
     },
     {
-      "pergunta": "Por que fazer teste de mecha?",
-      "resposta": "Porque mostra como o seu fio reage à química antes do procedimento completo."
+      "pergunta": "Precisa fazer teste de mecha?",
+      "resposta": "Sim. Em loiros e em qualquer química, a casa começa pela avaliação e pelo teste de mecha. É o que mostra como o seu fio reage antes do procedimento completo."
+    },
+    {
+      "pergunta": "Fiz química nos últimos meses. Posso fazer?",
+      "resposta": "Conte isso na hora de agendar. O histórico de química muda a técnica e às vezes o tempo entre um procedimento e outro; a profissional decide com você na avaliação."
+    },
+    {
+      "pergunta": "Quanto tempo dura?",
+      "resposta": "Depende do seu fio, da rotina e dos cuidados em casa. Na avaliação, a profissional indica de quanto em quanto tempo voltar para a manutenção."
+    },
+    {
+      "pergunta": "Dá para fazer loiro em cabelo branco?",
+      "resposta": "Dá, e em alguns casos só com coloração. A avaliação mostra se o seu fio pede mechas, coloração ou as duas coisas."
     }
   ],
   "publicado": true,
   "opcional": false,
-  "textoRevisado": false,
+  "textoRevisado": true,
   "ordem": 2
 }

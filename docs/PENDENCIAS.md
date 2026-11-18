@@ -88,3 +88,27 @@ Lista viva gerada pela config: `pnpm validate-config --tudo`. Resumo do que depe
 - **"Agendar horário"** abre o WhatsApp geral; o agendador entra na sessão 7 (o botão fica igual, troca só o destino).
 - **Meta description** da home: sessão 8 (SEO). Hoje o Lighthouse SEO dá 54 só por noindex + falta de description (esperado no preview).
 - O quadro "revelação no espelho" e o loop "ondas" são do filme institucional com música de direitos desconhecidos: usados mudos.
+
+## Sessão 5 — Textos (18/11/2026)
+
+Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Frases reais vão com fonte (`real()`); o resto é redação.
+
+### Para a Edna/casa confirmar ou autorizar
+- **Manifesto "Não é sobre luxo. É sobre merecimento."** (legenda de 22/08/2026 no perfil pessoal da Edna): a investigação pede "usar com autorização e crédito". Usado em valores e na história; **confirmar a autorização**.
+- **"Hoje sim temos fila de espera"**: atribuída à revista dos 5 anos (investigação §3). Conferir a edição exata.
+- **Isabela na casa desde março de 2020** (revista 2023): confirmar.
+- **Explicações técnicas** (blindagem nas unhas, mechas finas na morena iluminada, perolado/bege/manteiga): revisar com Isabela, Andressa e Thaynara.
+- **Quem faz cada serviço:** os campos "quem faz" ficam vazios até a casa confirmar (o teste garante).
+- **Duração dos atendimentos:** omitida em todas as páginas; a FAQ diz que "a recepção informa a estimativa".
+- **Estacionamento, formas de pagamento, cartão-presente, noiva fora do salão, acessibilidade:** fora dos textos até confirmar (o teste barra essas palavras).
+- **Feriados:** os textos dizem "em feriados, confirme pelo WhatsApp" (não afirmam que a casa fecha).
+- **Domínio:** o cartão do QR monta "ou acesse <domínio>/avaliar" só quando `PUBLIC_SITE_URL` existir.
+- **Links das 3 revistas (Flipsnack):** pegar os endereços no Linktree.
+- **Regras do Dois Reais ou um Cabelo:** o site não fala de regras nem de prêmio; manda para o Instagram.
+
+### Decisões de texto
+- **"Revista nº 1" virou "Edição 01" / "a primeira revista":** "nº 1" está na lista de termos vetados (seção 8).
+- **Fala da Thaynara sem "na durabilidade eu garanto"** (promessa). Fala da Kah sem "oferecer o melhor" (termo vetado).
+- **Página do vídeo "Toda Pontual":** a descrição fala do cartão, sem sorteio (o site não divulga sorteio).
+- **Tratamentos**: o texto avisa que tratamento capilar é técnica de salão, não de saúde, e que queda pede dermatologista.
+- **Coleção `servicos`**: processo, FAQ e resumo agora vêm de `src/content/textos/servicos.ts` (teste de sincronia).
