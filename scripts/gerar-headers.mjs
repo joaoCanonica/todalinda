@@ -92,9 +92,6 @@ const config = {
   installCommand: 'pnpm install --frozen-lockfile',
   buildCommand: 'pnpm build',
   outputDirectory: 'dist',
-  // o build precisa de ffmpeg e Chromium, que a Vercel não tem: quem constrói e publica é o
-  // GitHub Actions (.github/workflows/deploy.yml). O build automático da Vercel pelo Git fica desligado.
-  git: { deploymentEnabled: false },
   cleanUrls: true,
   trailingSlash: false,
   headers: [

@@ -7,7 +7,9 @@
 // Variáveis: SEM_MIDIA=1 pula tudo; FORCAR=1 refaz tudo; JOBS=n (padrão 2) vídeos em paralelo.
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 import {
+  cpSync,
   createReadStream,
   existsSync,
   mkdirSync,
@@ -39,6 +41,14 @@ const soVideos = args.includes('--so-videos');
 const filtroIds = args.filter((a) => !a.startsWith('--'));
 
 const manifesto = JSON.parse(readFileSync(join(RAIZ, 'media.manifest.json'), 'utf8'));
+// No build da Vercel (e em CI), os derivados persistem entre deploys no cache de build, que guarda
+// node_modules/**: gerar tudo do zero leva dezenas de minutos em 2 núcleos.
+const PERSISTIR = Boolean(process.env.VERCEL || process.env.CI);
+const GUARDADO = join(RAIZ, 'node_modules/.cache/todalinda/media');
+if (PERSISTIR && !existsSync(CACHE) && existsSync(join(GUARDADO, '.cache.json'))) {
+  cpSync(GUARDADO, SAIDA, { recursive: true });
+  console.log('[midia] derivados restaurados do cache de build');
+}
 mkdirSync(SAIDA, { recursive: true });
 const cache = existsSync(CACHE)
   ? JSON.parse(readFileSync(CACHE, 'utf8'))
@@ -285,14 +295,14 @@ async function video(item, fila) {
       fila.push(() =>
         talvez(chave, [mp4, webm, poster], async () => {
           const entrada = ['-loglevel', 'error', '-y'];
-          await pexec('ffmpeg', [
+          await pexec(FFMPEG, [
             ...entrada,
             '-i',
             join(RAIZ, item.arquivo),
             ...argsVideo({ trecho, ...v, formato: 'mp4', audio }),
             mp4,
           ]);
-          await pexec('ffmpeg', [
+          await pexec(FFMPEG, [
             ...entrada,
             '-i',
             join(RAIZ, item.arquivo),
@@ -301,7 +311,7 @@ async function video(item, fila) {
           ]);
           // pôster = primeiro quadro do trecho (o loop começa nele)
           const { stdout } = await pexec(
-            'ffmpeg',
+            FFMPEG,
             [
               ...entrada,
               '-ss',
@@ -364,12 +374,20 @@ const t0 = Date.now();
 const publicaveis = manifesto.itens.filter(
   (i) => !i.naoUsar && (!filtroIds.length || filtroIds.includes(i.id)),
 );
+// ffmpeg do sistema; sem ele (build da Vercel), o binário do pacote ffmpeg-static
+let FFMPEG = 'ffmpeg';
 let temFfmpeg = true;
 try {
-  await pexec('ffmpeg', ['-version']);
+  await pexec(FFMPEG, ['-version']);
 } catch {
-  temFfmpeg = false;
-  console.warn('[midia] ffmpeg ausente: vídeos não serão gerados.');
+  try {
+    FFMPEG = createRequire(import.meta.url)('ffmpeg-static');
+    await pexec(FFMPEG, ['-version']);
+    console.log('[midia] usando o ffmpeg do pacote ffmpeg-static');
+  } catch {
+    temFfmpeg = false;
+    console.warn('[midia] ffmpeg ausente: vídeos não serão gerados.');
+  }
 }
 
 if (!soVideos) {
@@ -433,3 +451,11 @@ writeFileSync(CACHE, JSON.stringify(cache));
 console.log(
   `[midia] ${feitos} gerado(s), ${pulados} já em dia, ${((Date.now() - t0) / 1000).toFixed(1)} s`,
 );
+if (PERSISTIR) {
+  rmSync(GUARDADO, { recursive: true, force: true });
+  mkdirSync(GUARDADO, { recursive: true });
+  cpSync(SAIDA, GUARDADO, { recursive: true });
+  console.log(
+    '[midia] derivados guardados no cache de build (node_modules/.cache/todalinda/media)',
+  );
+}

@@ -1,11 +1,13 @@
 // Imagens Open Graph 1200×630 (sessão 8), geradas no build: a foto ★ da técnica + a palavra TODALINDA
 // (logo oficial, sem redesenho) + "Lages/SC · desde 2017". Também gera o logo em PNG 512 (JSON-LD).
+// Sem navegador: o texto vira vetor pelas fontes da casa (fontkit) e o sharp compõe (roda na Vercel).
 // Saída: public/og/<nome>.jpg e public/marca/todalinda-logo-512.png (fora do git). Cache por conteúdo.
 // Uso: node scripts/gerar-og.mjs  (roda no prebuild, depois do prepare-media)
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { chromium } from 'playwright';
+import { create as createFont } from 'fontkit';
+import { decompress } from 'wawoff2';
 import sharp from 'sharp';
 
 const RAIZ = new URL('..', import.meta.url).pathname;
@@ -46,29 +48,106 @@ const artes = [
 ].filter((a) => a.foto && publicavel(a.foto));
 
 const palavra = readFileSync(join(RAIZ, 'src/components/marca/svg/todalinda-palavra.svg'), 'utf8');
-const fonte = (f) =>
-  `data:font/woff2;base64,${readFileSync(join(RAIZ, 'public/fonts', f)).toString('base64')}`;
-const html = (a, foto) => `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><style>
-@font-face{font-family:P;src:url(${fonte('playfair-display-wght.woff2')});font-weight:400 900}
-@font-face{font-family:P;font-style:italic;src:url(${fonte('playfair-display-wght-italico.woff2')});font-weight:400 900}
-@font-face{font-family:M;src:url(${fonte('manrope-wght.woff2')});font-weight:200 800}
-*{margin:0;box-sizing:border-box}
-body{width:1200px;height:630px;display:grid;grid-template-columns:560px 1fr;background:#121013;color:#F7F3EC;overflow:hidden}
-.foto{background:url(${foto}) center/cover}
-.texto{display:flex;flex-direction:column;justify-content:space-between;padding:64px 64px 56px}
-.palavra{width:400px;color:#F7F3EC}.palavra svg{width:100%;height:auto;display:block}
-.num{font:600 18px/1 M;letter-spacing:.28em;text-transform:uppercase;color:#AE8C55;margin-top:22px}
-h1{font:italic 800 64px/1.02 P;letter-spacing:-.02em;max-width:9.5em}
-.pe{font:600 22px/1 M;letter-spacing:.24em;text-transform:uppercase;color:#E2C88C;border-top:1px solid rgba(247,243,236,.22);padding-top:24px}
-</style></head><body><div class="foto"></div><div class="texto">
-<div><div class="palavra">${palavra.replace('<svg ', '<svg fill="currentColor" ')}</div><p class="num">Edição Todalinda · Nº 10</p></div>
-<h1>${a.titulo}</h1><p class="pe">Lages/SC · desde 2017</p></div></body></html>`;
+
+// ---------- texto em vetor (sem navegador) ----------
+// As fontes da casa (woff2 variáveis) viram contornos SVG pelo fontkit; o sharp (librsvg) só desenha
+// caminhos, então o resultado não depende de fontes instaladas na máquina do build.
+// o fontkit não aplica o peso variável em WOFF2: descomprime para TTF (wawoff2) e aplica o eixo wght
+const carregar = async (arq, eixos) =>
+  createFont(
+    Buffer.from(await decompress(readFileSync(join(RAIZ, 'public/fonts', arq)))),
+  ).getVariation(eixos);
+const FONTES = {
+  versalete: await carregar('manrope-wght.woff2', { wght: 600 }),
+  titulo: await carregar('playfair-display-wght-italico.woff2', { wght: 800 }),
+};
+/** Uma linha de texto como <path>, a partir da linha de base (x, y). Devolve o SVG e a largura. */
+function linha(fonte, str, tamanho, { x, y, cor, espaco = 0 }) {
+  const run = fonte.layout(str);
+  const k = tamanho / fonte.unitsPerEm;
+  let cx = 0;
+  const d = [];
+  run.glyphs.forEach((g, i) => {
+    const pos = run.positions[i];
+    d.push(
+      g.path
+        .scale(k, -k)
+        .translate(x + cx + pos.xOffset * k, y - pos.yOffset * k)
+        .toSVG(),
+    );
+    cx += pos.xAdvance * k + espaco;
+  });
+  return { svg: `<path fill="${cor}" d="${d.join(' ')}"/>`, largura: cx - espaco };
+}
+const largura = (fonte, str, tamanho, espaco = 0) =>
+  linha(fonte, str, tamanho, { x: 0, y: 0, cor: '#000', espaco }).largura;
+/** Quebra o título em linhas de até `max` px (como o max-width do CSS). */
+function quebrar(fonte, str, tamanho, max, espaco) {
+  const linhas = [];
+  let atual = '';
+  for (const p of str.split(' ')) {
+    const teste = atual ? `${atual} ${p}` : p;
+    if (atual && largura(fonte, teste, tamanho, espaco) > max) {
+      linhas.push(atual);
+      atual = p;
+    } else atual = teste;
+  }
+  if (atual) linhas.push(atual);
+  return linhas;
+}
+
+// medidas da arte (1200×630): foto à esquerda (560 px); painel Noite com 64 px de respiro
+const X = 624;
+const LARG_TEXTO = 1200 - X - 64;
+const PAPEL = '#F7F3EC';
+const OURO = '#AE8C55';
+const OURO_CLARO = '#E2C88C';
+function painel(titulo) {
+  const vb = palavra.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 1161 170';
+  const [, , vw, vh] = vb.split(/\s+/).map(Number);
+  const altLogo = (400 * vh) / vw;
+  const corpoLogo = palavra
+    .replace(/^<svg[^>]*>/, '')
+    .replace(/<\/svg>\s*$/, '')
+    .replace(/currentColor/g, PAPEL);
+  const num = linha(FONTES.versalete, 'EDIÇÃO TODALINDA · Nº 10', 18, {
+    x: X,
+    y: 64 + altLogo + 22 + 14,
+    cor: OURO,
+    espaco: 18 * 0.28,
+  });
+  const pe = linha(FONTES.versalete, 'LAGES/SC · DESDE 2017', 22, {
+    x: X,
+    y: 630 - 56 - 5,
+    cor: OURO_CLARO,
+    espaco: 22 * 0.24,
+  });
+  const yLinha = 630 - 56 - 22 - 24;
+  // título: itálico 800, 64 px, entrelinha 1,02, centrado entre o bloco de cima e o fio de baixo
+  const esp = -0.02 * 64;
+  const linhas = quebrar(FONTES.titulo, titulo, 64, LARG_TEXTO, esp);
+  const topo = 64 + altLogo + 22 + 18;
+  const altura = linhas.length * 64 * 1.02;
+  const y0 = (topo + yLinha) / 2 - altura / 2 + 64 * 0.8;
+  const tit = linhas.map(
+    (l, i) =>
+      linha(FONTES.titulo, l, 64, { x: X, y: y0 + i * 64 * 1.02, cor: PAPEL, espaco: esp }).svg,
+  );
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg x="${X}" y="64" width="400" height="${altLogo}" viewBox="${vb}">${corpoLogo}</svg>
+${num.svg}
+${tit.join('\n')}
+<rect x="${X}" y="${yLinha}" width="${LARG_TEXTO}" height="1" fill="${PAPEL}" fill-opacity="0.22"/>
+${pe.svg}
+</svg>`;
+}
 
 const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf8')) : {};
 const pendentes = artes
   .map((a) => {
     const arq = join(RAIZ, 'public', arquivoDe(a.foto));
     const hash = createHash('sha1')
+      .update('v2-vetor') // muda quando o desenho da arte muda
       .update(JSON.stringify(a))
       .update(readFileSync(arq))
       .update(palavra)
@@ -77,26 +156,18 @@ const pendentes = artes
   })
   .filter((a) => cache[a.nome] !== a.hash || !existsSync(a.saida));
 
-if (pendentes.length) {
-  const nav = await chromium.launch();
-  const p = await nav.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
-  for (const a of pendentes) {
-    // a foto entra como data URL (JPEG 1200 px) para o HTML não depender de servidor
-    const jpg = await sharp(a.arq)
-      .resize({ width: 1200, withoutEnlargement: true })
-      .jpeg({ quality: 82 })
-      .toBuffer();
-    await p.setContent(html(a, `data:image/jpeg;base64,${jpg.toString('base64')}`), {
-      waitUntil: 'load',
-    });
-    await p.evaluate(() => document.fonts.ready);
-    const png = await p.screenshot({ type: 'png' });
-    await sharp(png).jpeg({ quality: 84, mozjpeg: true }).toFile(a.saida);
-    cache[a.nome] = a.hash;
-  }
-  await nav.close();
-  writeFileSync(CACHE, JSON.stringify(cache, null, 2));
+for (const a of pendentes) {
+  const foto = await sharp(a.arq).resize(560, 630, { fit: 'cover', position: 'centre' }).toBuffer();
+  await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#121013' } })
+    .composite([
+      { input: foto, left: 0, top: 0 },
+      { input: Buffer.from(painel(a.titulo)), left: 0, top: 0 },
+    ])
+    .jpeg({ quality: 84, mozjpeg: true })
+    .toFile(a.saida);
+  cache[a.nome] = a.hash;
 }
+if (pendentes.length) writeFileSync(CACHE, JSON.stringify(cache, null, 2));
 
 // logo em PNG (JSON-LD "logo": o Google pede imagem rastreável, ≥ 112 px)
 const logoPng = join(RAIZ, 'public/marca/todalinda-logo-512.png');
