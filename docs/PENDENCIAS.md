@@ -182,3 +182,9 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Domínio `todalinda.com.br`:** fixado na config. Ainda não está registrado nem apontado. **Não imprimir o cartão QR antes de o domínio estar no ar.**
 - **Link "Pedir avaliações":** pendente. A rede deste ambiente não lê o Google Maps, e a extensão do Chrome não estava conectada nesta sessão. Passo a passo em `docs/DEPLOY.md`. Até lá, `/avaliar` abre a ficha do Google.
 - **Deploy:** o João sobe na Vercel. O build automático da Vercel pelo Git fica desligado (`git.deploymentEnabled: false`, a Vercel não tem ffmpeg nem Chromium). Quem publica é o GitHub Actions, conforme `docs/DEPLOY.md`.
+- **Link de avaliação (19/11, 2ª tentativa):** o João mandou um link de busca do Google (`google.com/search?…q=toda+linda+lages&si=…&uds=…`). Ele **não serve** como `PUBLIC_GOOGLE_REVIEW_URL`:
+  - é o link da página de resultados, não do formulário de avaliação;
+  - carrega parâmetros de sessão (`sxsrf`, `si`, `uds`, `ved`, `biw`) que expiram ou mudam de pessoa para pessoa;
+  - não traz o identificador da ficha (Place ID, `ChIJ…`).
+
+  `/avaliar` segue na ficha estável (`maps?cid=14959576611857227956`). O link certo começa com `https://g.page/r/` e termina em `/review`: Perfil da Empresa → "Pedir avaliações" (`docs/DEPLOY.md`).
