@@ -1,0 +1,57 @@
+---
+// /a-casa: o tour da casa (sessão 6B). Introdução, o tour (3D + lista + fotos) e o rodapé.
+import Botao from '../components/base/Botao.astro';
+import Tour from '../components/casa3d/Tour.astro';
+import Interna from '../layouts/Interna.astro';
+import { aCasa } from '../content/textos/paginas.ts';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const t = aCasa;
+---
+
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  trilha={[{ nome: 'A casa', url: '/a-casa' }]}
+>
+  <div class="intro tom-capa">
+    <p class="versalete intro__rotulo">{t.rotulo}</p>
+    <h1>
+      {t.titulo.antes}
+      <em>{t.titulo.destaque}</em>
+      {t.titulo.depois}
+    </h1>
+    <p class="lead intro__resposta">{t.resposta}</p>
+    <p class="intro__aviso">{t.aviso3d}</p>
+  </div>
+  <Tour />
+  <div class="cta tom-pagina">
+    <h2>{t.cta.titulo}</h2>
+    <Botao href={linkWhatsApp(t.cta.whatsapp)} externo agendar={{}}>
+      {t.cta.botao}
+    </Botao>
+  </div>
+</Interna>
+
+<style>
+  .intro {
+    padding: var(--e-7) var(--margem) var(--e-4);
+  }
+  .intro__rotulo {
+    color: var(--acento);
+    margin: 0 0 var(--e-3);
+  }
+  .intro__resposta {
+    margin-top: var(--e-4);
+  }
+  .intro__aviso {
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-5);
+    padding: var(--e-8) var(--margem);
+  }
+</style>

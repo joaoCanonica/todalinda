@@ -1,0 +1,387 @@
+---
+// O AGENDADOR (fase 1): três passos numa tela só — (1) serviço, (2) com quem (só se houver
+// profissional confirmada para o serviço), (3) quando (próximos 14 dias ter–sáb + período) —, as
+// perguntas condicionais, a prévia da mensagem exata e "Enviar pelo WhatsApp".
+// É um formulário nativo (radios). Sem JS, o botão é o link geral do WhatsApp. Nada é guardado.
+// O destino vem de src/config/agenda.ts (via src/lib/agenda.ts): esta UI não sabe que é WhatsApp.
+import { getCollection } from 'astro:content';
+import { EM_PREVIEW } from '../../config/ambiente.ts';
+import { agenda as cfg } from '../../config/agenda.ts';
+import { perfis } from '../../content/textos/equipe.ts';
+import { agendar as t } from '../../content/textos/paginas.ts';
+import { EXTRAS, PERIODOS, paraAgenda, proximosDias } from '../../lib/agenda.ts';
+import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+
+interface Props {
+  /** Prefixo dos ids (há um agendador na página e outro na gaveta). */
+  id: string;
+  /** Lê ?servico= e ?profissional= da URL ao abrir (página /agendar). */
+  lerUrl?: boolean;
+  titulo?: boolean;
+}
+const { id, lerUrl = false, titulo = true } = Astro.props;
+
+const colecao = (await getCollection('servicos'))
+  .map((s) => s.data)
+  .filter((s) => s.publicado)
+  .sort((a, b) => a.ordem - b.ordem);
+// a fundadora não entra como opção de horário ("Falar com a Edna" vai direto ao WhatsApp)
+const equipe = (await getCollection('equipe'))
+  .map((m) => m.data)
+  .filter((m) => perfis[m.slug]?.agendar.startsWith('Agendar'))
+  .sort((a, b) => a.ordem - b.ordem)
+  .map((m) => ({ slug: m.slug, nome: m.nome.replace(/\s*[“"][^”"]*[”"]/, '') }));
+const servicos = [
+  ...colecao.map(paraAgenda),
+  { ...EXTRAS.avaliacao, profissionaisConfirmados: null },
+  { ...EXTRAS.naoSei, profissionaisConfirmados: null },
+];
+// sugestão pelas especialidades: só no preview (com selo), nunca em produção
+const sugeridos = EM_PREVIEW
+  ? Object.fromEntries(
+      colecao.map((s) => [
+        s.id,
+        s.profissionais.estado === 'bloqueante' ? s.profissionais.sugestao : [],
+      ]),
+    )
+  : {};
+const dados = { servicos, equipe, sugeridos, preview: EM_PREVIEW };
+const dias = proximosDias(undefined, cfg.diasAFrente); // a data do build; o script refaz com a data de hoje
+const geral = linkWhatsApp(MENSAGENS.geral());
+const n = (s: string) => `${id}-${s}`;
+---
+
+<form
+  class="agd"
+  data-agendador
+  data-dados={JSON.stringify(dados)}
+  data-ler-url={lerUrl ? '' : undefined}
+  aria-labelledby={titulo ? n('titulo') : undefined}
+  aria-label={titulo ? undefined : 'Agendador'}
+  novalidate
+>
+  {titulo && (
+    <h2 id={n('titulo')} class="agd__titulo">
+      {t.titulo.antes}
+      <em>{t.titulo.destaque}</em>
+      {t.titulo.depois}
+    </h2>
+  )}
+
+  <fieldset class="agd__passo">
+    <legend class="agd__legenda">
+      <span class="agd__num" aria-hidden="true"></span>
+      {t.perguntas.servico}
+    </legend>
+    <div class="agd__chips">
+      {servicos.map((s) => (
+        <label class="agd__chip">
+          <input type="radio" name="servico" value={s.id} />
+          <span>{s.nome}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset class="agd__passo" data-passo-profissional hidden>
+    <legend class="agd__legenda">
+      <span class="agd__num" aria-hidden="true"></span>
+      {t.perguntas.profissional}
+    </legend>
+    <div class="agd__chips">
+      <label class="agd__chip">
+        <input type="radio" name="profissional" value="" checked />
+        <span>Sem preferência</span>
+      </label>
+      {equipe.map((m) => (
+        <label class="agd__chip" data-pessoa={m.slug} hidden>
+          <input type="radio" name="profissional" value={m.slug} />
+          <span>{m.nome}</span>
+          <span class="agd__selo" data-selo hidden>
+            provisório
+          </span>
+        </label>
+      ))}
+    </div>
+    <p class="agd__ajuda" data-ajuda-profissional hidden>
+      Sugestão pelas especialidades: a casa ainda vai confirmar quem faz este serviço.
+    </p>
+  </fieldset>
+
+  <fieldset class="agd__passo">
+    <legend class="agd__legenda">
+      <span class="agd__num" aria-hidden="true"></span>Quando?
+    </legend>
+    <p class="agd__sub" id={n('dias-ajuda')}>
+      {t.perguntas.dia} Terça a sábado, nos próximos 14 dias.
+    </p>
+    <div class="agd__dias" data-dias role="radiogroup" aria-describedby={n('dias-ajuda')}>
+      {dias.map((d) => (
+        <label class:list={['agd__dia', { 'agd__dia--fechado': !d.disponivel }]}>
+          <input type="radio" name="data" value={d.data} disabled={!d.disponivel} />
+          <span class="agd__dia-rotulo">{d.rotulo}</span>
+          {d.motivo && <span class="agd__motivo">{d.motivo}</span>}
+        </label>
+      ))}
+    </div>
+    <p class="agd__sub">{t.perguntas.periodo}</p>
+    <div class="agd__chips">
+      {PERIODOS.map((p) => (
+        <label class="agd__chip">
+          <input type="radio" name="periodo" value={p.id} />
+          <span>{p.rotulo}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset class="agd__extra" data-pergunta-quimica hidden>
+    <legend class="agd__sub">{t.perguntas.quimica}</legend>
+    <div class="agd__chips">
+      <label class="agd__chip">
+        <input type="radio" name="quimica" value="sim" />
+        <span>Sim</span>
+      </label>
+      <label class="agd__chip">
+        <input type="radio" name="quimica" value="nao" />
+        <span>Não</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset class="agd__extra">
+    <legend class="agd__sub">{t.perguntas.primeiraVez}</legend>
+    <div class="agd__chips">
+      <label class="agd__chip">
+        <input type="radio" name="primeira" value="sim" />
+        <span>Sim, primeira vez</span>
+      </label>
+      <label class="agd__chip">
+        <input type="radio" name="primeira" value="nao" />
+        <span>Já sou cliente</span>
+      </label>
+    </div>
+    <p class="agd__ajuda" data-primeira-cor hidden>
+      {t.primeiraVezCor}
+    </p>
+  </fieldset>
+
+  <div class="agd__extra">
+    <label class="agd__sub" for={n('nome')}>
+      {t.perguntas.nome}
+    </label>
+    <input
+      class="agd__nome"
+      id={n('nome')}
+      name="nome"
+      type="text"
+      autocomplete="given-name"
+      maxlength="60"
+    />
+  </div>
+
+  <div class="agd__previa">
+    <p class="versalete agd__previa-rotulo" id={n('previa-rotulo')}>
+      A mensagem que vai
+    </p>
+    <output
+      class="agd__mensagem"
+      data-previa
+      aria-labelledby={n('previa-rotulo')}
+      aria-live="polite"
+    >
+      {MENSAGENS.geral()}
+    </output>
+    <p class="agd__preco">{t.preco}</p>
+    <a class="agd__enviar versalete" href={geral} data-enviar rel="noopener" target="_blank">
+      {t.botao}
+      <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+    </a>
+    <p class="agd__privacidade">{t.privacidade}</p>
+  </div>
+</form>
+
+<script>
+  // o agendador só baixa depois do LCP (a capa primeiro); sem JS, o link geral funciona
+  import { depoisDoLcp } from '../../scripts/depois-do-lcp.ts';
+  void depoisDoLcp().then(() => import('./agendador.ts'));
+</script>
+
+<style>
+  .agd {
+    display: grid;
+    gap: var(--e-5);
+    counter-reset: passo;
+    max-width: 46rem;
+  }
+  .agd__titulo {
+    margin-bottom: var(--e-2);
+  }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  .agd__passo {
+    counter-increment: passo;
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-4);
+  }
+  .agd__legenda {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    padding: 0;
+    margin-bottom: var(--e-3);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .agd__num::before {
+    content: counter(passo, decimal-leading-zero);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+    color: var(--acento);
+    font-variant-numeric: tabular-nums;
+  }
+  .agd__sub {
+    display: block;
+    margin: var(--e-3) 0 var(--e-2);
+    padding: 0;
+    font-weight: 600;
+    font-size: var(--fs-pequeno);
+  }
+  .agd__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+  }
+  .agd__chip,
+  .agd__dia {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: var(--fs-pequeno);
+  }
+  .agd__chip input,
+  .agd__dia input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: inherit;
+  }
+  .agd__chip:has(input:checked),
+  .agd__dia:has(input:checked) {
+    background: var(--texto);
+    border-color: var(--texto);
+    color: var(--fundo);
+  }
+  .agd__chip:has(input:focus-visible),
+  .agd__dia:has(input:focus-visible),
+  .agd__nome:focus-visible {
+    outline: 2px solid var(--foco);
+    outline-offset: 2px;
+  }
+  .agd__selo {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid currentColor;
+    padding: 0 0.4em;
+    border-radius: 2px;
+  }
+  .agd__dias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.4rem, 1fr));
+    gap: var(--e-2);
+  }
+  .agd__dia {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    border-radius: 2px;
+    padding: 0.45em 0.8em;
+    min-height: 52px;
+  }
+  .agd__dia-rotulo {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .agd__dia--fechado {
+    cursor: not-allowed;
+    color: var(--texto-2);
+    border-style: dashed;
+  }
+  .agd__dia--fechado .agd__dia-rotulo {
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+  .agd__motivo {
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+  .agd__ajuda {
+    margin: var(--e-2) 0 0;
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .agd__nome {
+    width: 100%;
+    max-width: 22rem;
+    min-height: 44px;
+    padding: 0 0.8em;
+    border: var(--fio) solid var(--fio-cor);
+    background: transparent;
+    color: var(--texto);
+    font: inherit;
+  }
+  .agd__previa {
+    display: grid;
+    gap: var(--e-3);
+    padding: var(--e-4);
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .agd__previa-rotulo {
+    margin: 0;
+    color: var(--acento);
+  }
+  .agd__mensagem {
+    display: block;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lead);
+    line-height: 1.35;
+  }
+  .agd__preco,
+  .agd__privacidade {
+    margin: 0;
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .agd__enviar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 1.4em;
+    background: var(--texto);
+    color: var(--fundo);
+    border: var(--fio) solid var(--cor-ouro);
+    text-decoration: none;
+  }
+  .agd__enviar:hover {
+    background: var(--cor-cafe);
+    color: var(--cor-papel);
+  }
+</style>

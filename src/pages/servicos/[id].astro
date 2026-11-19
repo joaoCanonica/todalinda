@@ -1,0 +1,673 @@
+---
+// /servicos/<id> — a MATÉRIA. Capa com a foto ★ da técnica e a etiqueta; parágrafo-resposta com
+// capitular; o que é; processo em passos numerados (Ouro tabular, na capa escura); galeria curta;
+// antes e depois (só par confirmado; o provável só no preview); quem faz (só confirmado); fala real;
+// cuidados; perguntas (<details>); CTA fixo "Agendar {serviço}".
+// Serviço sem mídia publicável não gera página (e o validate-config trava a produção).
+import { getCollection } from 'astro:content';
+import ComparadorAntesDepois from '../../components/base/ComparadorAntesDepois.astro';
+import Botao from '../../components/base/Botao.astro';
+import Citacao from '../../components/base/Citacao.astro';
+import Poster from '../../components/base/Poster.astro';
+import Rotulo from '../../components/base/Rotulo.astro';
+import Capitular from '../../components/edicao/Capitular.astro';
+import Etiqueta from '../../components/edicao/Etiqueta.astro';
+import Folio from '../../components/edicao/Folio.astro';
+import Pagina from '../../components/edicao/Pagina.astro';
+import Provisorio from '../../components/Provisorio.astro';
+import VideoSobDemanda from '../../components/secoes/VideoSobDemanda.astro';
+import { doisDigitos, provisoria } from '../../components/secoes/util.ts';
+import { EM_PREVIEW } from '../../config/ambiente.ts';
+import type { Membro, Servico, Trabalho } from '../../content/schemas.ts';
+import { servicos as textos, type TextoServico } from '../../content/textos/servicos.ts';
+import { alt, videos } from '../../content/textos/midia.ts';
+import { faq as faqLd, servico as servicoLd } from '../../components/seo/jsonld.ts';
+import { videoLd } from '../../components/seo/videos.ts';
+import Interna from '../../layouts/Interna.astro';
+import {
+  autorDe,
+  ehVideo,
+  hashtagDo,
+  midiaDoServico,
+  ondeDe,
+  paresDe,
+  posterDe,
+  preloadDe,
+  videoDaFala,
+} from '../../lib/paginas.ts';
+import { linkWhatsApp } from '../../lib/whatsapp.ts';
+
+export async function getStaticPaths() {
+  const trabalhos = (await getCollection('trabalhos')).map((t) => t.data);
+  const equipe = (await getCollection('equipe')).map((m) => m.data);
+  return (await getCollection('servicos'))
+    .map((s) => s.data)
+    .filter((s) => s.publicado && textos[s.id])
+    .map((s) => ({ s, ...midiaDoServico(s, trabalhos) }))
+    .filter(({ capa }) => capa !== null)
+    .map(({ s, capa, galeria }) => ({
+      params: { id: s.id },
+      props: { s, capa: capa as string, galeria, trabalhos, equipe },
+    }));
+}
+
+interface Props {
+  s: Servico;
+  capa: string;
+  galeria: string[];
+  trabalhos: Trabalho[];
+  equipe: Membro[];
+}
+const { s, capa, galeria, trabalhos, equipe } = Astro.props;
+const t = textos[s.id] as TextoServico;
+const zap = linkWhatsApp(t.whatsapp);
+// 85vw no celular: com DPR 1,75 cai na variante de 640 px (a de 800 pesava no LCP)
+const SIZES_CAPA = '(min-width: 60rem) 46vw, 85vw';
+const motivoCapa = provisoria(capa);
+const posterCapa = posterDe(capa, '720x1280') ?? { imagem: capa, alt: alt[capa] ?? '' };
+const pares = paresDe(s.id, trabalhos, EM_PREVIEW).slice(0, 2);
+
+// quem faz: confirmado → nomes; pendente → só no preview, a sugestão com selo
+const nome = (slug: string) => equipe.find((m) => m.slug === slug)?.nome ?? slug;
+const quemFaz =
+  s.profissionais.estado === 'confirmado'
+    ? { slugs: s.profissionais.valor, provisorio: false }
+    : EM_PREVIEW && s.profissionais.sugestao.length
+      ? { slugs: s.profissionais.sugestao, provisorio: true }
+      : null;
+const fala = t.fala;
+const videoFala = fala ? videoDaFala(fala.fonte) : null;
+const ldVideo = videoFala ? videoLd(videoFala) : null;
+const jsonld = [
+  servicoLd({
+    id: s.id,
+    nome: s.nome,
+    resumo: s.resumo,
+    url: `/servicos/${s.id}`,
+    descricao: t.resposta,
+    tipo: s.nome,
+    imagem: `/og/servico-${s.id}.jpg`,
+  }),
+  faqLd(t.faq),
+  ...(ldVideo ? [ldVideo] : []),
+];
+---
+
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  agendar={zap}
+  agendarCom={{ servico: s.id }}
+  og={`servico-${s.id}`}
+  tipoOg="article"
+  jsonld={jsonld}
+  trilha={[{ nome: s.nome, url: `/servicos/${s.id}` }]}
+  {...(ehVideo(capa) ? {} : { preload: preloadDe(capa, SIZES_CAPA) })}
+>
+  <!-- CAPA DA MATÉRIA -->
+  <section class="materia-capa tom-capa" aria-labelledby="titulo-materia">
+    <Folio secao={t.rotulo} />
+    <div class="mc__texto">
+      <div class="mc__marca">
+        <Etiqueta hashtag={hashtagDo(s.grupo)} />
+        <Rotulo tom="acento">Matéria · {t.rotulo}</Rotulo>
+      </div>
+      <h1 id="titulo-materia" class="mc__titulo">
+        {t.titulo.antes}
+        <em>{t.titulo.destaque}</em>
+        {t.titulo.depois}
+      </h1>
+      <Capitular>
+        <p class="lead">{t.resposta}</p>
+      </Capitular>
+      <div class="mc__acoes">
+        <Botao href={zap} externo agendar={{ servico: s.id }}>
+          {t.cta}
+        </Botao>
+        <Botao href="#processo" variante="secundario">
+          Como é feito
+        </Botao>
+      </div>
+    </div>
+    <figure class="mc__foto">
+      {'video' in posterCapa ? (
+        <Poster {...posterCapa} proporcao="4 / 5" prioridade />
+      ) : (
+        <Poster {...posterCapa} proporcao="4 / 5" sizes={SIZES_CAPA} prioridade />
+      )}
+      <figcaption class="versalete">
+        {s.nome} · Todalinda
+        {motivoCapa && <Provisorio motivo={motivoCapa} />}
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- O QUE É / PARA QUEM: página clara, em duas colunas de revista -->
+  <Pagina tom="pagina" secao="O que é" rotulo="O que é">
+    <div class="colunas">
+      <div class="colunas__texto">
+        <h2>O que é</h2>
+        {t.oQueE.map((p) => (
+          <p>{p}</p>
+        ))}
+      </div>
+      <aside class="colunas__lado" aria-labelledby="para-quem">
+        <h2 id="para-quem" class="versalete">
+          Para quem
+        </h2>
+        <ul role="list">
+          {t.paraQuem.map((p) => (
+            <li>{p}</li>
+          ))}
+        </ul>
+        <p class="colunas__preco">
+          O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa.
+        </p>
+      </aside>
+    </div>
+  </Pagina>
+
+  <!-- PROCESSO: capa escura, numerais em Ouro -->
+  <Pagina tom="capa" secao="Processo" id="processo" rotulo="Como é feito">
+    <h2 class="proc__titulo">
+      Como é <em>feito</em>
+    </h2>
+    <ol class="proc" role="list">
+      {t.processo.map((p, i) => (
+        <li class="proc__passo">
+          <span class="proc__num numeros" aria-hidden="true">
+            {doisDigitos(i + 1)}
+          </span>
+          <h3 class="proc__nome">
+            <span class="sr-only">Passo {i + 1}: </span>
+            {p.titulo}
+          </h3>
+          <p>{p.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </Pagina>
+
+  <!-- GALERIA CURTA -->
+  {galeria.length > 0 && (
+    <Pagina tom="pagina" secao="Trabalhos" rotulo="Trabalhos">
+      <div class="gal__cabeca">
+        <h2>
+          Feito <em>aqui</em>
+        </h2>
+        <a class="gal__todos" href={`/trabalhos?tecnica=${s.id}`}>
+          Ver todos os trabalhos de {s.nome.toLowerCase()}
+        </a>
+      </div>
+      <ul class="gal" role="list">
+        {galeria.map((id) => {
+          const p = posterDe(id);
+          const motivo = provisoria(id);
+          return (
+            p && (
+              <li class="gal__item">
+                <figure>
+                  {'video' in p ? (
+                    <Poster {...p} proporcao="4 / 5" />
+                  ) : (
+                    <Poster {...p} proporcao="4 / 5" sizes="(min-width: 60rem) 30vw, 90vw" />
+                  )}
+                  <figcaption class="versalete">
+                    {s.nome}
+                    {motivo && <Provisorio motivo={motivo} />}
+                  </figcaption>
+                </figure>
+              </li>
+            )
+          );
+        })}
+      </ul>
+    </Pagina>
+  )}
+
+  <!-- ANTES E DEPOIS (só par real; o provável só no preview) -->
+  {pares.length > 0 && (
+    <Pagina tom="pagina" secao="Antes e depois" rotulo="Antes e depois">
+      <h2>
+        Antes e <em>depois</em>
+      </h2>
+      <div class="ad">
+        {pares.map((par) => (
+          <div class="ad__par">
+            <ComparadorAntesDepois
+              antes={par.antes}
+              depois={par.depois}
+              altAntes={alt[par.antes] ?? 'Antes'}
+              altDepois={alt[par.depois] ?? 'Depois'}
+              tecnica={s.nome}
+            />
+            {!par.confirmado && (
+              <Provisorio
+                motivo={par.motivo ?? 'par antes e depois provável: confirmar com a casa'}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </Pagina>
+  )}
+
+  <!-- QUEM FAZ · FALA · CUIDADOS -->
+  <Pagina tom="pagina" secao="Cuidados" rotulo="Quem faz e cuidados">
+    <div class="fim">
+      {quemFaz && (
+        <div class="fim__quem">
+          <h2 class="versalete">Quem faz</h2>
+          <ul role="list">
+            {quemFaz.slugs.map((slug) => (
+              <li>
+                <a href={`/equipe/${slug}`}>{nome(slug)}</a>
+              </li>
+            ))}
+          </ul>
+          {quemFaz.provisorio && (
+            <Provisorio motivo="sugestão pelas especialidades: a casa ainda não confirmou quem faz" />
+          )}
+        </div>
+      )}
+      {fala && (
+        <div class="fim__fala">
+          <Citacao autor={autorDe(fala.fonte)} fonte={ondeDe(fala.fonte)}>
+            {fala.texto}
+          </Citacao>
+          {videoFala && videos[videoFala] && (
+            <VideoSobDemanda
+              id={videoFala}
+              rotulo={`Ouvir ${autorDe(fala.fonte).split(' ')[0]}`}
+              titulo={videos[videoFala]?.titulo ?? ''}
+              descricao={videos[videoFala]?.descricao ?? ''}
+            />
+          )}
+        </div>
+      )}
+      <div class="fim__cuidados">
+        <h2 class="versalete">Depois do salão</h2>
+        <ol role="list">
+          {t.cuidados.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </Pagina>
+
+  <!-- PERGUNTAS -->
+  <Pagina tom="pagina" secao="Perguntas" rotulo="Perguntas">
+    <h2>
+      Perguntas <em>frequentes</em>
+    </h2>
+    <div class="faq">
+      {t.faq.map((f) => (
+        <details class="faq__item">
+          <summary>
+            <h3 class="faq__pergunta">{f.pergunta}</h3>
+          </summary>
+          <p>{f.resposta}</p>
+        </details>
+      ))}
+    </div>
+    <p class="faq__mais">
+      <a href="/perguntas-frequentes">Todas as perguntas frequentes</a>
+    </p>
+  </Pagina>
+
+  <!-- CTA fixo: gruda no pé da tela enquanto a matéria está aberta e para antes do rodapé -->
+  <div class="cta-fixo">
+    <a
+      class="cta-fixo__botao versalete"
+      href={zap}
+      rel="noopener"
+      target="_blank"
+      data-agendar
+      data-agendar-servico={s.id}
+    >
+      {t.cta}
+      <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+    </a>
+  </div>
+</Interna>
+
+<style>
+  /* capa da matéria */
+  .materia-capa {
+    position: relative;
+    display: grid;
+    gap: var(--e-6);
+    padding: var(--e-8) var(--margem) var(--e-8);
+  }
+  .mc__marca {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3);
+    margin-bottom: var(--e-5);
+  }
+  .mc__marca :global(p) {
+    margin: 0;
+  }
+  .mc__titulo {
+    font-size: clamp(3.1rem, 1.4rem + 7vw, 8rem);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--e-6);
+  }
+  .mc__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+    margin-top: var(--e-5);
+  }
+  .mc__foto {
+    margin: 0;
+  }
+  .mc__foto figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .materia-capa {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: end;
+      gap: var(--e-8);
+      padding-top: var(--e-9);
+    }
+  }
+
+  /* duas colunas de revista */
+  .colunas {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .colunas__texto h2 {
+    margin-bottom: var(--e-5);
+  }
+  .colunas__lado {
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-4);
+  }
+  .colunas__lado h2 {
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+    margin-bottom: var(--e-3);
+  }
+  .colunas__lado ul {
+    margin: 0 0 var(--e-5);
+    padding: 0;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+  }
+  .colunas__lado li + li {
+    margin-top: var(--e-3);
+  }
+  .colunas__preco {
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  @media (min-width: 60rem) {
+    .colunas {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: var(--e-8);
+    }
+    .colunas__texto {
+      columns: 2 18rem;
+      column-gap: var(--e-6);
+    }
+    .colunas__texto h2 {
+      column-span: all;
+    }
+  }
+
+  /* processo */
+  .proc__titulo {
+    margin-bottom: var(--e-7);
+  }
+  .proc {
+    display: grid;
+    gap: var(--e-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .proc__passo {
+    display: grid;
+    align-content: start;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    column-gap: var(--e-4);
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-4);
+  }
+  .proc__num {
+    grid-row: span 2;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(2.6rem, 2rem + 2vw, 3.6rem);
+    line-height: 0.9;
+    color: var(--cor-ouro-claro);
+  }
+  .proc__nome {
+    margin-bottom: var(--e-2);
+  }
+  .proc__passo p {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .proc {
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    }
+    .proc__passo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .proc__num {
+      grid-row: auto;
+      margin-bottom: var(--e-4);
+    }
+  }
+
+  /* galeria */
+  .gal__cabeca {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--e-3);
+    margin-bottom: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .gal__todos {
+    color: var(--acento);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .gal {
+    display: grid;
+    gap: var(--e-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .gal figure {
+    margin: 0;
+  }
+  .gal figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  @media (min-width: 48rem) {
+    .gal {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .gal__item:nth-child(2) {
+      margin-top: var(--e-8);
+    }
+  }
+
+  /* antes e depois */
+  .ad {
+    display: grid;
+    gap: var(--e-6);
+    margin-top: var(--e-6);
+    max-width: 60rem;
+  }
+  @media (min-width: 60rem) {
+    .ad {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* quem faz, fala, cuidados */
+  .fim {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .fim h2 {
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+    margin-bottom: var(--e-4);
+  }
+  .fim__quem ul {
+    margin: 0 0 var(--e-3);
+    padding: 0;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .fim__quem a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+  .fim__fala {
+    display: grid;
+    gap: var(--e-4);
+    justify-items: start;
+  }
+  .fim__cuidados ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: cuidado;
+  }
+  .fim__cuidados li {
+    counter-increment: cuidado;
+    display: grid;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    padding-block: var(--e-3);
+    border-top: var(--fio) solid var(--fio-cor);
+    max-width: var(--largura-texto);
+  }
+  .fim__cuidados li::before {
+    content: counter(cuidado, decimal-leading-zero);
+    color: var(--acento);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  @media (min-width: 60rem) {
+    .fim {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: var(--e-8);
+    }
+  }
+
+  /* perguntas */
+  .faq {
+    margin-top: var(--e-6);
+    max-width: 52rem;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .faq__item {
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .faq__item summary {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--e-4);
+    min-height: 56px;
+    align-items: center;
+    padding-block: var(--e-3);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+  }
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__item summary::after {
+    content: '+';
+    flex: none;
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    font-weight: 400;
+  }
+  .faq__item[open] summary::after {
+    content: '−';
+  }
+  .faq__item p {
+    padding-bottom: var(--e-4);
+  }
+  .faq__mais {
+    margin-top: var(--e-5);
+  }
+
+  /* CTA fixo */
+  .cta-fixo {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    padding: var(--e-3) var(--margem) max(var(--e-3), env(safe-area-inset-bottom));
+    pointer-events: none;
+  }
+  .cta-fixo__botao {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 26rem;
+    min-height: 52px;
+    padding: 0 1.4em;
+    background: var(--cor-noite);
+    color: var(--cor-papel);
+    border: var(--fio) solid var(--cor-ouro);
+    text-decoration: none;
+  }
+  .cta-fixo__botao:hover {
+    background: var(--cor-cafe);
+  }
+  @media (min-width: 60rem) {
+    .cta-fixo {
+      justify-content: flex-end;
+    }
+    .cta-fixo__botao {
+      width: auto;
+    }
+  }
+  /* a pergunta real é o título (h3): leitores de tela e buscadores a encontram como título */
+  .faq__pergunta {
+    margin: 0;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+</style>

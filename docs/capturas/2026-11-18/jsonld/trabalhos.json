@@ -1,0 +1,448 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Trabalhos da Todalinda",
+    "url": "https://todalinda.exemplo/trabalhos",
+    "associatedMedia": [
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-749143529-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-859140964-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-876662670-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-751623903-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-859866649-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-860153001-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862434060-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862550598-2118.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862620147-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-887849578-1918.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-902591720-2400.webp",
+        "caption": "Morena iluminada",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-753362068-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-861280514-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-901881314-912.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-751726770-1184.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-751939719-2272.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-753471488-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-753546098-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862082658-b-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862831173-1966.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-894460956-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-900352710-2384.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-900637927-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-902547672-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-936040292-2400.webp",
+        "caption": "Loiros",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-754970697-1320.webp",
+        "caption": "Ruivo e cobre",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-765855000-2400.webp",
+        "caption": "Ruivo e cobre",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-756641555-1320.webp",
+        "caption": "Ruivo e cobre",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-862082658-a-2400.webp",
+        "caption": "Ruivo e cobre",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-887153455-1918.webp",
+        "caption": "Ruivo e cobre",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-753672680-2400.webp",
+        "caption": "Castanho e mocha",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-756143696-2400.webp",
+        "caption": "Castanho e mocha",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-801582372-2400.webp",
+        "caption": "Castanho e mocha",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-885931508-1918.webp",
+        "caption": "Castanho e mocha",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-902586035-2400.webp",
+        "caption": "Corte",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-902586330-2400.webp",
+        "caption": "Corte",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-846320909-2400.webp",
+        "caption": "Penteado e make",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-899604807-896.webp",
+        "caption": "Penteado e make",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-887750884-2400.webp",
+        "caption": "Esmalteria",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-901840667-2400.webp",
+        "caption": "Esmalteria",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-849272130-2400.webp",
+        "caption": "Esmalteria",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://todalinda.exemplo/media/img/f-850007933-2400.webp",
+        "caption": "Esmalteria",
+        "creditText": "Todalinda",
+        "creator": {
+          "@id": "https://todalinda.exemplo/#salao"
+        },
+        "copyrightNotice": "Todalinda · Cordova Antoniolli Serviços de Estéticas LTDA"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Todalinda",
+        "item": "https://todalinda.exemplo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Trabalhos",
+        "item": "https://todalinda.exemplo/trabalhos"
+      }
+    ]
+  }
+]

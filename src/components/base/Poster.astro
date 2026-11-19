@@ -1,0 +1,101 @@
+---
+// Imagem ou vídeo com LQIP (fundo borrado enquanto carrega) e proporção reservada (CLS 0).
+// Vídeo: mudo, em loop, sem autoplay no HTML; src/scripts/video.ts dá play só se o movimento for permitido.
+import { imagem, video } from '../../lib/midia.ts';
+
+type Props =
+  | {
+      imagem: string;
+      alt: string;
+      sizes?: string;
+      prioridade?: boolean;
+      video?: never;
+      class?: string;
+      proporcao?: string;
+      lqip?: boolean;
+    }
+  | {
+      video: string;
+      trecho: string;
+      rotulo?: string;
+      posterImagem?: string;
+      alt: string;
+      imagem?: never;
+      prioridade?: boolean;
+      class?: string;
+      proporcao?: string;
+      lqip?: boolean;
+    };
+
+const p = Astro.props;
+const classe = p.class ?? '';
+// LQIP (base64 inline, não comprime): por padrão só nas imagens prioritárias; as de baixo ficam no fundo café.
+const prioridade = p.prioridade ?? false;
+const posterImagem = 'posterImagem' in p ? p.posterImagem : undefined;
+const img = p.imagem ? imagem(p.imagem) : posterImagem ? imagem(posterImagem) : null;
+const vid = p.video ? video(p.video, p.trecho, p.rotulo) : null;
+const w = vid?.w ?? img?.largura ?? 1;
+const h = vid?.h ?? img?.altura ?? 1;
+const sizes = (p.imagem && p.sizes) || '100vw';
+/** Proporção forçada (recorte central por object-fit); padrão: a do arquivo. */
+const proporcao = p.proporcao ?? `${w} / ${h}`;
+---
+
+<div
+  class:list={['poster', classe]}
+  style={`aspect-ratio: ${proporcao};${(p.lqip ?? prioridade) && img?.lqip ? ` background-image: url(${img.lqip})` : ''}`}
+  data-bloqueio={vid?.bloqueio ?? img?.bloqueio}
+>
+  {vid ? (
+    <video
+      class="poster__midia"
+      muted
+      loop
+      playsinline
+      preload={prioridade ? 'auto' : 'none'}
+      poster={vid.poster}
+      width={w}
+      height={h}
+      aria-label={p.alt}
+      data-video-mudo
+    >
+      <source src={vid.webm} type="video/webm" />
+      <source src={vid.mp4} type="video/mp4" />
+    </video>
+  ) : (
+    img && (
+      <picture>
+        <source type="image/avif" srcset={img.srcsetAvif} sizes={sizes} />
+        <img
+          class="poster__midia"
+          src={img.src}
+          srcset={img.srcsetWebp}
+          sizes={sizes}
+          width={img.largura}
+          height={img.altura}
+          alt={p.alt}
+          loading={prioridade ? 'eager' : 'lazy'}
+          decoding="async"
+          fetchpriority={prioridade ? 'high' : 'auto'}
+        />
+      </picture>
+    )
+  )}
+</div>
+
+<style>
+  .poster {
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--cor-cafe);
+  }
+  .poster :global(picture),
+  .poster__midia {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

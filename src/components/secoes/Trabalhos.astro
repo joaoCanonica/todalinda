@@ -1,0 +1,195 @@
+---
+// 4 · TRABALHOS (capa): grade editorial assimétrica — uma foto grande (★) + duas menores por técnica.
+// Filtro com botões nativos. Sem JS, todas as técnicas aparecem empilhadas.
+import { trabalhos as t } from '../../content/textos/home.ts';
+import { alt } from '../../content/textos/midia.ts';
+import Botao from '../base/Botao.astro';
+import Poster from '../base/Poster.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+import { liberada } from './util.ts';
+
+const grupos = [
+  {
+    id: 'morena-iluminada',
+    nome: 'Morena iluminada',
+    fotos: ['f-876662670', 'f-749143529', 'f-902591720'],
+  },
+  { id: 'loiros', nome: 'Loiros', fotos: ['f-753362068', 'f-861280514', 'f-901881314'] },
+  {
+    id: 'ruivo-e-cobre',
+    nome: 'Ruivo e cobre',
+    fotos: ['f-754970697', 'f-765855000', 'f-887153455'],
+  },
+  {
+    id: 'castanho-e-mocha',
+    nome: 'Castanho e mocha',
+    fotos: ['f-753672680', 'f-801582372', 'f-885931508'],
+  },
+  { id: 'corte', nome: 'Corte', fotos: ['f-902586035', 'f-902586330', 'f-801582372'] },
+  {
+    id: 'penteado-e-make',
+    nome: 'Penteado',
+    fotos: ['f-846320909', 'f-899604807', 'q-dido-sorrindo'],
+  },
+  { id: 'esmalteria', nome: 'Esmalteria', fotos: ['f-887750884', 'f-901840667', 'f-849272130'] },
+].map((g) => ({ ...g, fotos: g.fotos.filter((f) => liberada(f)) }));
+---
+
+<Pagina tom="capa" secao={t.folio} id="trabalhos" rotulo="Trabalhos">
+  <div class="trab">
+    <div class="trab__cabeca">
+      <Rotulo tom="acento">{t.folio}</Rotulo>
+      <h2>
+        {t.titulo.antes}
+        <em>{t.titulo.destaque}</em>
+        {t.titulo.depois}
+      </h2>
+      <p>{t.intro}</p>
+    </div>
+    <div class="trab__filtro" role="group" aria-label={t.filtro} data-trab-filtro hidden>
+      {grupos.map((g, i) => (
+        <button
+          type="button"
+          class="versalete"
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          data-trab-alvo={g.id}
+        >
+          {g.nome}
+        </button>
+      ))}
+    </div>
+    {grupos.map((g, i) => (
+      <section
+        class="trab__grupo"
+        data-trab-grupo={g.id}
+        data-ativo={i === 0 ? '' : undefined}
+        aria-label={g.nome}
+      >
+        <h3 class="trab__nome versalete">{g.nome}</h3>
+        <div class="trab__grade">
+          {g.fotos.map((f, j) => (
+            <figure class:list={['trab__foto', j === 0 ? 'trab__foto--capa' : 'trab__foto--menor']}>
+              <Poster
+                imagem={f}
+                alt={alt[f] ?? ''}
+                proporcao={j === 0 ? '4 / 5' : '1 / 1'}
+                sizes={j === 0 ? '(min-width: 60rem) 50vw, 100vw' : '(min-width: 60rem) 25vw, 50vw'}
+              />
+            </figure>
+          ))}
+        </div>
+        <a class="trab__link" href={`/servicos/${g.id}`}>
+          Ler a matéria de {g.nome.toLowerCase()}
+        </a>
+      </section>
+    ))}
+    <Botao href="/trabalhos" variante="secundario">
+      {t.verTodos}
+    </Botao>
+  </div>
+</Pagina>
+
+<script>
+  const filtro = document.querySelector<HTMLElement>('[data-trab-filtro]');
+  const grupos = [...document.querySelectorAll<HTMLElement>('[data-trab-grupo]')];
+  if (filtro && grupos.length) {
+    filtro.hidden = false;
+    document.documentElement.classList.add('trab-js');
+    const botoes = [...filtro.querySelectorAll<HTMLButtonElement>('[data-trab-alvo]')];
+    for (const b of botoes) {
+      b.addEventListener('click', () => {
+        for (const x of botoes) x.setAttribute('aria-pressed', String(x === b));
+        for (const g of grupos)
+          g.toggleAttribute('data-ativo', g.dataset.trabGrupo === b.dataset.trabAlvo);
+      });
+    }
+  }
+</script>
+
+<style>
+  .trab {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .trab__cabeca p {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .trab__filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+  }
+  .trab__filtro[hidden] {
+    display: none;
+  }
+  .trab__filtro button {
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+    transition:
+      background-color var(--dur-2) var(--curva-precisa),
+      color var(--dur-2) var(--curva-precisa);
+  }
+  .trab__filtro button[aria-pressed='true'] {
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    border-color: var(--cor-papel);
+  }
+  :global(.trab-js) .trab__grupo:not([data-ativo]) {
+    display: none;
+  }
+  :global(.trab-js) .trab__nome {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .trab__nome {
+    margin: 0 0 var(--e-3);
+    color: var(--acento);
+  }
+  .trab__grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-3);
+  }
+  .trab__foto {
+    margin: 0;
+  }
+  .trab__foto--capa {
+    grid-column: 1 / -1;
+  }
+  .trab__link {
+    display: inline-block;
+    margin-top: var(--e-3);
+    min-height: 44px;
+    padding-block: 0.6em;
+    color: var(--cor-ouro-claro);
+  }
+  @media (min-width: 60rem) {
+    /* assimetria editorial: capa alta à esquerda, duas menores deslocadas à direita */
+    .trab__grade {
+      grid-template-columns: 7fr 4fr;
+      grid-template-rows: auto auto;
+      gap: var(--e-4) var(--e-5);
+    }
+    .trab__foto--capa {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+    .trab__foto--menor:nth-child(2) {
+      margin-top: var(--e-8);
+    }
+    .trab__foto--menor:nth-child(3) {
+      margin-inline-start: var(--e-7);
+    }
+  }
+</style>

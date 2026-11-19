@@ -1,0 +1,44 @@
+---
+// Selo PROVISÓRIO ao lado de um valor em "aviso" (ou de uma sugestão não confirmada).
+// Em produção o selo some; o valor só aparece se a config permitir.
+import { EM_PREVIEW } from '../config/ambiente.ts';
+
+interface Props {
+  motivo: string;
+}
+const { motivo } = Astro.props;
+---
+
+<span class="provisorio-alvo">
+  <slot />
+  {EM_PREVIEW && (
+    <span class="provisorio" title={motivo}>
+      Provisório<span class="sr-only">: {motivo}</span>
+    </span>
+  )}
+</span>
+
+<style>
+  .provisorio {
+    display: inline-block;
+    margin-inline-start: 0.4em;
+    padding: 0 0.45em;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    font:
+      600 0.625rem/1.6 system-ui,
+      sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: var(--texto-2); /* sem opacidade: o selo precisa do mesmo contraste do texto */
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

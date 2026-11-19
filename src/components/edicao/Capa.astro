@@ -1,0 +1,154 @@
+---
+// A capa da edição: cabeçalho com o logo "palavra", faixa fina "Nº 10 · desde 2017 · Lages/SC",
+// manchete, 3 chamadas de capa e a foto/vídeo de capa. Desktop: capa vertical à direita;
+// mobile: a mídia sangra (de borda a borda).
+import { contato } from '../../config/contato.ts';
+import { marca } from '../../config/marca.ts';
+import Poster from '../base/Poster.astro';
+import Logo from '../marca/Logo.astro';
+
+type Midia =
+  | { imagem: string; alt: string }
+  | { video: string; trecho: string; rotulo?: string; posterImagem?: string; alt: string };
+interface Props {
+  numero?: string;
+  chamadas: [string, string, string];
+  midia: Midia;
+}
+const { numero = 'Nº 10', chamadas, midia } = Astro.props;
+const desde = marca.fundacao.ano.valor;
+const cidade = `${contato.endereco.valor.cidade}/${contato.endereco.valor.uf}`;
+---
+
+<header class="capa tom-capa">
+  <div class="capa__cabecalho">
+    <Logo variante="palavra" titulo="Todalinda" class="capa__logo" />
+    <p class="capa__faixa versalete">
+      <span>{numero}</span>
+      <span aria-hidden="true">·</span>
+      <span>desde {desde}</span>
+      <span aria-hidden="true">·</span>
+      <span>{cidade}</span>
+    </p>
+  </div>
+  <div class="capa__corpo">
+    <div class="capa__texto">
+      <h1 class="capa__manchete manchete">
+        <slot name="manchete" />
+      </h1>
+      <ul class="capa__chamadas" role="list">
+        {chamadas.map((c, i) => (
+          <li>
+            <span class="capa__num numeros" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            {c}
+          </li>
+        ))}
+      </ul>
+      <div class="capa__acoes">
+        <slot name="acoes" />
+      </div>
+    </div>
+    <div class="capa__midia">
+      {'imagem' in midia && midia.imagem ? (
+        <Poster
+          imagem={midia.imagem}
+          alt={midia.alt}
+          prioridade
+          sizes="(min-width: 60rem) 40vw, 100vw"
+        />
+      ) : (
+        <Poster
+          video={(midia as { video: string }).video}
+          trecho={(midia as { trecho: string }).trecho}
+          rotulo={(midia as { rotulo?: string }).rotulo ?? '720x900-4x5'}
+          alt={midia.alt}
+          prioridade
+        />
+      )}
+    </div>
+  </div>
+</header>
+
+<script>
+  import '../../scripts/video.ts';
+</script>
+
+<style>
+  .capa {
+    padding: var(--e-5) var(--margem) var(--e-8);
+  }
+  .capa__cabecalho {
+    display: grid;
+    gap: var(--e-3);
+  }
+  .capa :global(.capa__logo) {
+    width: 100%;
+    color: var(--cor-papel);
+  }
+  .capa__faixa {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.9em;
+    max-width: none;
+    margin: 0;
+    padding-block: 0.55em;
+    border-block: var(--fio) solid var(--fio-cor);
+    color: var(--acento);
+  }
+  .capa__corpo {
+    display: grid;
+    gap: var(--e-6);
+    margin-top: var(--e-6);
+  }
+  .capa__manchete {
+    font-size: var(--fs-capa);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+  .capa__chamadas {
+    display: grid;
+    gap: var(--e-3);
+    margin: var(--e-6) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 30rem;
+  }
+  .capa__chamadas li {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    padding-top: var(--e-3);
+    border-top: var(--fio) solid var(--fio-cor);
+    font-size: var(--fs-lead);
+    line-height: 1.35;
+  }
+  .capa__num {
+    color: var(--acento);
+    font-size: var(--fs-pequeno);
+    padding-top: 0.2em;
+  }
+  .capa__acoes {
+    margin-top: var(--e-6);
+  }
+  .capa__acoes:empty {
+    display: none;
+  }
+  /* mobile: a mídia sangra */
+  .capa__midia {
+    order: -1;
+    margin-inline: calc(var(--margem) * -1);
+  }
+  @media (min-width: 60rem) {
+    .capa__corpo {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: var(--e-7);
+    }
+    .capa__midia {
+      order: 0;
+      margin-inline: 0;
+    }
+  }
+</style>

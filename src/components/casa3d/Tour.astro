@@ -1,0 +1,493 @@
+---
+// O tour da casa. Três camadas:
+//  A) maquete 3D (esquemática até a planta; GLB quando existir) — ilha carregada depois do LCP;
+//  B) "Ver de verdade": splat do ambiente sob demanda (até existir, fotos/vídeo do ambiente);
+//  C) fallback: a lista de ambientes (tablist) + painéis com fotos funciona sem WebGL e sem JS.
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { getCollection } from 'astro:content';
+import { EM_PREVIEW } from '../../config/ambiente.ts';
+import { maqueteEsquematica } from '../../config/casa3d.ts';
+import { alt } from '../../content/textos/midia.ts';
+import { servicos as textosServico } from '../../content/textos/servicos.ts';
+import { linkWhatsApp, MENSAGENS } from '../../lib/whatsapp.ts';
+import Poster from '../base/Poster.astro';
+import { liberada } from '../secoes/util.ts';
+
+interface Props {
+  inicial?: string;
+}
+const { inicial = 'fachada-e-gramado' } = Astro.props;
+const ambientes = (await getCollection('ambientes'))
+  .map((a) => a.data)
+  .sort((a, b) => a.ordem - b.ordem);
+const servicos = new Map((await getCollection('servicos')).map((s) => [s.data.id, s.data]));
+// a URL leva o hash do conteúdo (?v=): o deploy serve /modelos com cache de 1 ano, imutável
+const arqGlb = join(process.cwd(), 'public/modelos/maquete.glb');
+const glb = existsSync(arqGlb)
+  ? `/modelos/maquete.glb?v=${createHash('sha1').update(readFileSync(arqGlb)).digest('hex').slice(0, 10)}`
+  : null;
+// esquemática: sempre no preview (com selo); em produção só com aprovação do João
+const mostra3d = Boolean(glb) || EM_PREVIEW || maqueteEsquematica.aprovadaPeloJoao;
+const poses = ambientes.map((a) => ({ id: a.id, posicao: a.camera.posicao, alvo: a.camera.alvo }));
+const andarTexto = {
+  terreo: 'Térreo',
+  superior: 'Andar de cima',
+  externo: 'Do lado de fora',
+  pendente: 'Andar a confirmar',
+} as const;
+const midiaDe = (ids: string[]) => ids.filter((m) => liberada(m));
+---
+
+<section
+  class="tour tom-capa"
+  id="tour"
+  aria-labelledby="tour-titulo"
+  data-tour
+  data-3d={mostra3d ? '' : undefined}
+  data-glb={glb ?? undefined}
+  data-poses={JSON.stringify(poses)}
+  data-inicial={inicial}
+>
+  <h2 id="tour-titulo" class="sr-only">
+    Os ambientes da casa
+  </h2>
+
+  <div
+    class="tour__lista"
+    role="tablist"
+    aria-label="Ambientes da casa"
+    aria-orientation="horizontal"
+    data-tablist
+  >
+    {ambientes.map((a, i) => (
+      <button
+        type="button"
+        role="tab"
+        id={`aba-${a.id}`}
+        aria-controls={`painel-${a.id}`}
+        aria-selected={a.id === inicial ? 'true' : 'false'}
+        tabindex={a.id === inicial ? 0 : -1}
+        class="tour__aba"
+        data-aba={a.id}
+      >
+        <span class="numeros" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        {a.nome}
+      </button>
+    ))}
+  </div>
+
+  <div class="tour__corpo">
+    <div class="tour__palco" data-palco data-ilha-3d data-estado="carregando" hidden={!mostra3d}>
+      <canvas
+        class="tour__canvas"
+        data-canvas
+        role="img"
+        aria-label="Maquete 3D da Todalinda. Use a lista de ambientes para navegar."
+      ></canvas>
+      <div class="tour__hotspots" aria-hidden="true">
+        {ambientes.map((a) => (
+          <button type="button" tabindex="-1" class="tour__hotspot versalete" data-hotspot={a.id}>
+            {a.nome}
+          </button>
+        ))}
+      </div>
+      {!glb && <p class="tour__selo versalete">{maqueteEsquematica.selo}</p>}
+      <p class="tour__estado versalete" data-estado-3d role="status">
+        Carregando a maquete…
+      </p>
+      <p class="tour__dica" data-dica hidden>
+        Arraste para girar um pouco. Os ambientes estão na lista.
+      </p>
+    </div>
+    {/* sem JS, o palco 3D nunca carregaria: mostra a foto da fachada e a lista no lugar */}
+    <noscript>
+      <style>
+        [data-palco] {
+          display: none !important;
+        }
+        [data-fallback] {
+          display: block !important;
+        }
+      </style>
+    </noscript>
+    <figure class="tour__fallback" data-fallback hidden={mostra3d}>
+      <Poster
+        imagem="cap-12-24-16"
+        alt={alt['cap-12-24-16'] ?? ''}
+        sizes="(min-width: 60rem) 30rem, 100vw"
+      />
+      <figcaption class="versalete">
+        A fachada da Todalinda. Escolha um ambiente para ver as fotos.
+      </figcaption>
+    </figure>
+
+    <div class="tour__paineis" data-paineis>
+      {ambientes.map((a) => {
+        const midia = midiaDe(a.midia);
+        const servs = a.servicos.map((s) => servicos.get(s)).filter((s) => s?.publicado);
+        return (
+          <div
+            role="tabpanel"
+            id={`painel-${a.id}`}
+            aria-labelledby={`aba-${a.id}`}
+            class="tour__painel"
+            data-painel={a.id}
+            hidden={a.id !== inicial}
+            tabindex="-1"
+          >
+            <p class="versalete tour__andar">{andarTexto[a.andar]}</p>
+            <h3 class="tour__nome">{a.nome}</h3>
+            <p class="tour__descricao">{a.descricao}</p>
+            {midia.length > 0 ? (
+              <ul class="tour__midia" role="list">
+                {midia.slice(0, 3).map((m) => (
+                  <li>
+                    <Poster
+                      imagem={m}
+                      alt={alt[m] ?? ''}
+                      proporcao="4 / 3"
+                      sizes="(min-width: 60rem) 10rem, 30vw"
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="tour__semfoto">Fotos deste ambiente em breve.</p>
+            )}
+            {servs.length > 0 && (
+              <div class="tour__servicos">
+                <p class="versalete">Feito aqui</p>
+                <ul role="list">
+                  {servs.map(
+                    (s) =>
+                      s && (
+                        <li>
+                          <a
+                            href={linkWhatsApp(
+                              textosServico[s.id]?.whatsapp ?? MENSAGENS.servico(s.nome),
+                            )}
+                            rel="noopener"
+                            target="_blank"
+                          >
+                            Agendar {s.nome.toLowerCase()}
+                            <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+                          </a>
+                        </li>
+                      ),
+                  )}
+                </ul>
+              </div>
+            )}
+            <div class="tour__acoes">
+              {servs.length === 0 && (
+                <a
+                  class="tour__agendar"
+                  href={linkWhatsApp(MENSAGENS.ambiente())}
+                  rel="noopener"
+                  target="_blank"
+                >
+                  Agendar horário<span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+                </a>
+              )}
+              {(a.splat || midia.length > 0) && (
+                <button
+                  type="button"
+                  class="tour__verdade versalete"
+                  data-verdade={a.id}
+                  data-splat={a.splat ?? undefined}
+                >
+                  Ver de verdade
+                </button>
+              )}
+            </div>
+            <button type="button" class="tour__fechar versalete" data-fechar-gaveta>
+              Fechar
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <dialog class="tour__dialogo tom-capa" data-dialogo aria-labelledby="dlg-titulo">
+    <p class="versalete" id="dlg-titulo" data-dlg-titulo>
+      Fotos do ambiente
+    </p>
+    <div class="tour__galeria" data-dlg-galeria></div>
+    <p class="tour__progresso" data-dlg-progresso hidden role="status"></p>
+    <form method="dialog">
+      <button class="versalete tour__fechar-dlg">Fechar</button>
+    </form>
+  </dialog>
+  <!-- galerias por ambiente (fotos maiores), copiadas para o diálogo ao pedir "Ver de verdade" -->
+  <template data-galerias>
+    {ambientes.map((a) => (
+      <div data-galeria={a.id}>
+        {midiaDe(a.midia).map((m) => (
+          <Poster imagem={m} alt={alt[m] ?? ''} sizes="(min-width: 60rem) 40rem, 92vw" />
+        ))}
+      </div>
+    ))}
+  </template>
+</section>
+
+<script>
+  import './ilha.ts';
+</script>
+
+<style>
+  .tour {
+    padding: var(--e-5) var(--margem) var(--e-8);
+  }
+  .tour__lista {
+    display: flex;
+    gap: var(--e-2);
+    overflow-x: auto;
+    position: relative;
+    padding: 6px 6px var(--e-3);
+    margin-inline: -6px;
+    scroll-padding-inline: 6px;
+    scrollbar-width: thin;
+  }
+  .tour__aba {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--texto);
+    font: inherit;
+    font-size: var(--fs-pequeno);
+    cursor: pointer;
+  }
+  .tour__aba .numeros {
+    color: var(--acento);
+    font-size: 0.85em;
+  }
+  .tour__aba[aria-selected='true'] {
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    border-color: var(--cor-papel);
+  }
+  .tour__aba[aria-selected='true'] .numeros {
+    color: var(--cor-mocha);
+  }
+  .tour__corpo {
+    display: grid;
+    gap: var(--e-5);
+    margin-top: var(--e-4);
+  }
+  .tour__palco {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    max-height: 72svh;
+    border: var(--fio) solid var(--fio-cor);
+    overflow: hidden;
+    touch-action: pan-y; /* a rolagem vertical da página continua; só o arrasto lateral gira */
+  }
+  .tour__palco[hidden] {
+    display: none;
+  }
+  .tour__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .tour__hotspots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .tour__hotspot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0.35em 0.7em;
+    border: var(--fio) solid color-mix(in srgb, var(--cor-ouro) 70%, transparent);
+    background: color-mix(in srgb, var(--cor-noite) 78%, transparent);
+    color: var(--cor-papel);
+    font-size: 0.625rem;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: background-color var(--dur-2) var(--curva-precisa);
+  }
+  .tour__hotspot[data-ativo] {
+    background: var(--cor-ouro-claro);
+    color: var(--cor-noite);
+  }
+  .tour__hotspot[data-fora] {
+    visibility: hidden;
+  }
+  .tour__selo {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-start: var(--e-3);
+    margin: 0;
+    max-width: calc(100% - 2 * var(--e-3));
+    padding: 0.4em 0.8em;
+    border: var(--fio) solid var(--cor-ouro);
+    background: var(--cor-noite);
+    color: var(--cor-ouro-claro);
+  }
+  .tour__estado {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    color: var(--cor-pedra-clara);
+    pointer-events: none;
+  }
+  .tour__estado[hidden] {
+    display: none;
+  }
+  .tour__dica {
+    position: absolute;
+    inset-block-end: var(--e-2);
+    inset-inline: var(--e-3);
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--cor-papel);
+    text-shadow: 0 0 6px var(--cor-noite);
+  }
+  .tour__fallback {
+    margin: 0;
+    max-width: 30rem; /* captura de tela: no máximo 480 px */
+  }
+  .tour__fallback[hidden] {
+    display: none;
+  }
+  .tour__fallback figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+  .tour__painel {
+    display: grid;
+    gap: var(--e-3);
+    align-content: start;
+  }
+  .tour__painel[hidden] {
+    display: none;
+  }
+  .tour__andar {
+    margin: 0;
+    color: var(--acento);
+  }
+  .tour__nome {
+    font-size: var(--fs-h2);
+  }
+  .tour__descricao,
+  .tour__semfoto {
+    margin: 0;
+    color: var(--texto-2);
+  }
+  .tour__midia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--e-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tour__servicos p {
+    margin: 0 0 var(--e-1);
+    color: var(--texto-2);
+  }
+  .tour__servicos ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--e-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tour__servicos a,
+  .tour__agendar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--cor-ouro-claro);
+  }
+  .tour__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+  }
+  .tour__verdade,
+  .tour__fechar,
+  .tour__fechar-dlg {
+    min-height: 44px;
+    padding: 0 1.1em;
+    border: var(--fio) solid var(--cor-papel);
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    cursor: pointer;
+  }
+  .tour__fechar {
+    display: none;
+    background: transparent;
+    color: var(--texto);
+    border-color: var(--fio-cor);
+  }
+  .tour__dialogo {
+    width: min(94vw, 44rem);
+    max-height: 92svh;
+    padding: var(--e-4);
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .tour__dialogo::backdrop {
+    background: color-mix(in srgb, var(--cor-noite) 88%, transparent);
+  }
+  .tour__galeria {
+    display: grid;
+    gap: var(--e-3);
+    margin-block: var(--e-3);
+  }
+  .tour__progresso {
+    color: var(--texto-2);
+  }
+
+  /* celular: o painel vira gaveta inferior quando a pessoa abre (Enter / toque na maquete) */
+  @media (max-width: 59.99rem) {
+    :global(.tour--gaveta) .tour__paineis {
+      position: fixed;
+      inset-inline: 0;
+      inset-block-end: 0;
+      z-index: 50;
+      max-height: 62svh;
+      overflow-y: auto;
+      padding: var(--e-5) var(--margem) calc(var(--e-5) + env(safe-area-inset-bottom));
+      background: var(--cor-cafe);
+      border-top: var(--fio) solid var(--cor-ouro);
+      box-shadow: 0 -12px 40px rgb(0 0 0 / 0.45);
+    }
+    :global(.tour--gaveta) .tour__fechar {
+      display: inline-flex;
+      align-items: center;
+      justify-self: start;
+    }
+  }
+  @media (min-width: 60rem) {
+    .tour__corpo {
+      grid-template-columns: minmax(0, 7fr) minmax(18rem, 4fr);
+      align-items: start;
+    }
+    .tour__palco {
+      aspect-ratio: 16 / 10;
+    }
+    .tour__paineis {
+      position: sticky;
+      top: var(--e-5);
+    }
+  }
+</style>

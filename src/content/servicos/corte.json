@@ -1,0 +1,49 @@
+{
+  "id": "corte",
+  "nome": "Corte",
+  "grupo": "corte",
+  "resumo": "Corte é forma. Camadas longas para dar movimento, bob para quem quer leveza, corte reto para quem quer peso nas pontas.",
+  "especialidades": ["cabelo"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Conversa",
+      "texto": "O que você quer, como arruma o cabelo no dia a dia e o que não abre mão. Fotos de referência ajudam."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "O corte, conforme o fio e o resultado combinado na conversa."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem, e a orientação do que fazer em casa até a próxima visita."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["dido-rodrigues", "andressa-savaris"]
+  },
+  "midia": ["f-902586035", "f-902586330", "f-801582372"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Posso levar uma foto de referência?",
+      "resposta": "Pode e ajuda. A profissional mostra o que daquela foto funciona no seu tipo de fio e no seu rosto."
+    },
+    {
+      "pergunta": "Dá para cortar e fazer cor no mesmo dia?",
+      "resposta": "Em muitos casos, sim. Diga os dois serviços na hora de agendar, para a recepção reservar o tempo certo."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": true,
+  "ordem": 6
+}

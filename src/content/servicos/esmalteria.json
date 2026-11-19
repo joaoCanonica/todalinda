@@ -1,0 +1,49 @@
+{
+  "id": "esmalteria",
+  "nome": "Esmalteria",
+  "grupo": "unhas",
+  "resumo": "Manicure e pedicure com esmaltação tradicional ou em gel.",
+  "especialidades": ["manicure", "pedicure", "nail design"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "A profissional olha a unha e pergunta da sua rotina para indicar a esmaltação."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Preparo da unha e esmaltação tradicional ou em gel, com blindagem quando indicada."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Orientação de cuidado até o próximo atendimento."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["karine", "thaynara-colombo"]
+  },
+  "midia": ["f-887750884", "f-901840667", "v-unhas", "f-849272130"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do serviço escolhido; no agendamento a gente te passa."
+    },
+    {
+      "pergunta": "O que é a blindagem?",
+      "resposta": "Uma camada de reforço aplicada antes da esmaltação em gel, para unhas que quebram com facilidade. A profissional indica se faz sentido para a sua unha."
+    },
+    {
+      "pergunta": "Posso tirar o gel em casa?",
+      "resposta": "O ideal é tirar no salão, para não arrancar camadas da unha junto."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": true,
+  "ordem": 9
+}

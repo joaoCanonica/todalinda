@@ -1,0 +1,295 @@
+---
+// /nossa-historia — a linha do tempo 2017 → 2027 como matéria em colunas de revista: o ano em
+// numeral grande, o texto em coluna, a fala real como olho. As falas da Edna em vídeo só carregam
+// quando a pessoa pede; a foto da equipe reunida fecha a matéria.
+import Botao from '../components/base/Botao.astro';
+import Citacao from '../components/base/Citacao.astro';
+import Poster from '../components/base/Poster.astro';
+import Etiqueta from '../components/edicao/Etiqueta.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import VideoSobDemanda from '../components/secoes/VideoSobDemanda.astro';
+import { liberada } from '../components/secoes/util.ts';
+import { whatsapp } from '../content/textos/geral.ts';
+import { editorial, momento } from '../content/textos/home.ts';
+import { alt, videos } from '../content/textos/midia.ts';
+import {
+  cta,
+  cursos,
+  linhaDoTempo,
+  meta,
+  pagina,
+  valoresDaCasa,
+} from '../content/textos/nossa-historia.ts';
+import { videoLd } from '../components/seo/videos.ts';
+import Interna from '../layouts/Interna.astro';
+import { autorDe, ondeDe } from '../lib/paginas.ts';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const FOTO_EQUIPE = 'f-851041550';
+const ldVideos = ['v-edna-sonho', 'v-edna-clientes'].flatMap((id) => videoLd(id) ?? []);
+const falas = [
+  { id: 'v-edna-sonho', frase: editorial.citacao.texto },
+  { id: 'v-edna-clientes', frase: momento.fala.at(-1)?.texto ?? '' },
+].filter((f) => liberada(f.id, 'inteiro') && videos[f.id]);
+---
+
+<Interna
+  titulo={meta.title}
+  descricao={meta.description}
+  trilha={[{ nome: 'Nossa história', url: '/nossa-historia' }]}
+  jsonld={ldVideos}
+>
+  <CabecaPagina
+    secao="História"
+    rotulo={pagina.rotulo}
+    titulo={pagina.titulo}
+    resposta={pagina.resposta}
+  />
+
+  <!-- a abertura da matéria: a Edna, em primeira pessoa -->
+  <Pagina tom="pagina" secao="Abertura" rotulo="A fundadora">
+    <div class="abertura">
+      {pagina.abertura.map((f) => (
+        <Citacao autor={autorDe(f.fonte)} fonte={ondeDe(f.fonte)}>
+          {f.texto}
+        </Citacao>
+      ))}
+    </div>
+  </Pagina>
+
+  <!-- a linha do tempo, em colunas -->
+  <Pagina tom="pagina" secao="2017–2027" rotulo="Linha do tempo">
+    <h2 class="lt__titulo">
+      Dez anos, <em>ano a ano</em>
+    </h2>
+    <ol class="lt" role="list">
+      {linhaDoTempo.map((m) => (
+        <li class:list={['lt__marco', { 'lt__marco--dez': m.ano === '2027' }]}>
+          <article aria-labelledby={`ano-${m.ano}`}>
+            <p class="lt__ano numeros" aria-hidden="true">
+              {m.ano}
+            </p>
+            <h3 id={`ano-${m.ano}`} class="lt__nome">
+              <span class="sr-only">{m.ano}: </span>
+              {m.titulo}
+            </h3>
+            <p>{m.texto}</p>
+            {m.fala && (
+              <blockquote class="lt__olho">
+                <p>“{m.fala.texto}”</p>
+              </blockquote>
+            )}
+          </article>
+        </li>
+      ))}
+    </ol>
+    <p class="lt__nota">{cursos}</p>
+  </Pagina>
+
+  <!-- ouvir a Edna (vídeo com som e legenda, só ao clicar) -->
+  {falas.length > 0 && (
+    <Pagina tom="capa" secao="Em vídeo" rotulo="A Edna, em vídeo">
+      <h2 class="ouvir__titulo">
+        Nas palavras da <em>Edna</em>
+      </h2>
+      <ul class="ouvir" role="list">
+        {falas.map((f) => (
+          <li class="ouvir__item">
+            <p class="ouvir__frase">“{f.frase}”</p>
+            <VideoSobDemanda
+              id={f.id}
+              rotulo="Ouvir a Edna"
+              titulo={videos[f.id]?.titulo ?? ''}
+              descricao={videos[f.id]?.descricao ?? ''}
+            />
+          </li>
+        ))}
+      </ul>
+    </Pagina>
+  )}
+
+  <!-- o que guia a casa -->
+  <Pagina tom="pagina" secao="Valores" rotulo={valoresDaCasa.titulo}>
+    <h2 class="val__titulo">
+      O que guia a <em>casa</em>
+    </h2>
+    <ul class="val" role="list">
+      {valoresDaCasa.itens.map((v) => (
+        <li>
+          <Citacao autor={autorDe(v.fonte)} fonte={ondeDe(v.fonte)}>
+            {v.texto}
+          </Citacao>
+        </li>
+      ))}
+    </ul>
+  </Pagina>
+
+  {liberada(FOTO_EQUIPE) && (
+    <section class="equipe tom-capa" aria-label="A equipe reunida">
+      <figure>
+        <Poster imagem={FOTO_EQUIPE} alt={alt[FOTO_EQUIPE] ?? momento.legendaFoto} sizes="100vw" />
+        <figcaption>
+          <Etiqueta hashtag="#EquipeTodalinda" />
+          <span class="versalete">{momento.legendaFoto}</span>
+        </figcaption>
+      </figure>
+    </section>
+  )}
+
+  <Pagina tom="capa" secao="Agendar" rotulo="Agendar">
+    <div class="cta">
+      <h2>
+        A próxima página tem <em>você</em>.
+      </h2>
+      <Botao href={linkWhatsApp(whatsapp.geral)} externo agendar={{}}>
+        {cta.botao}
+      </Botao>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .abertura {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  @media (min-width: 60rem) {
+    .abertura {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--e-8);
+    }
+  }
+  .lt__titulo {
+    margin-bottom: var(--e-7);
+  }
+  .lt {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .lt__marco {
+    break-inside: avoid;
+    padding: var(--e-4) 0 var(--e-6);
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .lt__ano {
+    margin: 0 0 var(--e-2);
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 2.6rem + 3.5vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--cor-tinta);
+  }
+  .lt__marco--dez .lt__ano {
+    color: var(--cor-mocha);
+  }
+  .lt__nome {
+    margin-bottom: var(--e-3);
+  }
+  .lt__olho {
+    margin: var(--e-4) 0 0;
+    padding-inline-start: var(--e-4);
+    border-inline-start: 2px solid var(--acento);
+  }
+  .lt__olho p {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-size: var(--fs-lead);
+    line-height: 1.35;
+  }
+  .lt__nota {
+    margin-top: var(--e-5);
+    color: var(--texto-2);
+  }
+  @media (min-width: 48rem) {
+    .lt {
+      columns: 2;
+      column-gap: var(--e-7);
+      column-rule: var(--fio) solid var(--fio-cor);
+    }
+  }
+  @media (min-width: 80rem) {
+    .lt {
+      columns: 3;
+    }
+  }
+  .ouvir__titulo {
+    margin-bottom: var(--e-6);
+  }
+  .ouvir {
+    display: grid;
+    gap: var(--e-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .ouvir__item {
+    display: grid;
+    gap: var(--e-4);
+    justify-items: start;
+    border-top: var(--fio) solid var(--fio-cor);
+    padding-top: var(--e-4);
+  }
+  .ouvir__frase {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-size: var(--fs-h2);
+    line-height: 1.1;
+    color: var(--cor-ouro-claro);
+  }
+  @media (min-width: 60rem) {
+    .ouvir {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--e-8);
+    }
+  }
+  .val__titulo {
+    margin-bottom: var(--e-6);
+  }
+  .val {
+    display: grid;
+    gap: var(--e-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  @media (min-width: 60rem) {
+    .val {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .equipe figure {
+    margin: 0;
+  }
+  .equipe figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3);
+    padding: var(--e-4) var(--margem) var(--e-6);
+    color: var(--texto-2);
+  }
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-5);
+  }
+  /* a foto da equipe (retrato vertical) vira faixa larga no desktop, com os rostos ao centro */
+  @media (min-width: 48rem) {
+    .equipe figure :global(.poster) {
+      aspect-ratio: 3 / 2 !important;
+    }
+    .equipe figure :global(.poster__midia) {
+      object-position: 50% 58%;
+    }
+  }
+</style>

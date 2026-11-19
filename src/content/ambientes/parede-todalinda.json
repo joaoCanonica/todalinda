@@ -1,0 +1,15 @@
+{
+  "id": "parede-todalinda",
+  "nome": "Parede TODALINDA",
+  "andar": "pendente",
+  "ordem": 7,
+  "descricao": "As letras douradas da marca na parede, que aparecem ao fundo de muitas fotos de resultado da casa.",
+  "servicos": [],
+  "midia": ["f-749143529", "f-751939719"],
+  "camera": {
+    "posicao": [5.8, 4.6, 1],
+    "alvo": [4.2, 0.4, -5.6]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

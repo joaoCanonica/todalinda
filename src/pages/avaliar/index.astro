@@ -1,0 +1,68 @@
+---
+// /avaliar — rota curta para avaliar no Google. Redireciona na hora para o link oficial
+// (meta refresh + script), com o link visível; noindex. Mede clique_avaliar(origem = ?o=qr|site|whatsapp),
+// só se a pessoa já aceitou a medição. Sem incentivo, sem estrelas, sem nota.
+import { cores } from '../../config/tema.ts';
+import { avaliar as a } from '../../content/textos/geral.ts';
+import { linkAvaliar } from '../../lib/avaliar.ts';
+
+const destino = linkAvaliar().url;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Avaliar a Todalinda no Google</title>
+    <meta name="theme-color" content={cores.noite} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta http-equiv="refresh" content={`1;url=${destino}`} />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #121013;
+        color: #f7f3ec;
+        font:
+          1.05rem/1.5 system-ui,
+          sans-serif;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      a {
+        color: #e2c88c;
+      }
+      p {
+        max-width: 28rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>{a.titulo}</p>
+      <p>
+        Abrindo a página da Todalinda no Google… Se não abrir,{' '}
+        <a href={destino} data-destino>
+          toque aqui para avaliar
+        </a>
+        .
+      </p>
+    </main>
+    <script>
+      import { aceito } from '../../components/consentimento/consentimento.ts';
+      import { medir } from '../../lib/medicao.ts';
+
+      const destino = document.querySelector<HTMLAnchorElement>('[data-destino]')?.href ?? '';
+      const o = new URLSearchParams(location.search).get('o') ?? '';
+      const origem = ['qr', 'site', 'whatsapp'].includes(o) ? o : 'direto';
+      medir('clique_avaliar', { origem });
+      // com a medição aceita, dá um instante para o evento sair; sem aceite, vai na hora
+      setTimeout(() => location.replace(destino), aceito() ? 400 : 0);
+    </script>
+  </body>
+</html>

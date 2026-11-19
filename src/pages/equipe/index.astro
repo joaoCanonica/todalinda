@@ -1,0 +1,205 @@
+---
+// /equipe — #TalentoTodalinda. A foto da equipe reunida como abertura (página dupla da revista)
+// e a grade de retratos; quem ainda não tem retrato em alta aparece no cartão tipográfico.
+import { getCollection } from 'astro:content';
+import CartaoTipografico from '../../components/base/CartaoTipografico.astro';
+import Poster from '../../components/base/Poster.astro';
+import Etiqueta from '../../components/edicao/Etiqueta.astro';
+import Pagina from '../../components/edicao/Pagina.astro';
+import CabecaPagina from '../../components/paginas/CabecaPagina.astro';
+import Provisorio from '../../components/Provisorio.astro';
+import { liberada, provisoria } from '../../components/secoes/util.ts';
+import { meta, pagina, perfis } from '../../content/textos/equipe.ts';
+import { alt } from '../../content/textos/midia.ts';
+import Interna from '../../layouts/Interna.astro';
+import { linkWhatsApp } from '../../lib/whatsapp.ts';
+
+const membros = (await getCollection('equipe'))
+  .map((m) => m.data)
+  .sort((a, b) => a.ordem - b.ordem);
+const FOTO_EQUIPE = 'f-851041550';
+const temFotoEquipe = liberada(FOTO_EQUIPE);
+---
+
+<Interna
+  titulo={meta.title}
+  descricao={meta.description}
+  trilha={[{ nome: 'Equipe', url: '/equipe' }]}
+>
+  <CabecaPagina
+    secao="Equipe"
+    hashtag="#TalentoTodalinda"
+    titulo={pagina.titulo}
+    resposta={pagina.resposta}
+  />
+
+  {temFotoEquipe && (
+    <section class="dupla tom-capa" aria-label="A equipe reunida">
+      <figure class="dupla__foto">
+        <Poster
+          imagem={FOTO_EQUIPE}
+          alt={alt[FOTO_EQUIPE] ?? 'A equipe Todalinda reunida.'}
+          prioridade
+          sizes="100vw"
+        />
+        <figcaption class="dupla__legenda">
+          <Etiqueta hashtag="#EquipeTodalinda" />
+          <blockquote>
+            <p>“{pagina.fala.texto}”</p>
+          </blockquote>
+          <p class="versalete dupla__autor">Edna Antoniolli · na revista da casa</p>
+        </figcaption>
+      </figure>
+    </section>
+  )}
+
+  <Pagina tom="pagina" secao="Retratos" rotulo="Quem é quem">
+    <h2 class="titulo">
+      Quem é <em>quem</em>
+    </h2>
+    <ul class="grade" role="list">
+      {membros.map((m) => {
+        const p = perfis[m.slug];
+        const foto = m.foto && liberada(m.foto) ? m.foto : null;
+        const motivo = foto ? provisoria(foto) : null;
+        return (
+          <li class="grade__item">
+            <a class="grade__retrato" href={`/equipe/${m.slug}`} tabindex="-1" aria-hidden="true">
+              {foto ? (
+                <Poster
+                  imagem={foto}
+                  alt={alt[foto] ?? m.nome}
+                  proporcao="4 / 5"
+                  sizes="(min-width: 60rem) 22vw, 50vw"
+                />
+              ) : (
+                <CartaoTipografico
+                  nome={m.nome}
+                  funcao={m.funcao}
+                  {...(m.anosDeProfissao ? { anos: m.anosDeProfissao } : {})}
+                />
+              )}
+            </a>
+            <h3 class="grade__nome">
+              <a href={`/equipe/${m.slug}`}>{m.nome}</a>
+            </h3>
+            <p class="grade__linha">
+              {motivo ? (
+                <Provisorio motivo={motivo}>{p?.linha ?? m.funcao}</Provisorio>
+              ) : (
+                (p?.linha ?? m.funcao)
+              )}
+            </p>
+            <a
+              class="grade__agendar versalete"
+              data-agendar={p?.agendar.startsWith('Agendar') ? '' : undefined}
+              data-agendar-profissional={p?.agendar.startsWith('Agendar') ? m.slug : undefined}
+              href={linkWhatsApp(p?.whatsapp)}
+              rel="noopener"
+              target="_blank"
+            >
+              {p?.agendar ?? `Agendar com ${m.nome}`}
+              <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </Pagina>
+</Interna>
+
+<style>
+  .dupla {
+    padding: 0 0 var(--e-8);
+  }
+  .dupla__foto {
+    margin: 0;
+  }
+  .dupla__legenda {
+    display: grid;
+    gap: var(--e-3);
+    justify-items: start;
+    padding: var(--e-5) var(--margem) 0;
+  }
+  .dupla__legenda blockquote {
+    margin: 0;
+  }
+  .dupla__legenda blockquote p {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-size: var(--fs-h2);
+    line-height: 1.1;
+    max-width: 22ch;
+  }
+  .dupla__autor {
+    color: var(--texto-2);
+    margin: 0;
+  }
+  .titulo {
+    margin-bottom: var(--e-6);
+  }
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-6) var(--e-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  /* cartão tipográfico na grade de 2 colunas: o nome cabe inteiro, sem quebrar no meio */
+  .grade__retrato :global(.cartao) {
+    padding: var(--e-3);
+  }
+  .grade__retrato :global(.cartao__nome) {
+    font-size: clamp(1.15rem, 13cqi, 4.5rem);
+    overflow-wrap: normal;
+  }
+  /* o retrato repete o link do nome (logo abaixo): fica fora do teclado e do leitor de tela */
+  .grade__retrato {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .grade__nome {
+    margin-top: var(--e-3);
+    font-size: var(--fs-h3);
+  }
+  .grade__nome a {
+    text-decoration: none;
+  }
+  .grade__nome a:hover {
+    text-decoration: underline;
+  }
+  .grade__linha {
+    margin: var(--e-1) 0 var(--e-2);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .grade__agendar {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--acento);
+  }
+  @media (min-width: 60rem) {
+    .grade {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--e-7) var(--e-5);
+    }
+    .grade__item:nth-child(4n + 2),
+    .grade__item:nth-child(4n + 4) {
+      margin-top: var(--e-7);
+    }
+  }
+  /* a foto da equipe (retrato vertical) vira faixa larga no desktop, com os rostos ao centro */
+  @media (min-width: 48rem) {
+    .dupla__foto :global(.poster) {
+      aspect-ratio: 3 / 2 !important;
+    }
+    .dupla__foto :global(.poster__midia) {
+      object-position: 50% 58%;
+    }
+  }
+</style>

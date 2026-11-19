@@ -1,0 +1,34 @@
+---
+// Vai no <head>, antes de pintar: decide se a abertura toca (uma vez por sessão) sem piscar.
+// ?abertura=1 força tocar; ?abertura=0 desliga; ?abertura-t=<ms> congela a linha do tempo nesse instante (capturas).
+---
+
+<script is:inline>
+  (function () {
+    try {
+      const q = new URLSearchParams(location.search);
+      if (q.get('abertura') === '0') return;
+      const forcar = q.has('abertura-t') || q.get('abertura') === '1';
+      if (!forcar && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('animate' in Element.prototype)) return;
+      let vista = null;
+      try {
+        vista = sessionStorage.getItem('tl-abertura');
+      } catch {
+        /* armazenamento bloqueado: toca a abertura */
+      }
+      if (vista && !forcar) return;
+      document.documentElement.setAttribute('data-abertura', 'tocar');
+    } catch {
+      /* nunca impedir a página */
+    }
+  })();
+</script>
+<style is:inline>
+  html[data-abertura='tocar'] [data-capa-entra] {
+    clip-path: inset(0 0 100% 0);
+  }
+  html[data-abertura='tocar'] [data-capa-logo] {
+    opacity: 0;
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+// Rótulo em caixa alta espaçada (o "versalete" da casa; nenhuma das fontes tem versalete real).
+interface Props {
+  as?: 'p' | 'span' | 'h2' | 'h3';
+  tom?: 'acento' | 'secundario';
+}
+const { as: Tag = 'p', tom = 'secundario' } = Astro.props;
+---
+
+<Tag class:list={['rotulo', 'versalete', `rotulo--${tom}`]}>
+  <slot />
+</Tag>
+
+<style>
+  .rotulo {
+    margin: 0 0 var(--e-3);
+  }
+  .rotulo--secundario {
+    color: var(--texto-2);
+  }
+  .rotulo--acento {
+    color: var(--acento);
+  }
+</style>

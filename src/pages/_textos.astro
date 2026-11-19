@@ -1,0 +1,173 @@
+---
+// /_textos: revisão de todos os textos do site (noindex). Frases reais aparecem com a fonte.
+// Publicada por [interna].astro. As citações do Google vão marcadas como avaliação literal.
+import '../styles/global.css';
+import PreviewBanner from '../components/PreviewBanner.astro';
+import { citacoes } from '../config/avaliacoes.ts';
+import { ehReal } from '../content/textos/fontes.ts';
+import * as T from '../content/textos/index.ts';
+
+type No =
+  | { tipo: 'texto'; v: string }
+  | { tipo: 'real'; v: string; fonte: string; edicao: string }
+  | { tipo: 'lista'; itens: No[] }
+  | { tipo: 'grupo'; chave: string; filhos: No[] };
+function arvore(v: unknown, chave = ''): No[] {
+  if (typeof v === 'string') return [{ tipo: 'texto', v }];
+  if (typeof v === 'number') return [{ tipo: 'texto', v: String(v) }];
+  if (typeof v === 'function') {
+    const exemplo = (v as (...a: string[]) => unknown)('Mechas', 'Mechas');
+    return typeof exemplo === 'string'
+      ? [{ tipo: 'texto', v: `${exemplo}  ← (exemplo de ${chave}(…))` }]
+      : [];
+  }
+  if (ehReal(v)) return [{ tipo: 'real', v: v.texto, fonte: v.fonte, edicao: v.edicao }];
+  if (Array.isArray(v)) return [{ tipo: 'lista', itens: v.flatMap((x) => arvore(x)) }];
+  if (v && typeof v === 'object')
+    return Object.entries(v)
+      .filter(([k]) => !['href', 'id'].includes(k))
+      .map(([k, x]) => ({ tipo: 'grupo' as const, chave: k, filhos: arvore(x, k) }));
+  return [];
+}
+const modulos = [
+  ['Geral (navegação, botões, WhatsApp, rodapé, avaliar, 404)', T.geral],
+  ['Home', T.home],
+  ['Serviços', T.servicos],
+  ['Tratamentos', T.tratamentos],
+  ['Nossa história', T.historia],
+  ['Equipe', T.equipe],
+  ['Páginas', T.paginas],
+  ['Mídia (alt e vídeos)', T.midia],
+] as const;
+const totalReais = JSON.stringify(Object.fromEntries(modulos)).split('"real":true').length - 1;
+const esc = (t: string) =>
+  t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function render(nos: No[]): string {
+  return nos
+    .map((n) => {
+      if (n.tipo === 'texto') return `<p>${esc(n.v)}</p>`;
+      if (n.tipo === 'real')
+        return `<blockquote class="real"><p>${esc(n.v)}</p><cite>Fonte: ${esc(n.fonte)} · edição: ${esc(n.edicao)}</cite></blockquote>`;
+      if (n.tipo === 'lista')
+        return `<ol>${n.itens.map((i) => `<li>${render([i])}</li>`).join('')}</ol>`;
+      return `<dl><dt>${esc(n.chave)}</dt><dd>${render(n.filhos)}</dd></dl>`;
+    })
+    .join('');
+}
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Textos · revisão · Todalinda</title>
+  </head>
+  <body>
+    <PreviewBanner />
+    <main class="tom-pagina revisao">
+      <h1>Textos do site</h1>
+      <p class="lead">
+        Revisão da sessão 5. Frases reais em destaque, com a fonte. {totalReais} frases reais; o
+        resto é redação.
+      </p>
+
+      <section>
+        <h2>Metas (title · description)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Rota</th>
+              <th>Title</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(T.metas).map(([rota, m]) => (
+              <tr>
+                <td>
+                  <code>{rota}</code>
+                </td>
+                <td>
+                  {m.title} <small class="numeros">({m.title.length})</small>
+                </td>
+                <td>
+                  {m.description} <small class="numeros">({m.description.length})</small>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Avaliações citadas (literais)</h2>
+        {citacoes.map((c) => (
+          <blockquote data-avaliacao-literal>
+            <p>“{c.texto}”</p>
+            <cite>
+              {c.autor} · {c.selo} (#{c.id}){c.editado ? ' · emoji removido' : ''}
+            </cite>
+          </blockquote>
+        ))}
+      </section>
+
+      {modulos.map(([titulo, mod]) => (
+        <section>
+          <h2>{titulo}</h2>
+          <Fragment set:html={render(arvore(mod))} />
+        </section>
+      ))}
+    </main>
+  </body>
+</html>
+
+<style>
+  .revisao {
+    padding: var(--e-6) var(--margem);
+    max-width: 70rem;
+  }
+  section {
+    margin-block: var(--e-7);
+  }
+  :global(.revisao dl) {
+    margin: 0 0 0 var(--e-4);
+    padding-left: var(--e-4);
+    border-left: var(--fio) solid var(--fio-cor);
+  }
+  :global(.revisao dt) {
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--texto-2);
+    margin-top: var(--e-3);
+  }
+  :global(.revisao dd) {
+    margin: 0;
+  }
+  :global(.revisao .real) {
+    margin: var(--e-2) 0;
+    padding: var(--e-2) var(--e-3);
+    border-left: 3px solid var(--cor-mocha);
+    background: color-mix(in srgb, var(--cor-mocha) 8%, transparent);
+  }
+  :global(.revisao .real cite) {
+    display: block;
+    font-size: var(--fs-pequeno);
+    color: var(--texto-2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-pequeno);
+  }
+  td,
+  th {
+    border-bottom: var(--fio) solid var(--fio-cor);
+    padding: 0.4em;
+    text-align: left;
+    vertical-align: top;
+  }
+</style>

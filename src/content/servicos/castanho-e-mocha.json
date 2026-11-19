@@ -1,0 +1,63 @@
+{
+  "id": "castanho-e-mocha",
+  "nome": "Castanho e mocha",
+  "grupo": "cor",
+  "resumo": "Castanho é a cor que mais parece natural, e por isso pede precisão: claro demais desbota, escuro demais apaga o rosto.",
+  "especialidades": ["colorimetria avançada", "mechas"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Antes de qualquer química, a profissional olha o seu fio, pergunta o que já foi feito nele e o que você quer. É aqui que a técnica e o valor são definidos."
+    },
+    {
+      "etapa": "teste-de-mecha",
+      "titulo": "Teste de mecha",
+      "texto": "Uma mecha pequena recebe o produto primeiro. Ela mostra como o seu fio reage, e o resultado orienta o resto do trabalho."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Coloração e tonalização em tons de castanho."
+    },
+    {
+      "etapa": "tratamento",
+      "titulo": "Tratamento",
+      "texto": "O cuidado indicado na avaliação (hidratação, nutrição ou reconstrução) entra antes ou depois da técnica, conforme o fio pede."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Escova ou modelagem, e a orientação do que fazer em casa até a próxima visita."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["isabela-cristina"]
+  },
+  "midia": ["f-753672680", "f-801582372", "f-885931508"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+    },
+    {
+      "pergunta": "Precisa fazer teste de mecha?",
+      "resposta": "Sim. Em castanho e mocha e em qualquer química, a casa começa pela avaliação e pelo teste de mecha. É o que mostra como o seu fio reage antes do procedimento completo."
+    },
+    {
+      "pergunta": "Fiz química nos últimos meses. Posso fazer?",
+      "resposta": "Conte isso na hora de agendar. O histórico de química muda a técnica e às vezes o tempo entre um procedimento e outro; a profissional decide com você na avaliação."
+    },
+    {
+      "pergunta": "Quanto tempo dura?",
+      "resposta": "Depende do seu fio, da rotina e dos cuidados em casa. Na avaliação, a profissional indica de quanto em quanto tempo voltar para a manutenção."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": true,
+  "ordem": 4
+}

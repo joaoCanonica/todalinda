@@ -1,0 +1,49 @@
+{
+  "id": "penteado-e-make",
+  "nome": "Penteado e make",
+  "grupo": "festa",
+  "resumo": "Coque baixo com ondas, rabo alto, cabelo solto e modelado. O penteado é pensado com o vestido, o evento e o seu cabelo.",
+  "especialidades": ["cabelo", "maquiagem"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Conversa",
+      "texto": "O evento, o horário, o vestido e as referências. Quanto antes, mais fácil reservar a equipe."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Penteado e maquiagem no dia, na casa."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Ajustes finais e fixação."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": ["dido-rodrigues", "andressa-savaris", "marina-schpanski"]
+  },
+  "midia": ["f-846320909", "f-899604807", "q-dido-sorrindo"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende do penteado, da maquiagem e do número de pessoas; no agendamento a gente te passa."
+    },
+    {
+      "pergunta": "Com quanto tempo de antecedência devo agendar?",
+      "resposta": "O quanto antes, principalmente em sábados de casamento e formatura. A recepção confirma a disponibilidade da equipe."
+    },
+    {
+      "pergunta": "Dá para produzir várias pessoas no mesmo dia?",
+      "resposta": "Diga quantas pessoas são ao agendar; a casa organiza a agenda e confirma."
+    }
+  ],
+  "publicado": true,
+  "opcional": false,
+  "textoRevisado": true,
+  "ordem": 8
+}

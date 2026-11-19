@@ -1,0 +1,216 @@
+{
+  "orcamento": {
+    "jsInicialKb": 40,
+    "ilhaKb": 180,
+    "glbMb": 3,
+    "splatMb": 40
+  },
+  "jsInicial": {
+    "maximoKb": 9.2,
+    "paginas": [
+      {
+        "rota": "/",
+        "jsKb": 9.2,
+        "htmlKb": 33.5
+      },
+      {
+        "rota": "/a-casa",
+        "jsKb": 6.2,
+        "htmlKb": 16.6
+      },
+      {
+        "rota": "/como-chegar",
+        "jsKb": 6.2,
+        "htmlKb": 15.7
+      },
+      {
+        "rota": "/_capa-a",
+        "jsKb": 5.3,
+        "htmlKb": 12
+      },
+      {
+        "rota": "/_capa-b",
+        "jsKb": 5.3,
+        "htmlKb": 12
+      },
+      {
+        "rota": "/trabalhos",
+        "jsKb": 4.9,
+        "htmlKb": 24.5
+      },
+      {
+        "rota": "/_estilo",
+        "jsKb": 3.5,
+        "htmlKb": 84.3
+      },
+      {
+        "rota": "/equipe/dido-rodrigues",
+        "jsKb": 2.9,
+        "htmlKb": 14.2
+      },
+      {
+        "rota": "/equipe/edna-antoniolli",
+        "jsKb": 2.9,
+        "htmlKb": 14.6
+      },
+      {
+        "rota": "/nossa-historia",
+        "jsKb": 2.9,
+        "htmlKb": 16
+      },
+      {
+        "rota": "/servicos/loiros",
+        "jsKb": 2.9,
+        "htmlKb": 17.7
+      },
+      {
+        "rota": "/servicos/morena-iluminada",
+        "jsKb": 2.9,
+        "htmlKb": 18
+      },
+      {
+        "rota": "/servicos/ruivo-e-cobre",
+        "jsKb": 2.9,
+        "htmlKb": 17.4
+      },
+      {
+        "rota": "/404",
+        "jsKb": 2.6,
+        "htmlKb": 11.2
+      },
+      {
+        "rota": "/agendar",
+        "jsKb": 2.6,
+        "htmlKb": 12.1
+      },
+      {
+        "rota": "/dois-reais-ou-um-cabelo",
+        "jsKb": 2.6,
+        "htmlKb": 13.2
+      },
+      {
+        "rota": "/equipe/andressa-savaris",
+        "jsKb": 2.6,
+        "htmlKb": 13.6
+      },
+      {
+        "rota": "/equipe",
+        "jsKb": 2.6,
+        "htmlKb": 13.9
+      },
+      {
+        "rota": "/equipe/isabela-cristina",
+        "jsKb": 2.6,
+        "htmlKb": 13.5
+      },
+      {
+        "rota": "/equipe/karine",
+        "jsKb": 2.6,
+        "htmlKb": 13
+      },
+      {
+        "rota": "/equipe/marina-schpanski",
+        "jsKb": 2.6,
+        "htmlKb": 12.9
+      },
+      {
+        "rota": "/equipe/thaynara-colombo",
+        "jsKb": 2.6,
+        "htmlKb": 13.1
+      },
+      {
+        "rota": "/perguntas-frequentes",
+        "jsKb": 2.6,
+        "htmlKb": 13.3
+      },
+      {
+        "rota": "/privacidade",
+        "jsKb": 2.6,
+        "htmlKb": 12.4
+      },
+      {
+        "rota": "/revista",
+        "jsKb": 2.6,
+        "htmlKb": 12.7
+      },
+      {
+        "rota": "/servicos/castanho-e-mocha",
+        "jsKb": 2.6,
+        "htmlKb": 16.3
+      },
+      {
+        "rota": "/servicos/corte",
+        "jsKb": 2.6,
+        "htmlKb": 16
+      },
+      {
+        "rota": "/servicos/esmalteria",
+        "jsKb": 2.6,
+        "htmlKb": 16.1
+      },
+      {
+        "rota": "/servicos/mechas",
+        "jsKb": 2.6,
+        "htmlKb": 15.4
+      },
+      {
+        "rota": "/servicos/penteado-e-make",
+        "jsKb": 2.6,
+        "htmlKb": 15.9
+      },
+      {
+        "rota": "/tratamentos",
+        "jsKb": 2.6,
+        "htmlKb": 15.4
+      },
+      {
+        "rota": "/avaliar",
+        "jsKb": 1.8,
+        "htmlKb": 0.7
+      },
+      {
+        "rota": "/avaliar/qr",
+        "jsKb": 0.2,
+        "htmlKb": 6.2
+      },
+      {
+        "rota": "/_textos",
+        "jsKb": 0,
+        "htmlKb": 27.9
+      }
+    ]
+  },
+  "ilha3d": {
+    "maqueteKb": 141.2,
+    "comGlbKb": 162.4,
+    "sparkSobDemandaKb": 920.7
+  },
+  "glb": [],
+  "splats": [],
+  "videos": {
+    "arquivos": 78,
+    "totalMb": 154.4,
+    "maior": {
+      "arquivo": "video/v-dido-loiro--inteiro-720x1280.mp4",
+      "kb": 13499.3
+    }
+  },
+  "fontes": [
+    {
+      "arquivo": "public/fonts/manrope-wght.woff2",
+      "kb": 24.3
+    },
+    {
+      "arquivo": "public/fonts/playfair-display-wght-italico.woff2",
+      "kb": 37.9
+    },
+    {
+      "arquivo": "public/fonts/playfair-display-wght.woff2",
+      "kb": 37.5
+    }
+  ],
+  "og": {
+    "imagens": 9,
+    "maiorKb": 96.4
+  }
+}

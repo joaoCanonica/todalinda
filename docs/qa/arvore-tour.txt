@@ -1,0 +1,26 @@
+- region "Os ambientes da casa":
+  - heading "Os ambientes da casa" [level=2]
+  - tablist "Ambientes da casa":
+    - tab "Fachada e gramado" [selected]
+    - tab "Recepção"
+    - tab "Salão de cabelo"
+    - tab "Lavatórios"
+    - tab "Esmalteria"
+    - tab "Sala de estética"
+    - tab "Parede TODALINDA"
+    - tab "Lounge e mezanino"
+  - img "Maquete 3D da Todalinda. Use a lista de ambientes para navegar."
+  - paragraph: Representação esquemática — em breve, a casa real
+  - paragraph: Arraste para girar um pouco. Os ambientes estão na lista.
+  - tabpanel "Fachada e gramado":
+    - paragraph: Do lado de fora
+    - heading "Fachada e gramado" [level=3]
+    - paragraph: "O sobrado claro da Rua Lauro Müller, 574: porta de madeira cor de laranja, vitrine, garagem à esquerda e o gramado com a placa \"somos TODALINDA\"."
+    - list:
+      - listitem:
+        - 'img "Fachada da Todalinda: sobrado claro com porta de madeira cor de laranja, gramado e a placa “somos TODALINDA”."'
+      - listitem:
+        - img "Fachada da Todalinda vista de outro ângulo, com a escada lateral."
+    - link "Agendar horário (abre o WhatsApp em nova aba)":
+      - /url: https://wa.me/5549991772089?text=Ol%C3%A1!%20Vi%20o%20espa%C3%A7o%20no%20site%20e%20quero%20agendar%20uma%20visita%2Fhor%C3%A1rio.
+    - button "Ver de verdade"

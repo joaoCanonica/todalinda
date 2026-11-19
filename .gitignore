@@ -1,0 +1,25 @@
+# dependências e build
+node_modules/
+dist/
+.astro/
+
+# derivados gerados no build (fora do git)
+public/media/
+public/modelos/
+
+# capturas (só as imagens; relatórios .md ficam)
+docs/capturas/**/*.png
+
+# ambiente
+.env*
+
+# sistema e editores
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+
+# transcrição local (modelos e venv)
+.ferramentas/
+public/og/
+public/marca/todalinda-logo-512.png

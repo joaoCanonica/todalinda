@@ -1,0 +1,102 @@
+---
+// 12 · AGENDAR (página): o agendador (sessão 7) direto na página da edição.
+import { agendar as a } from '../../content/textos/home.ts';
+import { contato } from '../../config/contato.ts';
+import Agendador from '../agendador/Agendador.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+---
+
+<Pagina tom="pagina" secao={a.folio} id="agendar" rotulo="Agendar">
+  <div class="ag">
+    <div class="ag__texto">
+      <Rotulo>{a.folio}</Rotulo>
+      <h2>
+        {a.titulo.antes}
+        <em>{a.titulo.destaque}</em>
+        {a.titulo.depois}
+      </h2>
+      <p>{a.intro}</p>
+      <p class="ag__nota">
+        <strong>{a.primeiraVez}</strong>
+      </p>
+      <p class="ag__nota">{a.preco}</p>
+    </div>
+    <div class="ag__servicos">
+      <Agendador id="home" titulo={false} />
+      <p class="ag__outros">
+        <a class="ag__tel" href={`tel:${contato.telefone.valor.tel}`}>
+          Prefere ligar? {contato.telefone.valor.exibir}
+        </a>
+      </p>
+    </div>
+  </div>
+</Pagina>
+
+<style>
+  .ag {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .ag__texto > p {
+    margin-top: var(--e-4);
+  }
+  .ag__nota {
+    color: var(--texto-2);
+  }
+  .ag__nota strong {
+    color: var(--texto);
+    font-weight: 600;
+  }
+  .ag__rotulo {
+    margin: 0 0 var(--e-3);
+    color: var(--texto-2);
+  }
+  .ag__servicos ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .ag__servico {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 52px;
+    padding-block: 0.6em;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    color: var(--texto);
+    text-decoration: none;
+  }
+  .ag__seta {
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    transition: transform var(--dur-2) var(--curva-entrada);
+  }
+  .ag__servico:hover .ag__seta,
+  .ag__servico:focus-visible .ag__seta {
+    transform: translateX(4px);
+  }
+  .ag__outros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-3) var(--e-5);
+    margin-top: var(--e-5);
+  }
+  .ag__tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--acento);
+  }
+  @media (min-width: 60rem) {
+    .ag {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--e-8);
+    }
+  }
+</style>

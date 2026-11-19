@@ -1,0 +1,388 @@
+---
+// /equipe/<slug> — perfil como "retrato de capa": retrato (ou cartão tipográfico), nome, função,
+// anos de profissão em número grande, especialidades, bio com capitular, fala real, trabalhos
+// assinados (só com autoria confirmada) e "Agendar com {nome}".
+import { getCollection } from 'astro:content';
+import Botao from '../../components/base/Botao.astro';
+import Citacao from '../../components/base/Citacao.astro';
+import Poster from '../../components/base/Poster.astro';
+import Etiqueta from '../../components/edicao/Etiqueta.astro';
+import Capitular from '../../components/edicao/Capitular.astro';
+import Folio from '../../components/edicao/Folio.astro';
+import Pagina from '../../components/edicao/Pagina.astro';
+import Provisorio from '../../components/Provisorio.astro';
+import VideoSobDemanda from '../../components/secoes/VideoSobDemanda.astro';
+import { liberada, provisoria } from '../../components/secoes/util.ts';
+import { contato } from '../../config/contato.ts';
+import type { Membro } from '../../content/schemas.ts';
+import { perfis, trabalhosDaPessoa, type Perfil } from '../../content/textos/equipe.ts';
+import { alt, videos } from '../../content/textos/midia.ts';
+import { abs, ID_SALAO } from '../../components/seo/jsonld.ts';
+import { videoLd } from '../../components/seo/videos.ts';
+import Interna from '../../layouts/Interna.astro';
+import { NOME_TECNICA, ondeDe, posterDe, videoDaFala } from '../../lib/paginas.ts';
+import { linkWhatsApp } from '../../lib/whatsapp.ts';
+
+export async function getStaticPaths() {
+  const membros = (await getCollection('equipe'))
+    .map((m) => m.data)
+    .sort((a, b) => a.ordem - b.ordem);
+  return membros
+    .filter((m) => perfis[m.slug])
+    .map((m, i) => ({
+      params: { slug: m.slug },
+      props: { m, proximo: membros[(i + 1) % membros.length] as Membro },
+    }));
+}
+interface Props {
+  m: Membro;
+  proximo: Membro;
+}
+const { m, proximo } = Astro.props;
+const p = perfis[m.slug] as Perfil;
+const zap = linkWhatsApp(p.whatsapp);
+// "Agendar com {nome}" abre o agendador; "Falar com a Edna" (fundadora) segue direto para o WhatsApp
+const ehAgendavel = p.agendar.startsWith('Agendar');
+const agendavel = ehAgendavel ? { agendar: { profissional: m.slug } } : {};
+const foto = m.foto && liberada(m.foto) ? m.foto : null;
+const motivo = foto ? provisoria(foto) : null;
+const assinados = (await getCollection('trabalhos'))
+  .map((t) => t.data)
+  .filter((t) => t.profissional === m.slug && posterDe(t.midia))
+  .slice(0, 6);
+const servicosConfirmados = (await getCollection('servicos'))
+  .map((s) => s.data)
+  .filter((s) => s.publicado && m.servicos.includes(s.id));
+const videoFala = p.fala ? videoDaFala(p.fala.fonte) : null;
+const ldVideo = videoFala ? videoLd(videoFala) : null;
+// JSON-LD: a pessoa, ligada ao salão (só fatos confirmados: função, anos, Instagram)
+const pessoaLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': abs(`/equipe/${m.slug}#pessoa`),
+  name: m.nome.replace(/\s*[“"][^”"]*[”"]/, ''),
+  jobTitle: m.slug === 'edna-antoniolli' ? 'Fundadora' : m.funcao,
+  url: abs(`/equipe/${m.slug}`),
+  description: p.bio.join(' '),
+  knowsAbout: p.especialidades,
+  ...(m.instagram ? { sameAs: `https://www.instagram.com/${m.instagram}/` } : {}),
+  worksFor: { '@id': ID_SALAO() },
+};
+const [primeiro, ...resto] = m.nome.split(' ');
+// sem retrato: monograma (as iniciais), em vez de repetir o nome que já está na manchete
+const iniciais = m.nome
+  .replace(/"[^"]*"/g, '')
+  .split(/\s+/)
+  .filter(Boolean)
+  .map((x) => x[0])
+  .slice(0, 2)
+  .join('');
+---
+
+<Interna
+  titulo={p.meta.title}
+  descricao={p.meta.description}
+  tipoOg="profile"
+  italico
+  jsonld={[pessoaLd, ...(ldVideo ? [ldVideo] : [])]}
+  trilha={[
+    { nome: 'Equipe', url: '/equipe' },
+    { nome: m.nome.replace(/\s*[“"][^”"]*[”"]/, ''), url: `/equipe/${m.slug}` },
+  ]}
+  agendar={zap}
+  {...(ehAgendavel ? { agendarCom: { profissional: m.slug } } : {})}
+>
+  <section class="perfil tom-capa" aria-labelledby="nome">
+    <Folio secao="Equipe" />
+    <div class="perfil__retrato">
+      {foto ? (
+        <>
+          <Poster
+            imagem={foto}
+            alt={alt[foto] ?? m.nome}
+            proporcao="4 / 5"
+            sizes="(min-width: 60rem) 30rem, 100vw"
+            prioridade
+          />
+          {motivo && <Provisorio motivo={motivo} />}
+        </>
+      ) : (
+        <div class="monograma" aria-hidden="true">
+          <span class="monograma__letras">{iniciais}</span>
+          <span class="monograma__nota versalete">{p.semRetrato ?? 'Retrato em breve.'}</span>
+        </div>
+      )}
+    </div>
+    <div class="perfil__texto">
+      <Etiqueta hashtag="#TalentoTodalinda" />
+      <h1 id="nome" class="perfil__nome">
+        {primeiro} {resto.length > 0 && <em>{resto.join(' ')}</em>}
+      </h1>
+      <p class="versalete perfil__funcao">{m.funcao}</p>
+      {m.anosDeProfissao && (
+        <p class="perfil__anos">
+          <span class="perfil__anos-num numeros">{m.anosDeProfissao}</span>
+          <span class="versalete">anos de profissão</span>
+        </p>
+      )}
+      <ul class="perfil__esp" role="list" aria-label="Especialidades">
+        {p.especialidades.map((e) => (
+          <li class="versalete">{e}</li>
+        ))}
+      </ul>
+      <Botao href={zap} externo {...agendavel}>
+        {p.agendar}
+      </Botao>
+    </div>
+  </section>
+
+  <Pagina tom="pagina" secao="Perfil" rotulo={`Sobre ${primeiro}`}>
+    <div class="bio">
+      <Capitular>
+        {p.bio.map((b) => (
+          <p class="lead">{b}</p>
+        ))}
+      </Capitular>
+      {p.fala && (
+        <div class="bio__fala">
+          <Citacao autor={m.nome} fonte={ondeDe(p.fala.fonte)}>
+            {p.fala.texto}
+          </Citacao>
+          {videoFala && videos[videoFala] && (
+            <VideoSobDemanda
+              id={videoFala}
+              rotulo={`Ouvir ${primeiro}`}
+              titulo={videos[videoFala]?.titulo ?? ''}
+              descricao={videos[videoFala]?.descricao ?? ''}
+            />
+          )}
+        </div>
+      )}
+      {m.instagram && (
+        <p class="bio__ig">
+          <a href={`https://www.instagram.com/${m.instagram}/`} rel="noopener" target="_blank">
+            Instagram @{m.instagram}
+            <span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        </p>
+      )}
+    </div>
+  </Pagina>
+
+  <Pagina tom="pagina" secao="Trabalhos" rotulo={trabalhosDaPessoa.titulo}>
+    <h2 class="versalete sub">{trabalhosDaPessoa.titulo}</h2>
+    {assinados.length > 0 ? (
+      <ul class="trab" role="list">
+        {assinados.map((t) => {
+          const pp = posterDe(t.midia);
+          return (
+            pp && (
+              <li>
+                <figure>
+                  {'video' in pp ? (
+                    <Poster {...pp} proporcao="4 / 5" />
+                  ) : (
+                    <Poster {...pp} proporcao="4 / 5" sizes="(min-width: 60rem) 25vw, 50vw" />
+                  )}
+                  <figcaption class="versalete">
+                    {NOME_TECNICA[t.tecnica]} · {m.nome}
+                  </figcaption>
+                </figure>
+              </li>
+            )
+          );
+        })}
+      </ul>
+    ) : (
+      <p class="vazio">
+        {trabalhosDaPessoa.vazio} <a href="/trabalhos">Ver todos os trabalhos da casa</a>.
+      </p>
+    )}
+    {servicosConfirmados.length > 0 && (
+      <>
+        <h2 class="versalete sub">Faz na casa</h2>
+        <ul class="faz" role="list">
+          {servicosConfirmados.map((s) => (
+            <li>
+              <a href={`/servicos/${s.id}`}>{s.nome}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
+  </Pagina>
+
+  <Pagina tom="capa" secao="Agendar" rotulo="Agendar">
+    <div class="fim">
+      <h2>
+        {p.agendar.slice(0, p.agendar.lastIndexOf(' ') + 1)}
+        <em>{p.agendar.split(' ').at(-1)}</em>
+      </h2>
+      <p>
+        Ou fale com a recepção pelo telefone{' '}
+        <a href={`tel:${contato.telefone.valor.tel}`}>{contato.telefone.valor.exibir}</a>.
+      </p>
+      <Botao href={zap} externo {...agendavel}>
+        {p.agendar}
+      </Botao>
+      <ul class="fim__prox" role="list">
+        <li>
+          Próxima página: <a href={`/equipe/${proximo.slug}`}>{proximo.nome}</a>
+        </li>
+        <li>
+          <a href="/equipe">Toda a equipe</a>
+        </li>
+      </ul>
+    </div>
+  </Pagina>
+</Interna>
+
+<style>
+  .perfil {
+    position: relative;
+    display: grid;
+    gap: var(--e-6);
+    padding: var(--e-8) var(--margem);
+  }
+  .perfil__retrato {
+    max-width: 30rem;
+  }
+  .perfil__nome {
+    font-size: clamp(3rem, 1.4rem + 6.5vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-block: var(--e-4) var(--e-3);
+  }
+  .perfil__nome em {
+    display: block;
+  }
+  .perfil__funcao {
+    color: var(--acento);
+    margin: 0 0 var(--e-5);
+  }
+  .perfil__anos {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    margin: 0 0 var(--e-5);
+  }
+  .perfil__anos-num {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(4rem, 3rem + 4vw, 6.5rem);
+    line-height: 0.9;
+    color: var(--cor-ouro-claro);
+  }
+  .perfil__anos .versalete {
+    color: var(--texto-2);
+  }
+  .perfil__esp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    margin: 0 0 var(--e-6);
+    padding: 0;
+    list-style: none;
+  }
+  .perfil__esp li {
+    padding: 0.35em 0.9em 0.3em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    color: var(--texto-2);
+  }
+  @media (min-width: 60rem) {
+    .perfil {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: end;
+      gap: var(--e-8);
+      padding-top: var(--e-9);
+    }
+  }
+  .bio {
+    display: grid;
+    gap: var(--e-6);
+    max-width: 56rem;
+  }
+  .bio__fala {
+    display: grid;
+    gap: var(--e-4);
+    justify-items: start;
+  }
+  .bio__ig a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--acento);
+  }
+  .sub {
+    color: var(--acento);
+    font-size: var(--fs-versalete);
+    margin-bottom: var(--e-4);
+  }
+  .vazio {
+    color: var(--texto-2);
+  }
+  .trab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-4);
+    margin: 0 0 var(--e-6);
+    padding: 0;
+    list-style: none;
+  }
+  .trab figure {
+    margin: 0;
+  }
+  .trab figcaption {
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  .faz {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .faz a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+  .fim {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-4);
+  }
+  .fim__prox {
+    margin: var(--e-5) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--texto-2);
+  }
+  .monograma {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    border: var(--fio) solid var(--fio-cor);
+  }
+  .monograma__letras {
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(6rem, 4rem + 10vw, 12rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--cor-ouro-claro);
+  }
+  .monograma__nota {
+    position: absolute;
+    inset-block-end: var(--e-4);
+    inset-inline-start: var(--e-4);
+    color: var(--texto-2);
+  }
+  .fim__prox a {
+    display: inline-block;
+    padding-block: 0.6em;
+  }
+</style>

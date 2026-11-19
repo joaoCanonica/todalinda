@@ -1,0 +1,69 @@
+{
+  "modelo": "large-v3-turbo",
+  "duracao": 45.02,
+  "segmentos": [
+    {
+      "inicio": 0.53,
+      "fim": 6.03,
+      "texto": "Dido, vamos falar sobre esse cabelo que é uma coloração e mechas, certo?"
+    },
+    {
+      "inicio": 6.69,
+      "fim": 10.73,
+      "texto": "Coloração. Não, é só coloração, Edna. Não tem mechas aqui não, você acredita?"
+    },
+    {
+      "inicio": 12.53,
+      "fim": 18.81,
+      "texto": "A gente, porque a cliente tem 100% de cabelinhos brancos, se você for ver bem a raizinha dela aqui, é bem clarinha."
+    },
+    {
+      "inicio": 18.81,
+      "fim": 24.87,
+      "texto": "Por quê? Porque a gente consegue fazer um loiro num cabelo 100% branco e fica esse tom maravilhoso, olha só."
+    },
+    {
+      "inicio": 24.99,
+      "fim": 26.95,
+      "texto": "É o famoso loiro de tinta, né, que a gente fala."
+    },
+    {
+      "inicio": 26.95,
+      "fim": 29.83,
+      "texto": "Claro que"
+    },
+    {
+      "inicio": 29.83,
+      "fim": 31.85,
+      "texto": "Foi feito mechas anteriormente"
+    },
+    {
+      "inicio": 31.85,
+      "fim": 33.45,
+      "texto": "Porque ela tinha uma raiz escura"
+    },
+    {
+      "inicio": 33.45,
+      "fim": 34.79,
+      "texto": "E a gente foi clareando aos poucos"
+    },
+    {
+      "inicio": 34.79,
+      "fim": 37.17,
+      "texto": "Mas hoje em dia a gente só retoca a raiz dela"
+    },
+    {
+      "inicio": 37.17,
+      "fim": 39.45,
+      "texto": "Pra gente manter esse tom de loiro perolado"
+    },
+    {
+      "inicio": 39.45,
+      "fim": 40.97,
+      "texto": "Que fica perfeito, né? Olha só"
+    }
+  ],
+  "correcoes": "aplicadas (scripts/dados/curadoria.mjs)",
+  "arquivo": "media-originais/videos/snapinsta-1794936180983.mp4",
+  "revisado": false
+}

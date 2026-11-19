@@ -1,0 +1,192 @@
+---
+// 3 · ANTES E DEPOIS (página): o vídeo "transformacao" com antes e depois marcados no tempo
+// e os pares de foto (PROVISÓRIO até a casa confirmar). Mídia com idade a confirmar só no preview.
+import { antesDepois } from '../../content/textos/home.ts';
+import { alt } from '../../content/textos/midia.ts';
+import { video } from '../../lib/midia.ts';
+import ComparadorAntesDepois from '../base/ComparadorAntesDepois.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+import Provisorio from '../Provisorio.astro';
+import { liberada, provisoria } from './util.ts';
+
+const a = antesDepois;
+const temVideo = liberada('v-transformacao', 'inteiro');
+const v = temVideo ? video('v-transformacao', 'inteiro', '540x960') : null;
+const CORTE = 4.8; // corte de cena medido (s): antes < 4,8 ≤ depois
+const pares = [
+  { antes: 'f-756143696', depois: 'f-754970697', legenda: a.pares[1]?.legenda ?? '' },
+  { antes: 'f-862082658-a', depois: 'f-862434060', legenda: a.pares[2]?.legenda ?? '' },
+].filter((p) => liberada(p.antes) && liberada(p.depois));
+const motivoVideo = provisoria('v-transformacao');
+---
+
+<Pagina tom="pagina" secao={a.folio} id="antes-e-depois" rotulo="Antes e depois">
+  <div class="ad">
+    <div class="ad__cabeca">
+      <Rotulo>{a.folio}</Rotulo>
+      <h2>
+        {a.titulo.antes}
+        <em>{a.titulo.destaque}</em>
+        {a.titulo.depois}
+      </h2>
+      <p>{a.intro}</p>
+    </div>
+    <div class="ad__pecas">
+      {v && (
+        <figure class="ad__video" data-ad-video data-corte={CORTE}>
+          <div class="ad__palco">
+            <video
+              muted
+              playsinline
+              loop
+              preload="none"
+              data-poster={v.poster}
+              width={v.w}
+              height={v.h}
+              aria-label={
+                alt['q-revelacao-espelho']
+                  ? 'Transformação: antes, cabelo longo e escuro; depois, morena iluminada mel com corte.'
+                  : ''
+              }
+            >
+              <source src={v.webm} type="video/webm" />
+              <source src={v.mp4} type="video/mp4" />
+            </video>
+            <span class="ad__marca versalete" data-ad-marca aria-hidden="true">
+              Antes
+            </span>
+          </div>
+          <div class="ad__botoes" role="group" aria-label="Ir para">
+            <button type="button" class="versalete" data-ad-ir="0" aria-label="Ver o antes">
+              Antes
+            </button>
+            <button type="button" class="versalete" data-ad-ir={CORTE} aria-label="Ver o depois">
+              Depois
+            </button>
+          </div>
+          <figcaption class="versalete">
+            {motivoVideo ? (
+              <Provisorio motivo={motivoVideo}>{a.pares[0]?.legenda}</Provisorio>
+            ) : (
+              a.pares[0]?.legenda
+            )}
+          </figcaption>
+        </figure>
+      )}
+      {pares.map((p) => (
+        <div class="ad__par">
+          <ComparadorAntesDepois
+            antes={p.antes}
+            depois={p.depois}
+            altAntes={alt[p.antes] ?? ''}
+            altDepois={alt[p.depois] ?? ''}
+            tecnica={p.legenda}
+          />
+          <p class="ad__aviso">
+            <Provisorio motivo={provisoria(p.antes) ?? 'par provável'}>{a.aviso}</Provisorio>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</Pagina>
+
+<script>
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const fig of document.querySelectorAll<HTMLElement>('[data-ad-video]')) {
+    const v = fig.querySelector('video');
+    const marca = fig.querySelector<HTMLElement>('[data-ad-marca]');
+    const corte = Number(fig.dataset.corte);
+    if (!v || !marca) continue;
+    // o pôster só baixa quando o vídeo chega perto da tela (o atributo poster carregaria logo de cara)
+    new IntersectionObserver(
+      ([e], io) => {
+        if (!e?.isIntersecting) return;
+        if (v.dataset.poster) v.poster = v.dataset.poster;
+        io.disconnect();
+      },
+      { rootMargin: '600px 0px' },
+    ).observe(v);
+    v.addEventListener('timeupdate', () => {
+      marca.textContent = v.currentTime < corte ? 'Antes' : 'Depois';
+    });
+    for (const b of fig.querySelectorAll<HTMLButtonElement>('[data-ad-ir]')) {
+      b.addEventListener('click', () => {
+        v.preload = 'auto';
+        v.currentTime = Number(b.dataset.adIr);
+        void v.play().catch(() => undefined);
+      });
+    }
+    if (!reduzir) {
+      new IntersectionObserver(
+        ([e]) => {
+          if (e?.isIntersecting) {
+            v.preload = 'auto';
+            void v.play().catch(() => undefined);
+          } else v.pause();
+        },
+        { threshold: 0.4 },
+      ).observe(v);
+    }
+  }
+</script>
+
+<style>
+  .ad {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .ad__cabeca p {
+    margin-top: var(--e-4);
+    color: var(--texto-2);
+  }
+  .ad__pecas {
+    display: grid;
+    gap: var(--e-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    align-items: start;
+  }
+  .ad__video {
+    margin: 0;
+  }
+  .ad__palco {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    max-height: 80svh;
+    background: var(--cor-cafe);
+  }
+  .ad__palco video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ad__marca {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-start: var(--e-3);
+    padding: 0.3em 0.7em;
+    background: var(--cor-noite);
+    color: var(--cor-papel);
+  }
+  .ad__botoes {
+    display: flex;
+    gap: var(--e-2);
+    margin-top: var(--e-3);
+  }
+  .ad__botoes button {
+    min-height: 44px;
+    padding: 0 1.1em;
+    background: transparent;
+    color: var(--texto);
+    border: var(--fio) solid var(--fio-cor);
+    cursor: pointer;
+  }
+  .ad__video figcaption,
+  .ad__aviso {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+</style>

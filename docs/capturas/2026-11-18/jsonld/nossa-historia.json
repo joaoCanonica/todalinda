@@ -1,0 +1,58 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Edna Antoniolli: ver um sonho se tornar um lugar",
+    "description": "A fundadora fala sobre ver o salão cheio e o que um dia foi um sonho. Com som e legenda.",
+    "thumbnailUrl": "https://todalinda.exemplo/media/video/v-edna-sonho--inteiro-540x960.avif",
+    "contentUrl": "https://todalinda.exemplo/media/video/v-edna-sonho--inteiro-540x960.mp4",
+    "uploadDate": "2026-11-18T01:22:09+00:00",
+    "duration": "PT41S",
+    "inLanguage": "pt-BR",
+    "transcript": "Tem dias que eu vejo o salão cheio e penso, como tudo começou. Hoje foi um dia desses. Porque chega uma hora que o negócio ganha vida própria. Tem cliente chegando, tem gente conversando, tem gente rindo, café sendo servido, escova sendo feita, mulher sendo produzida. E momentos que vão ficar para sempre na memória de algumas pessoas e a gente faz parte nesses momentos. E você percebe que o que um dia foi uma ideia e um sonho, hoje faz parte da rotina de muitas pessoas. Talvez uma das partes mais bonitas de empreender seja essa, ver um sonho se tornar um lugar.",
+    "actor": {
+      "@type": "Person",
+      "name": "Edna Antoniolli"
+    },
+    "publisher": {
+      "@id": "https://todalinda.exemplo/#salao"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Edna Antoniolli: clientes que viram história",
+    "description": "A fundadora fala sobre as clientes que acompanham a casa há anos. Com som e legenda.",
+    "thumbnailUrl": "https://todalinda.exemplo/media/video/v-edna-clientes--inteiro-540x960.avif",
+    "contentUrl": "https://todalinda.exemplo/media/video/v-edna-clientes--inteiro-540x960.mp4",
+    "uploadDate": "2026-11-18T01:22:09+00:00",
+    "duration": "PT32S",
+    "inLanguage": "pt-BR",
+    "transcript": "Tem clientes que eu olho e penso, meu Deus, você está aqui há quanto tempo? A gente acompanhou mudança de cabelo, trabalho, namoro, casamento, filhos. E no meio disso tudo, continuou se encontrando aqui. Por isso eu digo, salão tem uma coisa muito especial, a gente não cuida só do cabelo de alguém. De alguma forma, a gente acaba acompanhando fases da vida. Talvez por isso algumas clientes deixam de ser apenas clientes e começam a fazer parte da nossa história.",
+    "actor": {
+      "@type": "Person",
+      "name": "Edna Antoniolli"
+    },
+    "publisher": {
+      "@id": "https://todalinda.exemplo/#salao"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Todalinda",
+        "item": "https://todalinda.exemplo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Nossa história",
+        "item": "https://todalinda.exemplo/nossa-historia"
+      }
+    ]
+  }
+]

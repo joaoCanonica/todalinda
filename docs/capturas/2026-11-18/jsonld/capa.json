@@ -1,0 +1,234 @@
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "@id": "https://todalinda.exemplo/#salao",
+  "additionalType": [
+    "https://schema.org/BeautySalon",
+    "https://schema.org/NailSalon"
+  ],
+  "name": "Todalinda",
+  "alternateName": "Ateliê de Beleza Toda Linda",
+  "legalName": "Cordova Antoniolli Serviços de Estéticas LTDA",
+  "taxID": "25.337.323/0001-04",
+  "description": "A Todalinda é um salão de beleza no Centro de Lages/SC, na Rua Lauro Müller, 574, aberto desde 2017. A casa é especializada em coloração (morena iluminada, loiros, ruivos), mechas com teste de mecha, corte, penteado, make e esmalteria, e atende de terça a sábado, das 9h às 19h.",
+  "url": "https://todalinda.exemplo/",
+  "image": "https://todalinda.exemplo/og/capa.jpg",
+  "logo": "https://todalinda.exemplo/marca/todalinda-logo-512.png",
+  "telephone": "+55-49-30180082",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "agendamento",
+      "telephone": "+55-49-991772089",
+      "availableLanguage": "pt-BR",
+      "description": "WhatsApp da recepção"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "recepção",
+      "telephone": "+55-49-30180082",
+      "availableLanguage": "pt-BR"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua Lauro Müller, 574",
+    "addressLocality": "Lages",
+    "addressRegion": "SC",
+    "postalCode": "88501-000",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -27.8168249,
+    "longitude": -50.3245096
+  },
+  "hasMap": "https://www.google.com/maps?cid=14959576611857227956",
+  "areaServed": {
+    "@type": "City",
+    "name": "Lages",
+    "containedInPlace": {
+      "@type": "State",
+      "name": "Santa Catarina"
+    }
+  },
+  "sameAs": [
+    "https://www.instagram.com/somostodalinda/",
+    "https://www.google.com/maps?cid=14959576611857227956"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "https://schema.org/Tuesday",
+        "https://schema.org/Wednesday",
+        "https://schema.org/Thursday",
+        "https://schema.org/Friday",
+        "https://schema.org/Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    }
+  ],
+  "foundingDate": "2017",
+  "founder": {
+    "@type": "Person",
+    "@id": "https://todalinda.exemplo/equipe/edna-antoniolli#pessoa",
+    "name": "Edna Antoniolli",
+    "jobTitle": "Fundadora",
+    "url": "https://todalinda.exemplo/equipe/edna-antoniolli"
+  },
+  "employee": [
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/dido-rodrigues#pessoa",
+      "name": "Dido Rodrigues",
+      "jobTitle": "Cabeleireiro",
+      "url": "https://todalinda.exemplo/equipe/dido-rodrigues",
+      "sameAs": "https://www.instagram.com/didorodrigues/",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/andressa-savaris#pessoa",
+      "name": "Andressa Savaris",
+      "jobTitle": "Cabeleireira e cosmetóloga",
+      "url": "https://todalinda.exemplo/equipe/andressa-savaris",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/isabela-cristina#pessoa",
+      "name": "Isabela Cristina",
+      "jobTitle": "Colorista",
+      "url": "https://todalinda.exemplo/equipe/isabela-cristina",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/karine#pessoa",
+      "name": "Karine",
+      "jobTitle": "Manicure e pedicure",
+      "url": "https://todalinda.exemplo/equipe/karine",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/thaynara-colombo#pessoa",
+      "name": "Thaynara Colombo",
+      "jobTitle": "Educadora e nail designer",
+      "url": "https://todalinda.exemplo/equipe/thaynara-colombo",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://todalinda.exemplo/equipe/marina-schpanski#pessoa",
+      "name": "Marina Schpanski",
+      "jobTitle": "Maquiadora",
+      "url": "https://todalinda.exemplo/equipe/marina-schpanski",
+      "worksFor": {
+        "@id": "https://todalinda.exemplo/#salao"
+      }
+    }
+  ],
+  "knowsAbout": [
+    "colorimetria",
+    "morena iluminada",
+    "loiro perolado",
+    "ruivo e cobre",
+    "mechas com teste de mecha",
+    "corte",
+    "penteado",
+    "maquiagem",
+    "esmaltação em gel",
+    "manicure e pedicure"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Serviços da Todalinda",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/morena-iluminada#servico",
+          "name": "Morena iluminada",
+          "url": "https://todalinda.exemplo/servicos/morena-iluminada"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/loiros#servico",
+          "name": "Loiros",
+          "url": "https://todalinda.exemplo/servicos/loiros"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/ruivo-e-cobre#servico",
+          "name": "Ruivo e cobre",
+          "url": "https://todalinda.exemplo/servicos/ruivo-e-cobre"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/castanho-e-mocha#servico",
+          "name": "Castanho e mocha",
+          "url": "https://todalinda.exemplo/servicos/castanho-e-mocha"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/mechas#servico",
+          "name": "Mechas",
+          "url": "https://todalinda.exemplo/servicos/mechas"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/corte#servico",
+          "name": "Corte",
+          "url": "https://todalinda.exemplo/servicos/corte"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/penteado-e-make#servico",
+          "name": "Penteado e make",
+          "url": "https://todalinda.exemplo/servicos/penteado-e-make"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "@id": "https://todalinda.exemplo/servicos/esmalteria#servico",
+          "name": "Esmalteria",
+          "url": "https://todalinda.exemplo/servicos/esmalteria"
+        }
+      }
+    ]
+  }
+}

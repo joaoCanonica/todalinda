@@ -1,0 +1,119 @@
+---
+// 2 · SUMÁRIO (capa): os serviços como índice de revista.
+import { sumario } from '../../content/textos/home.ts';
+import Rotulo from '../base/Rotulo.astro';
+import Pagina from '../edicao/Pagina.astro';
+
+const s = sumario;
+// Tratamentos não tem página publicada (sem mídia): no sumário, vai para o glossário /tratamentos.
+const href = (id: string) => (id === 'tratamentos' ? '/tratamentos' : `/servicos/${id}`);
+---
+
+<Pagina tom="capa" secao={s.folio} id="sumario" rotulo="Sumário">
+  <div class="sumario">
+    <div class="sumario__cabeca">
+      <Rotulo tom="acento">{s.folio}</Rotulo>
+      <h2>
+        {s.titulo.antes}
+        <em>{s.titulo.destaque}</em>
+        {s.titulo.depois}
+      </h2>
+      <p class="sumario__intro">{s.intro}</p>
+    </div>
+    <ol class="sumario__lista" role="list">
+      {s.itens.map((i) => (
+        <li>
+          <a href={href(i.id)} class="sumario__item">
+            <span class="sumario__pagina numeros" aria-hidden="true">
+              {i.pagina}
+            </span>
+            <span class="sumario__nome">{i.nome}</span>
+            <span class="sumario__linha">{i.linha}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Pagina>
+
+<style>
+  .sumario {
+    display: grid;
+    gap: var(--e-6);
+    max-width: var(--largura-max);
+  }
+  .sumario__intro {
+    color: var(--texto-2);
+    margin-top: var(--e-4);
+  }
+  .sumario__lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .sumario__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    grid-template-areas: 'pag nome' 'pag linha';
+    column-gap: var(--e-4);
+    padding-block: var(--e-4);
+    border-bottom: var(--fio) solid var(--fio-cor);
+    color: var(--texto);
+    text-decoration: none;
+  }
+  .sumario__item::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: -1px;
+    height: var(--fio);
+    background: var(--cor-ouro);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-3) var(--curva-entrada);
+  }
+  .sumario__pagina {
+    grid-area: pag;
+    padding-top: 0.35em;
+    color: var(--acento);
+    font-size: var(--fs-pequeno);
+    font-weight: 600;
+    transition: transform var(--dur-2) var(--curva-entrada);
+  }
+  .sumario__nome {
+    grid-area: nome;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    line-height: 1.1;
+  }
+  .sumario__linha {
+    grid-area: linha;
+    margin-top: var(--e-1);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .sumario__item:hover::after,
+  .sumario__item:focus-visible::after {
+    transform: scaleX(1);
+  }
+  .sumario__item:hover .sumario__pagina,
+  .sumario__item:focus-visible .sumario__pagina {
+    transform: translateX(4px);
+  }
+  @media (min-width: 60rem) {
+    .sumario {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: var(--e-8);
+    }
+    .sumario__item {
+      grid-template-columns: 4rem minmax(0, 1.1fr) minmax(0, 1fr);
+      grid-template-areas: 'pag nome linha';
+      align-items: baseline;
+    }
+    .sumario__linha {
+      margin-top: 0;
+    }
+  }
+</style>

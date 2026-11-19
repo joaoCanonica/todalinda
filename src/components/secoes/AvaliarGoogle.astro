@@ -1,0 +1,65 @@
+---
+// 10 · AVALIAR NO GOOGLE (página, bloco cheio). Sem estrelas, sem nota, sem incentivo.
+import { avaliar as a } from '../../content/textos/geral.ts';
+import Pagina from '../edicao/Pagina.astro';
+// passa pela rota curta /avaliar (mede o clique e redireciona para o link oficial)
+---
+
+<Pagina tom="pagina" secao="Avaliar" id="avaliar" rotulo="Avaliar no Google" class="avaliar-bloco">
+  <div class="avaliar">
+    <h2 class="avaliar__titulo">{a.titulo}</h2>
+    <a class="avaliar__botao" href="/avaliar?o=site">
+      {a.botao}
+      <span class="sr-only"> (vai para a página da Todalinda no Google)</span>
+    </a>
+    <p class="avaliar__linha">{a.linha}</p>
+  </div>
+</Pagina>
+
+<style>
+  :global(.avaliar-bloco) {
+    background: var(--cor-cafe);
+    color: var(--cor-papel);
+    --texto: var(--cor-papel);
+    --texto-2: var(--cor-papel);
+    --acento: var(--cor-ouro);
+    --fio-cor: color-mix(in srgb, var(--cor-papel) 22%, transparent);
+    --foco: var(--cor-ouro);
+  }
+  :global(.avaliar-bloco) :global(.folio) {
+    color: var(--cor-ouro);
+  }
+  .avaliar {
+    display: grid;
+    justify-items: center;
+    gap: var(--e-5);
+    text-align: center;
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .avaliar__titulo {
+    font-size: var(--fs-h2);
+  }
+  .avaliar__botao {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.9em 2em 0.85em;
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: var(--fs-pequeno);
+    text-decoration: none;
+    transition: background-color var(--dur-2) var(--curva-precisa);
+  }
+  .avaliar__botao:hover {
+    background: var(--cor-ouro-claro);
+  }
+  .avaliar__linha {
+    margin: 0;
+    color: var(--cor-papel); /* pedra clara sobre café não fecha AA */
+    font-size: var(--fs-pequeno);
+  }
+</style>

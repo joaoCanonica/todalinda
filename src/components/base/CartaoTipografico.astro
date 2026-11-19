@@ -1,0 +1,60 @@
+---
+// Retrato tipográfico para quem ainda não tem foto em alta: nome em Playfair grande, função, anos.
+interface Props {
+  nome: string;
+  funcao: string;
+  anos?: number;
+}
+const { nome, funcao, anos } = Astro.props;
+const [primeiro, ...resto] = nome.split(' ');
+---
+
+<article class="cartao">
+  <p class="cartao__nome">
+    <span>{primeiro}</span>
+    {resto.length > 0 && <span class="cartao__sobrenome">{resto.join(' ')}</span>}
+  </p>
+  <p class="cartao__funcao versalete">{funcao}</p>
+  {anos && (
+    <p class="cartao__anos">
+      <span class="numeros">{anos}</span> anos de profissão
+    </p>
+  )}
+</article>
+
+<style>
+  .cartao {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    aspect-ratio: 4 / 5;
+    padding: var(--e-5);
+    container-type: inline-size;
+    border: var(--fio) solid var(--fio-cor);
+    background: var(--fundo);
+  }
+  .cartao__nome {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(2rem, 15cqi, 4.5rem);
+    overflow-wrap: anywhere;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+  .cartao__nome span {
+    display: block;
+  }
+  .cartao__sobrenome {
+    font-style: italic;
+    font-weight: 800;
+  }
+  .cartao__funcao {
+    margin: var(--e-4) 0 0;
+    color: var(--acento);
+  }
+  .cartao__anos {
+    margin: var(--e-1) 0 0;
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+</style>

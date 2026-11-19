@@ -1,0 +1,23 @@
+{
+  "id": "salao-de-cabelo",
+  "nome": "Salão de cabelo",
+  "andar": "pendente",
+  "ordem": 3,
+  "descricao": "Bancadas brancas com espelhos iluminados, cadeiras pretas e trilho de spots. É onde a cor, o corte e o penteado acontecem.",
+  "servicos": [
+    "morena-iluminada",
+    "loiros",
+    "ruivo-e-cobre",
+    "castanho-e-mocha",
+    "mechas",
+    "corte",
+    "penteado-e-make"
+  ],
+  "midia": ["cap-12-24-52", "q-ondas", "f-851041550"],
+  "camera": {
+    "posicao": [2.4, 4.6, 4.5],
+    "alvo": [0.8, 0.4, -1.9]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

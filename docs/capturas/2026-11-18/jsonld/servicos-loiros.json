@@ -1,0 +1,102 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": "https://todalinda.exemplo/servicos/loiros#servico",
+    "name": "Loiros",
+    "serviceType": "Loiros",
+    "description": "Os loiros são feitos na Todalinda, salão no Centro de Lages/SC (Rua Lauro Müller, 574), de terça a sábado, das 9h às 19h. Perolado, bege ou manteiga: o caminho até o tom começa pela avaliação e pelo teste de mecha.",
+    "url": "https://todalinda.exemplo/servicos/loiros",
+    "image": "https://todalinda.exemplo/og/servico-loiros.jpg",
+    "provider": {
+      "@id": "https://todalinda.exemplo/#salao"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Lages"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quanto custa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Precisa fazer teste de mecha?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim. Em loiros e em qualquer química, a casa começa pela avaliação e pelo teste de mecha. É o que mostra como o seu fio reage antes do procedimento completo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Fiz química nos últimos meses. Posso fazer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Conte isso na hora de agendar. O histórico de química muda a técnica e às vezes o tempo entre um procedimento e outro; a profissional decide com você na avaliação."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo dura?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende do seu fio, da rotina e dos cuidados em casa. Na avaliação, a profissional indica de quanto em quanto tempo voltar para a manutenção."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Dá para fazer loiro em cabelo branco?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dá, e em alguns casos só com coloração. A avaliação mostra se o seu fio pede mechas, coloração ou as duas coisas."
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Dido Rodrigues: loiro em cabelo branco",
+    "description": "Dido explica como chegar ao loiro perolado em cabelo com fios brancos. Com som e legenda.",
+    "thumbnailUrl": "https://todalinda.exemplo/media/video/v-dido-loiro--inteiro-540x960.avif",
+    "contentUrl": "https://todalinda.exemplo/media/video/v-dido-loiro--inteiro-540x960.mp4",
+    "uploadDate": "2026-11-18T01:22:09+00:00",
+    "duration": "PT45S",
+    "inLanguage": "pt-BR",
+    "transcript": "Dido, vamos falar sobre esse cabelo que é uma coloração e mechas, certo? Coloração. Não, é só coloração, Edna. Não tem mechas aqui não, você acredita? A gente, porque a cliente tem 100% de cabelinhos brancos, se você for ver bem a raizinha dela aqui, é bem clarinha. Por quê? Porque a gente consegue fazer um loiro num cabelo 100% branco e fica esse tom maravilhoso, olha só. É o famoso loiro de tinta, né, que a gente fala. Claro que Foi feito mechas anteriormente Porque ela tinha uma raiz escura E a gente foi clareando aos poucos Mas hoje em dia a gente só retoca a raiz dela Pra gente manter esse tom de loiro perolado Que fica perfeito, né? Olha só",
+    "actor": {
+      "@type": "Person",
+      "name": "Dido Rodrigues"
+    },
+    "publisher": {
+      "@id": "https://todalinda.exemplo/#salao"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Todalinda",
+        "item": "https://todalinda.exemplo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Loiros",
+        "item": "https://todalinda.exemplo/servicos/loiros"
+      }
+    ]
+  }
+]

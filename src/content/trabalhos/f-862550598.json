@@ -1,0 +1,10 @@
+{
+  "midia": "f-862550598",
+  "tecnica": "morena-iluminada",
+  "destaque": false,
+  "parAntesDepois": {
+    "papel": "depois",
+    "com": ["f-862082658-a"],
+    "confirmado": false
+  }
+}

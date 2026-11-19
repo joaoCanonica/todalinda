@@ -1,0 +1,474 @@
+[
+  {
+    "rota": "/",
+    "perf": 92,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 3240,
+    "cls": 0.001,
+    "tbt": 20,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/404",
+    "perf": 96,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 69,
+    "lcp": 2777,
+    "cls": 0.002,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "is-crawlable",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/a-casa",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1087,
+    "cls": 0.008,
+    "tbt": 97,
+    "falhas": [
+      "max-potential-fid",
+      "interactive",
+      "mainthread-work-breakdown",
+      "unused-css-rules",
+      "unused-javascript",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/agendar",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1003,
+    "cls": 0.015,
+    "tbt": 0,
+    "falhas": [
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/avaliar/qr",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 63,
+    "lcp": 790,
+    "cls": 0.005,
+    "tbt": 0,
+    "falhas": [
+      "is-crawlable",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/como-chegar",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1107,
+    "cls": 0.006,
+    "tbt": 5,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/dois-reais-ou-um-cabelo",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 925,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 945,
+    "cls": 0.007,
+    "tbt": 74,
+    "falhas": [
+      "max-potential-fid",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/andressa-savaris",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2480,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/dido-rodrigues",
+    "perf": 96,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2781,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/edna-antoniolli",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2403,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/isabela-cristina",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2478,
+    "cls": 0,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/karine",
+    "perf": 95,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2782,
+    "cls": 0.002,
+    "tbt": 68,
+    "falhas": [
+      "largest-contentful-paint",
+      "max-potential-fid",
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/marina-schpanski",
+    "perf": 96,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2781,
+    "cls": 0.002,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/equipe/thaynara-colombo",
+    "perf": 96,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 2782,
+    "cls": 0,
+    "tbt": 17,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/nossa-historia",
+    "perf": 98,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1083,
+    "cls": 0.007,
+    "tbt": 142,
+    "falhas": [
+      "max-potential-fid",
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/perguntas-frequentes",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 951,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/privacidade",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 944,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/revista",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 946,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "cache-insight",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/castanho-e-mocha",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1078,
+    "cls": 0.007,
+    "tbt": 92,
+    "falhas": [
+      "max-potential-fid",
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/corte",
+    "perf": 93,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 3229,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/esmalteria",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1129,
+    "cls": 0.007,
+    "tbt": 69,
+    "falhas": [
+      "max-potential-fid",
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/loiros",
+    "perf": 93,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 3156,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "largest-contentful-paint",
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/mechas",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1091,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "total-byte-weight",
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/morena-iluminada",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1081,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/penteado-e-make",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1099,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/servicos/ruivo-e-cobre",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1083,
+    "cls": 0.007,
+    "tbt": 96,
+    "falhas": [
+      "max-potential-fid",
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/trabalhos",
+    "perf": 99,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1571,
+    "cls": 0.007,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "document-latency-insight",
+      "image-delivery-insight",
+      "network-dependency-tree-insight"
+    ]
+  },
+  {
+    "rota": "/tratamentos",
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 100,
+    "lcp": 1085,
+    "cls": 0.006,
+    "tbt": 0,
+    "falhas": [
+      "unused-css-rules",
+      "document-latency-insight",
+      "network-dependency-tree-insight"
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "id": "fachada-e-gramado",
+  "nome": "Fachada e gramado",
+  "andar": "externo",
+  "ordem": 1,
+  "descricao": "O sobrado claro da Rua Lauro Müller, 574: porta de madeira cor de laranja, vitrine, garagem à esquerda e o gramado com a placa \"somos TODALINDA\".",
+  "servicos": [],
+  "midia": ["cap-12-24-16", "cap-12-25-23"],
+  "camera": {
+    "posicao": [9, 4.5, 15],
+    "alvo": [2, 2.4, 0]
+  },
+  "fonteLayout": "foto",
+  "splat": null
+}

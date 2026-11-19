@@ -1,0 +1,29 @@
+---
+// Etiqueta: pílula de contorno 1 px com hashtag REAL da casa (src/config/marca.ts).
+import { marca } from '../../config/marca.ts';
+
+type Hashtag = (typeof marca.hashtags.valor)[number];
+interface Props {
+  hashtag: Hashtag;
+}
+const { hashtag } = Astro.props;
+if (!marca.hashtags.valor.includes(hashtag))
+  throw new Error(`hashtag fora da lista da casa: ${hashtag}`);
+---
+
+<span class="etiqueta versalete">{hashtag}</span>
+
+<style>
+  .etiqueta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35em 0.9em 0.3em;
+    border: var(--fio) solid currentColor;
+    border-radius: 999px;
+    color: var(--acento);
+    letter-spacing: 0.12em;
+    text-transform: none;
+    font-variant-caps: normal;
+    white-space: nowrap;
+  }
+</style>

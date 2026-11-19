@@ -1,0 +1,74 @@
+---
+// A gaveta do agendador: um <dialog> nativo que qualquer link com data-agendar abre, já preenchido
+// (data-agendar-servico, data-agendar-profissional). Sem JS, o link segue para o WhatsApp.
+import Agendador from './Agendador.astro';
+---
+
+<dialog class="gaveta tom-pagina" data-gaveta-agendar aria-labelledby="gaveta-titulo">
+  <div class="gaveta__topo">
+    <p id="gaveta-titulo" class="versalete gaveta__titulo" tabindex="-1" data-gaveta-titulo>
+      Agendar
+    </p>
+    <form method="dialog">
+      <button class="gaveta__fechar versalete">Fechar</button>
+    </form>
+  </div>
+  <Agendador id="gaveta" titulo={false} />
+</dialog>
+
+<style>
+  .gaveta {
+    width: min(100%, 40rem);
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0 0 0 auto;
+    padding: 0 var(--margem) var(--e-6);
+    border: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .gaveta::backdrop {
+    background: rgb(18 16 19 / 0.7);
+  }
+  .gaveta[open] {
+    animation: entrar var(--dur-3) var(--curva-entrada);
+  }
+  @keyframes entrar {
+    from {
+      translate: 100% 0;
+    }
+  }
+  .gaveta__topo {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--e-3) 0;
+    margin-bottom: var(--e-3);
+    background: var(--fundo);
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .gaveta__titulo {
+    margin: 0;
+    color: var(--acento);
+  }
+  .gaveta__titulo:focus {
+    outline: none;
+  }
+  .gaveta__fechar {
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+  }
+  @media (max-width: 40rem) {
+    .gaveta {
+      width: 100%;
+    }
+  }
+</style>

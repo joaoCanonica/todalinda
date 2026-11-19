@@ -1,0 +1,10 @@
+{
+  "midia": "f-754970697",
+  "tecnica": "ruivo-e-cobre",
+  "destaque": true,
+  "parAntesDepois": {
+    "papel": "depois",
+    "com": ["f-756143696"],
+    "confirmado": false
+  }
+}

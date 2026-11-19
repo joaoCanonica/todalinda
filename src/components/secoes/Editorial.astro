@@ -1,0 +1,94 @@
+---
+// 1 · EDITORIAL (página): retrato da Edna, abertura com capitular e a frase em citação grande.
+import { editorial } from '../../content/textos/home.ts';
+import { txt } from '../../content/textos/fontes.ts';
+import Poster from '../base/Poster.astro';
+import Rotulo from '../base/Rotulo.astro';
+import Capitular from '../edicao/Capitular.astro';
+import Pagina from '../edicao/Pagina.astro';
+import VideoSobDemanda from './VideoSobDemanda.astro';
+import { alt } from '../../content/textos/midia.ts';
+
+const e = editorial;
+---
+
+<Pagina tom="pagina" secao={e.folio} id="editorial" rotulo="Editorial">
+  <div class="editorial">
+    <figure class="editorial__retrato" data-revelar>
+      <Poster
+        imagem="cap-12-49-24"
+        alt={alt['cap-12-49-24'] ?? ''}
+        sizes="(min-width: 60rem) 24rem, 80vw"
+      />
+      <figcaption class="versalete">{e.assinatura}</figcaption>
+    </figure>
+    <div class="editorial__texto">
+      <Rotulo>{e.rotulo}</Rotulo>
+      <!-- o título é a própria citação grande: o h2 fica para leitores de tela, sem repetir na tela -->
+      <h2 class="sr-only">
+        {e.titulo.antes}
+        {e.titulo.destaque}
+        {e.titulo.depois}
+      </h2>
+      <Capitular>
+        {e.paragrafos.map((p) => (
+          <p>{txt(p)}</p>
+        ))}
+      </Capitular>
+      <blockquote class="editorial__citacao" data-revelar aria-hidden="true">
+        <p>{txt(e.citacao)}</p>
+      </blockquote>
+      <VideoSobDemanda
+        id="v-edna-sonho"
+        rotulo={e.botaoVideo}
+        titulo="Edna Antoniolli: ver um sonho se tornar um lugar"
+        descricao={e.descricaoVideo}
+      />
+    </div>
+  </div>
+</Pagina>
+
+<style>
+  .editorial {
+    display: grid;
+    gap: var(--e-7);
+    max-width: var(--largura-max);
+  }
+  .editorial__retrato {
+    margin: 0;
+    max-width: 24rem; /* captura de tela: no máximo 480 px reais */
+  }
+  .editorial__retrato figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+  .editorial__texto h2 {
+    margin-bottom: var(--e-5);
+  }
+  .editorial__citacao {
+    margin: var(--e-6) 0;
+    padding: 0;
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h2);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .editorial__citacao p {
+    margin: 0;
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  @media (min-width: 60rem) {
+    .editorial {
+      grid-template-columns: minmax(16rem, 24rem) minmax(0, 40rem);
+      align-items: start;
+      gap: var(--e-8);
+    }
+    .editorial__retrato {
+      position: sticky;
+      top: var(--e-6);
+    }
+  }
+</style>

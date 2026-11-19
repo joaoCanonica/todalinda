@@ -1,0 +1,101 @@
+---
+// Antes e depois real. Com JS: sobreposição controlada por input range (teclado: setas, Home/End).
+// Sem JS: as duas fotos lado a lado, cada uma com seu rótulo.
+import Poster from './Poster.astro';
+
+interface Props {
+  antes: string;
+  depois: string;
+  altAntes: string;
+  altDepois: string;
+  tecnica: string;
+}
+const { antes, depois, altAntes, altDepois, tecnica } = Astro.props;
+const id = `cmp-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<figure class="comparador" data-comparador style="--pos: 50%">
+  <div class="comparador__palco">
+    <div class="comparador__lado comparador__antes">
+      <Poster imagem={antes} alt={altAntes} sizes="(min-width: 60rem) 40vw, 100vw" />
+      <span class="comparador__rotulo versalete">Antes</span>
+    </div>
+    <div class="comparador__lado comparador__depois">
+      <Poster imagem={depois} alt={altDepois} sizes="(min-width: 60rem) 40vw, 100vw" />
+      <span class="comparador__rotulo versalete">Depois</span>
+    </div>
+  </div>
+  <label class="comparador__controle" for={id}>
+    <span class="versalete">Arraste para comparar</span>
+    <input id={id} type="range" min="0" max="100" step="1" value="50" />
+  </label>
+  <figcaption class="versalete">{tecnica}</figcaption>
+</figure>
+
+<script>
+  import '../../scripts/comparador.ts';
+</script>
+
+<style>
+  .comparador {
+    margin: 0;
+  }
+  .comparador__palco {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-2);
+  }
+  .comparador__lado {
+    position: relative;
+  }
+  .comparador__rotulo {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-start: var(--e-3);
+    padding: 0.3em 0.7em;
+    background: var(--cor-noite);
+    color: var(--cor-papel);
+  }
+  .comparador__controle {
+    display: none;
+  }
+  figcaption {
+    margin-top: var(--e-3);
+    color: var(--texto-2);
+  }
+  /* modo ativo (com JS): sobreposição */
+  :global(.comparador--ativo) .comparador__palco {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  :global(.comparador--ativo) .comparador__lado {
+    grid-area: 1 / 1;
+  }
+  :global(.comparador--ativo) .comparador__antes {
+    z-index: 1;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+  :global(.comparador--ativo) .comparador__depois .comparador__rotulo {
+    inset-inline: auto var(--e-3);
+  }
+  :global(.comparador--ativo) .comparador__palco::after {
+    content: '';
+    z-index: 2;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--pos);
+    width: var(--fio);
+    background: var(--cor-papel);
+  }
+  :global(.comparador--ativo) .comparador__controle {
+    display: grid;
+    gap: var(--e-2);
+    margin-top: var(--e-4);
+  }
+  input[type='range'] {
+    width: 100%;
+    min-height: 44px;
+    accent-color: var(--acento);
+  }
+</style>

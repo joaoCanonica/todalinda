@@ -1,0 +1,67 @@
+---
+// /agendar — o agendador em página inteira. Lê ?servico= e ?profissional= (links de fora do site,
+// QR, Instagram). Sem JS, o botão é o link geral do WhatsApp.
+import Pagina from '../components/edicao/Pagina.astro';
+import Agendador from '../components/agendador/Agendador.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import { doisDigitos } from '../components/secoes/util.ts';
+import { contato } from '../config/contato.ts';
+import { agendar as t } from '../content/textos/paginas.ts';
+import Interna from '../layouts/Interna.astro';
+---
+
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  trilha={[{ nome: 'Agendar', url: '/agendar' }]}
+>
+  <CabecaPagina secao="Agendar" rotulo={t.rotulo} titulo={t.titulo} resposta={t.resposta}>
+    <ol class="passos" role="list">
+      {t.passos.map((p, i) => (
+        <li>
+          <span class="numeros">{doisDigitos(i + 1)}</span>
+          <strong>{p.titulo}.</strong> {p.texto}
+        </li>
+      ))}
+    </ol>
+  </CabecaPagina>
+  <Pagina tom="pagina" secao="Agendador" rotulo="Agendador">
+    <Agendador id="pagina" lerUrl titulo={false} />
+    <p class="ligar">
+      {t.semWhatsApp.replace('(49) 3018-0082', '')}
+      <a href={`tel:${contato.telefone.valor.tel}`}>{contato.telefone.valor.exibir}</a>.
+    </p>
+  </Pagina>
+</Interna>
+
+<style>
+  .passos {
+    display: grid;
+    gap: var(--e-3);
+    margin: var(--e-6) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 44rem;
+  }
+  .passos li {
+    display: grid;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    color: var(--texto-2);
+  }
+  .passos .numeros {
+    grid-row: span 2;
+    color: var(--acento-forte);
+    font-weight: 600;
+  }
+  .passos strong {
+    color: var(--texto);
+  }
+  .ligar {
+    margin-top: var(--e-6);
+    color: var(--texto-2);
+  }
+  .ligar a {
+    display: inline-block;
+    padding-block: 0.6em;
+  }
+</style>

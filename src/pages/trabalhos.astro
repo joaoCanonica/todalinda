@@ -1,0 +1,441 @@
+---
+// /trabalhos — a galeria completa. Filtro por técnica com botões nativos (aria-pressed) e URL ?tecnica=;
+// lightbox em <dialog> nativo (setas trocam, Esc fecha, foco volta à foto). Legenda: técnica · profissional
+// (profissional só quando a casa confirmou a autoria). Sem JS: tudo aparece, cada foto é um link.
+import { getCollection } from 'astro:content';
+import Botao from '../components/base/Botao.astro';
+import Poster from '../components/base/Poster.astro';
+import Pagina from '../components/edicao/Pagina.astro';
+import CabecaPagina from '../components/paginas/CabecaPagina.astro';
+import Provisorio from '../components/Provisorio.astro';
+import { provisoria } from '../components/secoes/util.ts';
+import { SERVICOS } from '../content/schemas.ts';
+import { botoes, whatsapp } from '../content/textos/geral.ts';
+import { trabalhos as t } from '../content/textos/paginas.ts';
+import { abs, imagem as imagemLd } from '../components/seo/jsonld.ts';
+import Interna from '../layouts/Interna.astro';
+import { NOME_TECNICA, posterDe } from '../lib/paginas.ts';
+import { imagem } from '../lib/midia.ts';
+import { linkWhatsApp } from '../lib/whatsapp.ts';
+
+const equipe = new Map((await getCollection('equipe')).map((m) => [m.data.slug, m.data.nome]));
+const ordem = (id: string) => SERVICOS.indexOf(id as (typeof SERVICOS)[number]);
+const itens = (await getCollection('trabalhos'))
+  .map((x) => x.data)
+  .map((x) => ({ ...x, poster: posterDe(x.midia, '720x1280') }))
+  .filter((x) => x.poster !== null)
+  .sort(
+    (a, b) =>
+      ordem(a.tecnica) - ordem(b.tecnica) ||
+      Number(b.destaque) - Number(a.destaque) ||
+      a.midia.localeCompare(b.midia),
+  )
+  .map((x) => {
+    const legenda = [
+      NOME_TECNICA[x.tecnica] ?? x.tecnica,
+      x.profissional && equipe.get(x.profissional),
+    ]
+      .filter(Boolean)
+      .join(' · ');
+    const grande = x.poster && 'imagem' in x.poster ? imagem(x.midia) : null;
+    return { ...x, legenda, grande, motivo: provisoria(x.midia) };
+  });
+// JSON-LD: as fotos da galeria como ImageObject (crédito da casa; sem nome de cliente)
+const galeria = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: 'Trabalhos da Todalinda',
+  url: abs('/trabalhos'),
+  associatedMedia: itens
+    .filter((x) => x.grande)
+    .map((x) => imagemLd({ url: x.grande?.src ?? '', legenda: x.legenda })),
+};
+const tecnicas = [...new Set(itens.map((x) => x.tecnica))];
+---
+
+<Interna
+  titulo={t.meta.title}
+  descricao={t.meta.description}
+  trilha={[{ nome: 'Trabalhos', url: '/trabalhos' }]}
+  jsonld={[galeria]}
+>
+  <CabecaPagina secao="Trabalhos" rotulo={t.rotulo} titulo={t.titulo} resposta={t.resposta} />
+
+  <Pagina tom="pagina" secao="Galeria" rotulo="Galeria de trabalhos">
+    <div class="filtro" role="group" aria-label={t.filtro} data-filtro hidden>
+      <button type="button" class="filtro__botao versalete" aria-pressed="true" data-tecnica="">
+        {t.todas} <span class="numeros">{itens.length}</span>
+      </button>
+      {tecnicas.map((id) => (
+        <button
+          type="button"
+          class="filtro__botao versalete"
+          aria-pressed="false"
+          data-tecnica={id}
+        >
+          {NOME_TECNICA[id]}{' '}
+          <span class="numeros">{itens.filter((x) => x.tecnica === id).length}</span>
+        </button>
+      ))}
+    </div>
+    <p class="contagem" aria-live="polite" data-contagem></p>
+    <ul class="grade" role="list" data-grade>
+      {itens.map((x, i) => (
+        <li
+          class:list={['grade__item', { 'grade__item--destaque': x.destaque }]}
+          data-tecnica={x.tecnica}
+        >
+          <figure>
+            <a
+              class="grade__abrir"
+              href={x.grande?.src ?? `#t-${i}`}
+              id={`t-${i}`}
+              data-abrir
+              data-tipo={x.grande ? 'imagem' : 'video'}
+              data-srcset={x.grande?.srcsetWebp}
+              data-avif={x.grande?.srcsetAvif}
+              aria-label={`Ampliar: ${x.legenda}`}
+            >
+              {x.poster && 'video' in x.poster ? (
+                <Poster {...x.poster} proporcao="4 / 5" />
+              ) : (
+                x.poster && (
+                  <Poster
+                    {...x.poster}
+                    proporcao="4 / 5"
+                    sizes="(min-width: 72rem) 22vw, (min-width: 48rem) 30vw, 50vw"
+                  />
+                )
+              )}
+            </a>
+            <figcaption class="versalete">
+              <span data-legenda>{x.legenda}</span>
+              {x.motivo && <Provisorio motivo={x.motivo} />}
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </Pagina>
+
+  <Pagina tom="capa" secao="Agendar" rotulo="Agendar">
+    <div class="cta">
+      <h2>
+        Viu algo <em>assim</em> para você?
+      </h2>
+      <p class="lead">
+        Conte qual foto te chamou atenção. Na avaliação, a casa vê se o seu fio chega lá e como.
+      </p>
+      <Botao href={linkWhatsApp(whatsapp.geral)} externo agendar={{}}>
+        {t.cta}
+      </Botao>
+    </div>
+  </Pagina>
+
+  <dialog class="lb tom-capa" aria-labelledby="lb-legenda" data-lb>
+    <figure class="lb__figura">
+      <div class="lb__midia" data-lb-midia></div>
+      <figcaption class="lb__legenda versalete">
+        <span id="lb-legenda" data-lb-legenda></span>
+        <span class="lb__pos numeros" data-lb-pos></span>
+      </figcaption>
+    </figure>
+    <div class="lb__controles">
+      <button type="button" class="lb__botao versalete" data-lb-anterior>
+        <span aria-hidden="true">←</span>
+        {botoes.anterior}
+      </button>
+      <a class="lb__botao versalete" href="" data-lb-agendar rel="noopener" target="_blank">
+        {t.cta}
+        <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+      </a>
+      <button type="button" class="lb__botao versalete" data-lb-proximo>
+        {botoes.proximo}
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+    <form method="dialog">
+      <button class="lb__fechar versalete">{botoes.fechar}</button>
+    </form>
+  </dialog>
+</Interna>
+
+<script>
+  import { linkWhatsApp, MENSAGENS } from '../lib/whatsapp.ts';
+
+  const grade = document.querySelector<HTMLElement>('[data-grade]');
+  const filtro = document.querySelector<HTMLElement>('[data-filtro]');
+  const contagem = document.querySelector<HTMLElement>('[data-contagem]');
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lb]');
+  if (grade && filtro && dlg) {
+    const itens = [...grade.querySelectorAll<HTMLLIElement>('li[data-tecnica]')];
+    const botoesF = [...filtro.querySelectorAll<HTMLButtonElement>('button[data-tecnica]')];
+    const validas = new Set(botoesF.map((b) => b.dataset.tecnica ?? ''));
+    filtro.hidden = false;
+
+    function filtrar(tecnica: string, url = true) {
+      if (!validas.has(tecnica)) tecnica = '';
+      for (const b of botoesF)
+        b.setAttribute('aria-pressed', String(b.dataset.tecnica === tecnica));
+      let n = 0;
+      for (const li of itens) {
+        const sim = !tecnica || li.dataset.tecnica === tecnica;
+        li.hidden = !sim;
+        if (sim) n++;
+      }
+      const nome = botoesF
+        .find((b) => b.dataset.tecnica === tecnica)
+        ?.firstChild?.textContent?.trim();
+      if (contagem)
+        contagem.textContent = tecnica
+          ? `${n} trabalhos de ${nome?.toLowerCase()}`
+          : `${n} trabalhos`;
+      if (url) {
+        const u = new URL(location.href);
+        if (tecnica) u.searchParams.set('tecnica', tecnica);
+        else u.searchParams.delete('tecnica');
+        history.replaceState(null, '', u);
+      }
+    }
+    for (const b of botoesF) b.addEventListener('click', () => filtrar(b.dataset.tecnica ?? ''));
+    filtrar(new URLSearchParams(location.search).get('tecnica') ?? '', false);
+
+    // lightbox
+    const midia = dlg.querySelector<HTMLElement>('[data-lb-midia]');
+    const legenda = dlg.querySelector<HTMLElement>('[data-lb-legenda]');
+    const pos = dlg.querySelector<HTMLElement>('[data-lb-pos]');
+    const agendar = dlg.querySelector<HTMLAnchorElement>('[data-lb-agendar]');
+    let lista: HTMLAnchorElement[] = [];
+    let atual = 0;
+    let origem: HTMLElement | null = null;
+
+    function mostrar(i: number) {
+      if (!midia || !lista.length) return;
+      atual = (i + lista.length) % lista.length;
+      const a = lista[atual];
+      if (!a) return;
+      const texto = a.closest('figure')?.querySelector('[data-legenda]')?.textContent ?? '';
+      const altTexto = a.querySelector<HTMLImageElement | HTMLVideoElement>('img, video');
+      if (a.dataset.tipo === 'imagem') {
+        const pic = document.createElement('picture');
+        const s = document.createElement('source');
+        s.type = 'image/avif';
+        s.srcset = a.dataset.avif ?? '';
+        s.sizes = '(min-width: 60rem) 60vw, 100vw';
+        const img = document.createElement('img');
+        img.src = a.href;
+        img.srcset = a.dataset.srcset ?? '';
+        img.sizes = s.sizes;
+        img.alt = (altTexto as HTMLImageElement | null)?.alt ?? texto;
+        pic.append(s, img);
+        midia.replaceChildren(pic);
+      } else {
+        const v = a.querySelector('video')?.cloneNode(true) as HTMLVideoElement | undefined;
+        if (v) {
+          v.controls = true;
+          v.removeAttribute('data-video-mudo');
+          v.preload = 'metadata';
+          midia.replaceChildren(v);
+          if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+            void v.play().catch(() => undefined);
+        }
+      }
+      if (legenda) legenda.textContent = texto;
+      if (pos) pos.textContent = `${atual + 1} / ${lista.length}`;
+      if (agendar)
+        agendar.href = linkWhatsApp(MENSAGENS.trabalho(texto.split(' · ')[0]?.toLowerCase() ?? ''));
+    }
+    grade.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-abrir]');
+      if (!a) return;
+      e.preventDefault();
+      lista = itens
+        .filter((li) => !li.hidden)
+        .flatMap((li) => li.querySelector<HTMLAnchorElement>('a[data-abrir]') ?? []);
+      origem = a;
+      mostrar(lista.indexOf(a));
+      dlg.showModal();
+    });
+    dlg.querySelector('[data-lb-anterior]')?.addEventListener('click', () => mostrar(atual - 1));
+    dlg.querySelector('[data-lb-proximo]')?.addEventListener('click', () => mostrar(atual + 1));
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') mostrar(atual - 1);
+      else if (e.key === 'ArrowRight') mostrar(atual + 1);
+    });
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) dlg.close(); // clique fora da imagem fecha
+    });
+    dlg.addEventListener('close', () => {
+      midia?.replaceChildren();
+      origem?.focus();
+    });
+  }
+</script>
+
+<style>
+  .filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    max-width: var(--largura-max);
+  }
+  /* sem JS o filtro não aparece, mas o espaço fica reservado (CLS 0) */
+  .filtro[hidden] {
+    display: flex;
+    visibility: hidden;
+  }
+  .filtro__botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: 44px;
+    padding: 0 1em;
+    border: var(--fio) solid var(--fio-cor);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+  }
+  .filtro__botao .numeros {
+    color: var(--texto-2);
+  }
+  .filtro__botao[aria-pressed='true'] {
+    background: var(--cor-tinta);
+    border-color: var(--cor-tinta);
+    color: var(--cor-papel);
+  }
+  .filtro__botao[aria-pressed='true'] .numeros {
+    color: var(--cor-ouro-claro);
+  }
+  .contagem {
+    min-height: 1.6em;
+    margin: var(--e-4) 0 var(--e-5);
+    color: var(--texto-2);
+    font-size: var(--fs-pequeno);
+  }
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-5) var(--e-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-width: var(--largura-max);
+  }
+  .grade__item[hidden] {
+    display: none;
+  }
+  .grade figure {
+    margin: 0;
+  }
+  .grade__abrir {
+    display: block;
+  }
+  .grade__abrir :global(.poster__midia) {
+    transition: scale var(--dur-3) var(--curva-saida);
+  }
+  .grade__abrir:hover :global(.poster__midia),
+  .grade__abrir:focus-visible :global(.poster__midia) {
+    scale: 1.03;
+  }
+  .grade figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    margin-top: var(--e-2);
+    color: var(--texto-2);
+  }
+  @media (min-width: 48rem) {
+    .grade {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--e-6) var(--e-4);
+    }
+  }
+  @media (min-width: 72rem) {
+    .grade {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: var(--e-4);
+  }
+
+  /* lightbox */
+  .lb {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: var(--e-4) var(--margem);
+    border: 0;
+  }
+  .lb::backdrop {
+    background: var(--cor-noite);
+  }
+  .lb[open] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    gap: var(--e-3);
+  }
+  .lb__figura {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: var(--e-2);
+    margin: 0;
+    min-height: 0;
+  }
+  .lb__midia {
+    position: relative;
+    min-height: 0;
+  }
+  .lb__midia :global(img),
+  .lb__midia :global(video) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+  }
+  .lb__legenda {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--e-3);
+    color: var(--texto-2);
+  }
+  .lb__controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--e-3);
+  }
+  .lb__botao,
+  .lb__fechar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 44px;
+    padding: 0 0.9em;
+    border: var(--fio) solid var(--fio-cor);
+    background: transparent;
+    color: var(--texto);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .lb form {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-end: var(--margem);
+  }
+  .lb__fechar {
+    background: var(--cor-noite);
+  }
+  @media (max-width: 30rem) {
+    .lb__botao {
+      padding: 0 0.6em;
+    }
+  }
+</style>

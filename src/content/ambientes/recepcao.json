@@ -1,0 +1,15 @@
+{
+  "id": "recepcao",
+  "nome": "Recepção",
+  "andar": "pendente",
+  "ordem": 2,
+  "descricao": "O painel preto com a filigrana dourada da marca e o nome TODA LINDA. Ao lado, um lírio-da-paz e o lounge, com luz de janela.",
+  "servicos": [],
+  "midia": ["f-883558643", "q-filigrana"],
+  "camera": {
+    "posicao": [-1, 4.6, 4.5],
+    "alvo": [-2.6, 0.4, -1.9]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

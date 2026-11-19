@@ -1,0 +1,37 @@
+---
+// Faixa "em revisão": só no preview. Lista as pendências da config (sem esconder nada).
+import { EM_PREVIEW } from '../config/ambiente.ts';
+import { pendencias } from '../config/index.ts';
+
+const lista = EM_PREVIEW ? pendencias() : [];
+const bloqueantes = lista.filter((p) => p.estado === 'bloqueante').length;
+---
+
+{EM_PREVIEW && (
+  <aside class="preview-banner" aria-label="Versão em revisão">
+    <strong>Em revisão</strong>
+    <span>
+      versão de preview, não indexada · {lista.length} pendência{lista.length === 1 ? '' : 's'}
+      {bloqueantes > 0 && ` (${bloqueantes} bloqueante${bloqueantes === 1 ? '' : 's'})`}
+    </span>
+  </aside>
+)}
+
+<style>
+  .preview-banner {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    padding: 0.4rem 1rem;
+    font:
+      600 0.75rem/1.4 system-ui,
+      sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #2a1e19;
+    color: #f7f3ec;
+  }
+  .preview-banner strong {
+    color: #e2c88c;
+  }
+</style>

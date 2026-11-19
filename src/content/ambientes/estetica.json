@@ -1,0 +1,15 @@
+{
+  "id": "estetica",
+  "nome": "Sala de estética",
+  "andar": "pendente",
+  "ordem": 6,
+  "descricao": "Uma sala reservada, com maca, mandala dourada na parede e jardim vertical.",
+  "servicos": [],
+  "midia": ["cap-12-25-07"],
+  "camera": {
+    "posicao": [2.4, 4.6, 1],
+    "alvo": [0.8, 0.4, -5.6]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://todalinda.local/media.manifest.schema.json",
+  "title": "Manifesto de mídia da Todalinda",
+  "type": "object",
+  "required": ["versao", "atualizado", "itens"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "versao": { "const": 1 },
+    "atualizado": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "itens": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "arquivo",
+        "tipo",
+        "natureza",
+        "pessoa",
+        "tecnica",
+        "descricao",
+        "uso",
+        "texto",
+        "trechos",
+        "resolucaoMax",
+        "rotacao",
+        "consentimento",
+        "audioLiberado",
+        "problemas",
+        "edicoes",
+        "naoUsar",
+        "parAntesDepois",
+        "escolha",
+        "crianca"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "arquivo": { "type": "string", "pattern": "^media-originais/" },
+        "tipo": { "enum": ["imagem", "video", "vetor"] },
+        "natureza": {
+          "enum": [
+            "foto",
+            "captura-de-tela",
+            "quadro-de-video",
+            "arte",
+            "capa-destaque",
+            "logo",
+            "video"
+          ]
+        },
+        "largura": { "type": ["integer", "null"], "minimum": 1 },
+        "altura": { "type": ["integer", "null"], "minimum": 1 },
+        "duracao": { "type": "number", "exclusiveMinimum": 0 },
+        "pessoa": { "type": ["string", "null"] },
+        "tecnica": { "type": ["string", "null"] },
+        "descricao": { "type": "string" },
+        "uso": { "type": "array", "items": { "type": "string" } },
+        "texto": { "type": ["string", "null"], "description": "Fala transcrita (vídeos)." },
+        "textoEm": { "type": "string", "description": "Arquivo com o texto transcrito da arte." },
+        "trechos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "nome",
+              "in",
+              "out",
+              "loop",
+              "audio",
+              "legenda",
+              "hero",
+              "referencia",
+              "tamanhos"
+            ],
+            "properties": {
+              "nome": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+              "in": { "type": "number", "minimum": 0 },
+              "out": { "type": "number", "exclusiveMinimum": 0 },
+              "loop": { "type": "boolean" },
+              "audio": { "type": "boolean" },
+              "legenda": { "type": "boolean" },
+              "hero": { "type": "boolean" },
+              "referencia": { "type": "boolean" },
+              "tamanhos": {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^\\d+x\\d+$" },
+                "minItems": 1
+              },
+              "nota": { "type": "string" },
+              "crianca": {
+                "enum": ["nao", "verificar", "sim"],
+                "description": "Idade a confirmar só neste trecho."
+              }
+            }
+          }
+        },
+        "resolucaoMax": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "Largura máxima publicável em px (nunca acima do original)."
+        },
+        "rotacao": { "enum": [0, 90, 180, 270] },
+        "recorte": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["left", "top", "width", "height"],
+          "properties": {
+            "left": { "type": "integer" },
+            "top": { "type": "integer" },
+            "width": { "type": "integer" },
+            "height": { "type": "integer" }
+          }
+        },
+        "consentimento": { "enum": ["autorizado", "pendente", "nao-precisa"] },
+        "audioLiberado": { "type": "boolean" },
+        "problemas": { "type": "array", "items": { "type": "string" } },
+        "edicoes": { "type": "array", "items": { "type": "string" } },
+        "naoUsar": { "type": "boolean" },
+        "motivoNaoUsar": { "type": "string" },
+        "parAntesDepois": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["papel", "com", "confirmado"],
+          "properties": {
+            "papel": { "enum": ["antes", "depois", "ambos"] },
+            "com": { "type": "array", "items": { "type": "string" } },
+            "confirmado": { "type": "boolean" }
+          }
+        },
+        "escolha": { "type": "boolean", "description": "Escolha ★ da curadoria." },
+        "crianca": { "enum": ["nao", "verificar", "sim"] },
+        "confirmarIdentidade": { "type": "boolean" },
+        "transcrever": { "type": "boolean" },
+        "transcricao": { "type": ["string", "null"] },
+        "origem": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["video", "tempo"],
+          "properties": {
+            "video": { "type": "string" },
+            "tempo": { "type": "number", "minimum": 0 }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "naoUsar": { "const": true } } },
+          "then": { "required": ["motivoNaoUsar"] }
+        },
+        {
+          "if": { "properties": { "natureza": { "const": "captura-de-tela" } } },
+          "then": { "properties": { "resolucaoMax": { "maximum": 480 } } }
+        },
+        {
+          "if": { "properties": { "crianca": { "const": "sim" } } },
+          "then": { "properties": { "naoUsar": { "const": true } } }
+        }
+      ]
+    }
+  }
+}

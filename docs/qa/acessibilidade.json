@@ -1,0 +1,1149 @@
+{
+  "axe": [
+    {
+      "rota": "/",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/_capa-a",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/_capa-b",
+      "largura": "390",
+      "violacoes": [
+        {
+          "id": "region",
+          "impacto": "moderate",
+          "alvos": [
+            ".aviso-preview"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/_estilo",
+      "largura": "390",
+      "violacoes": [
+        {
+          "id": "landmark-one-main",
+          "impacto": "moderate",
+          "alvos": [
+            "html"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/_textos",
+      "largura": "390",
+      "violacoes": [
+        {
+          "id": "color-contrast",
+          "impacto": "serious",
+          "alvos": [
+            "dl:nth-child(7) > dd > dl:nth-child(4) > dd > ol > li:nth-child(1) > .real > cite",
+            "dl:nth-child(7) > dd > dl:nth-child(4) > dd > ol > li:nth-child(2) > .real > cite",
+            "dl:nth-child(7) > dd > dl:nth-child(4) > dd > ol > li:nth-child(3) > .real > cite"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/a-casa",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/agendar",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/avaliar/qr",
+      "largura": "390",
+      "violacoes": [
+        {
+          "id": "region",
+          "impacto": "moderate",
+          "alvos": [
+            ".controles > p"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/como-chegar",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/dois-reais-ou-um-cabelo",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/andressa-savaris",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/dido-rodrigues",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/edna-antoniolli",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/isabela-cristina",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/karine",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/marina-schpanski",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/thaynara-colombo",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/nossa-historia",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/perguntas-frequentes",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/privacidade",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/revista",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/castanho-e-mocha",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/corte",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/esmalteria",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/loiros",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/mechas",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/morena-iluminada",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/penteado-e-make",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/ruivo-e-cobre",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/trabalhos",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/tratamentos",
+      "largura": "390",
+      "violacoes": []
+    },
+    {
+      "rota": "/",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/_capa-a",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/_capa-b",
+      "largura": "1440",
+      "violacoes": [
+        {
+          "id": "region",
+          "impacto": "moderate",
+          "alvos": [
+            ".aviso-preview"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/_estilo",
+      "largura": "1440",
+      "violacoes": [
+        {
+          "id": "landmark-one-main",
+          "impacto": "moderate",
+          "alvos": [
+            "html"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/_textos",
+      "largura": "1440",
+      "violacoes": [
+        {
+          "id": "color-contrast",
+          "impacto": "serious",
+          "alvos": [
+            "dl:nth-child(12) > dd > dl:nth-child(1) > dd > .real > cite",
+            "dl:nth-child(12) > dd > dl:nth-child(2) > dd > .real > cite",
+            "dl:nth-child(12) > dd > dl:nth-child(3) > dd > .real > cite"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/a-casa",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/agendar",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/avaliar/qr",
+      "largura": "1440",
+      "violacoes": [
+        {
+          "id": "region",
+          "impacto": "moderate",
+          "alvos": [
+            ".controles > p"
+          ]
+        }
+      ]
+    },
+    {
+      "rota": "/como-chegar",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/dois-reais-ou-um-cabelo",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/andressa-savaris",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/dido-rodrigues",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/edna-antoniolli",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/isabela-cristina",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/karine",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/marina-schpanski",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/equipe/thaynara-colombo",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/nossa-historia",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/perguntas-frequentes",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/privacidade",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/revista",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/castanho-e-mocha",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/corte",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/esmalteria",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/loiros",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/mechas",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/morena-iluminada",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/penteado-e-make",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/servicos/ruivo-e-cobre",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/trabalhos",
+      "largura": "1440",
+      "violacoes": []
+    },
+    {
+      "rota": "/tratamentos",
+      "largura": "1440",
+      "violacoes": []
+    }
+  ],
+  "csp": [],
+  "zoom": [
+    {
+      "rota": "/",
+      "sobra": 0
+    },
+    {
+      "rota": "/_capa-a",
+      "sobra": 0
+    },
+    {
+      "rota": "/_capa-b",
+      "sobra": 0
+    },
+    {
+      "rota": "/_estilo",
+      "sobra": 0
+    },
+    {
+      "rota": "/_textos",
+      "sobra": 0
+    },
+    {
+      "rota": "/a-casa",
+      "sobra": 0
+    },
+    {
+      "rota": "/agendar",
+      "sobra": 0
+    },
+    {
+      "rota": "/avaliar/qr",
+      "sobra": 0
+    },
+    {
+      "rota": "/como-chegar",
+      "sobra": 0
+    },
+    {
+      "rota": "/dois-reais-ou-um-cabelo",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/andressa-savaris",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/dido-rodrigues",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/edna-antoniolli",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/isabela-cristina",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/karine",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/marina-schpanski",
+      "sobra": 0
+    },
+    {
+      "rota": "/equipe/thaynara-colombo",
+      "sobra": 0
+    },
+    {
+      "rota": "/nossa-historia",
+      "sobra": 0
+    },
+    {
+      "rota": "/perguntas-frequentes",
+      "sobra": 0
+    },
+    {
+      "rota": "/privacidade",
+      "sobra": 0
+    },
+    {
+      "rota": "/revista",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/castanho-e-mocha",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/corte",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/esmalteria",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/loiros",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/mechas",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/morena-iluminada",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/penteado-e-make",
+      "sobra": 0
+    },
+    {
+      "rota": "/servicos/ruivo-e-cobre",
+      "sobra": 0
+    },
+    {
+      "rota": "/trabalhos",
+      "sobra": 0
+    },
+    {
+      "rota": "/tratamentos",
+      "sobra": 0
+    }
+  ],
+  "teclado": {
+    "naAbertura": true,
+    "marcos": {
+      "capa": true,
+      "sumario": true,
+      "comparador": true,
+      "agendador": true,
+      "whatsapp": true
+    },
+    "tabs": 62,
+    "semFocoVisivel": 0,
+    "passos": [
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Pular abertura",
+        "nome": null,
+        "valor": null,
+        "secao": "",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Todalinda, início",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "01Morena iluminada, loiros e ruivos: técnica + cor",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "02Dois Reais ou um Cabelo: o quadro da casa",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "03Por dentro da casa, em 3D",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar horário (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ver trabalhos",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Pausar vídeo",
+        "nome": null,
+        "valor": null,
+        "secao": "capa-home tom-capa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ouvir a Edna",
+        "nome": null,
+        "valor": null,
+        "secao": "editorial",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "04Morena iluminadaLuz mel e caramelo desenhada sob",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "06LoirosPerolado, bege e manteiga, do clareamento ",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "08Ruivo e cobreDo cobre suave ao ruivo intenso.",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "10Castanho e mochaProfundidade e brilho no castanh",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "12MechasSempre com teste de mecha antes.",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "14A Arte do CorteCamadas, comprimento e forma para",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "16Penteado e makePara o dia em que tudo precisa es",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "18EsmalteriaManicure, pedicure e esmaltação em gel",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "20TratamentosO que acontece dentro do fio, explica",
+        "nome": null,
+        "valor": null,
+        "secao": "sumario",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Ver o antes",
+        "nome": null,
+        "valor": null,
+        "secao": "antes-e-depois",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Ver o depois",
+        "nome": null,
+        "valor": null,
+        "secao": "antes-e-depois",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": null,
+        "valor": "50",
+        "secao": "antes-e-depois",
+        "visivel": true
+      },
+      {
+        "acao": "→→ comparador 50 → 52"
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": null,
+        "valor": "50",
+        "secao": "antes-e-depois",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Morena iluminada",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Loiros",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Ruivo e cobre",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Castanho e mocha",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Corte",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Penteado",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "BUTTON",
+        "texto": "Esmalteria",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ler a matéria de morena iluminada",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ver todos os trabalhos",
+        "nome": null,
+        "valor": null,
+        "secao": "trabalhos",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Assista no Instagram (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "dois-reais",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Sobre o quadro e as temporadas",
+        "nome": null,
+        "valor": null,
+        "secao": "dois-reais",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "DIV",
+        "texto": "Equipe Todalinda",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Edna Antoniolli",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Falar com a Edna (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Dido Rodrigues",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Dido (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Andressa Savaris",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Andressa (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Isabela Cristina",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Isabela (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Karine “Kah”",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Kah (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Thaynara Colombo",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Thaynara (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Marina Schpanski",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Agendar com Marina (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "equipe",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Carregar o tour 3D",
+        "nome": null,
+        "valor": null,
+        "secao": "a-casa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Abrir o tour completo",
+        "nome": null,
+        "valor": null,
+        "secao": "a-casa",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ouvir a Edna",
+        "nome": null,
+        "valor": null,
+        "secao": "momento",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Avaliação no Google (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "o-que-dizem",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Avaliação no Google (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "o-que-dizem",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Avaliação no Google (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "o-que-dizem",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Ver todas no Google (abre em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "o-que-dizem",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Avaliar no Google (vai para a página da Todalinda ",
+        "nome": null,
+        "valor": null,
+        "secao": "avaliar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "servico",
+        "valor": "morena-iluminada",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "→→ serviço",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "servico",
+        "valor": "ruivo-e-cobre",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "data",
+        "valor": "2026-11-19",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "→ dia",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "data",
+        "valor": "2026-11-21",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "periodo",
+        "valor": "manha",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "→ período",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "periodo",
+        "valor": "tarde",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "primeira",
+        "valor": "sim",
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "INPUT",
+        "texto": "",
+        "nome": "nome",
+        "valor": null,
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Tab",
+        "tag": "A",
+        "texto": "Enviar pelo WhatsApp (abre o WhatsApp em nova aba)",
+        "nome": null,
+        "valor": null,
+        "secao": "agendar",
+        "visivel": true
+      },
+      {
+        "acao": "Enter → WhatsApp",
+        "href": "Olá! Vim pelo site da Todalinda e quero agendar um horário."
+      }
+    ]
+  },
+  "movimento": {
+    "/": {
+      "animacoes": 0,
+      "videosTocando": 0,
+      "abertura": true,
+      "tour3d": null
+    },
+    "/servicos/mechas": {
+      "animacoes": 0,
+      "videosTocando": 0,
+      "abertura": false,
+      "tour3d": null
+    },
+    "/a-casa": {
+      "animacoes": 0,
+      "videosTocando": 0,
+      "abertura": false,
+      "tour3d": "movimento-reduzido"
+    }
+  }
+}

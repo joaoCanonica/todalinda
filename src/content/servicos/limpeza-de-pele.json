@@ -1,0 +1,41 @@
+{
+  "id": "limpeza-de-pele",
+  "nome": "Limpeza de pele",
+  "grupo": "estetica",
+  "resumo": "Higienização e preparo da pele, com avaliação individual.",
+  "especialidades": ["estética"],
+  "processo": [
+    {
+      "etapa": "avaliacao",
+      "titulo": "Avaliação",
+      "texto": "Avaliação da pele antes de qualquer etapa."
+    },
+    {
+      "etapa": "tecnica",
+      "titulo": "Técnica",
+      "texto": "Higienização, esfoliação e extração conforme a avaliação da pele."
+    },
+    {
+      "etapa": "finalizacao",
+      "titulo": "Finalização",
+      "texto": "Orientação de cuidados em casa."
+    }
+  ],
+  "profissionais": {
+    "estado": "bloqueante",
+    "valor": null,
+    "rotulo": "confirmar com a casa quem faz",
+    "sugestao": []
+  },
+  "midia": ["cap-12-25-07"],
+  "faq": [
+    {
+      "pergunta": "Quanto custa?",
+      "resposta": "O valor depende da avaliação; no atendimento a gente te passa."
+    }
+  ],
+  "publicado": false,
+  "opcional": true,
+  "textoRevisado": false,
+  "ordem": 10
+}

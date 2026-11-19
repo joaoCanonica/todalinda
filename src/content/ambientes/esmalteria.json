@@ -1,0 +1,15 @@
+{
+  "id": "esmalteria",
+  "nome": "Esmalteria",
+  "andar": "pendente",
+  "ordem": 5,
+  "descricao": "Prateleiras de esmaltes com espelhos e uma planta pendente. Manicure, pedicure e esmaltação em gel.",
+  "servicos": ["esmalteria"],
+  "midia": ["cap-12-24-33"],
+  "camera": {
+    "posicao": [-1, 4.6, 1],
+    "alvo": [-2.6, 0.4, -5.6]
+  },
+  "fonteLayout": "pendente",
+  "splat": null
+}

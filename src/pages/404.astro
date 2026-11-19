@@ -1,0 +1,76 @@
+---
+// 404 — curta: uma capitular e três caminhos de volta à casa.
+import Capitular from '../components/edicao/Capitular.astro';
+import Folio from '../components/edicao/Folio.astro';
+import { pagina404 as p } from '../content/textos/geral.ts';
+import Interna from '../layouts/Interna.astro';
+---
+
+<Interna titulo={p.meta.title} descricao={p.meta.description} noindex italico>
+  <section class="nf tom-capa" aria-labelledby="nf-titulo">
+    <Folio secao="404" />
+    <p class="nf__num numeros" aria-hidden="true">
+      404
+    </p>
+    <h1 id="nf-titulo" class="nf__titulo">
+      {p.titulo}
+    </h1>
+    <Capitular>
+      <p class="lead">{p.texto}</p>
+    </Capitular>
+    <ol class="nf__caminhos" role="list">
+      {p.caminhos.map((c, i) => (
+        <li>
+          <a href={c.href}>
+            <span class="numeros">{String(i + 1).padStart(2, '0')}</span>
+            {c.rotulo}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Interna>
+
+<style>
+  .nf {
+    position: relative;
+    padding: var(--e-8) var(--margem) var(--e-9);
+    min-height: 70vh;
+  }
+  .nf__num {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(5rem, 3rem + 9vw, 12rem);
+    line-height: 0.85;
+    color: var(--cor-ouro-claro);
+  }
+  .nf__titulo {
+    margin-block: var(--e-5) var(--e-6);
+    max-width: 16ch;
+  }
+  .nf__caminhos {
+    margin: var(--e-6) 0 0;
+    padding: 0;
+    list-style: none;
+    max-width: 30rem;
+    border-top: var(--fio) solid var(--fio-cor);
+  }
+  .nf__caminhos a {
+    display: flex;
+    align-items: center;
+    gap: var(--e-4);
+    min-height: 56px;
+    border-bottom: var(--fio) solid var(--fio-cor);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    text-decoration: none;
+  }
+  .nf__caminhos .numeros {
+    color: var(--acento);
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+  }
+</style>

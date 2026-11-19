@@ -1,0 +1,36 @@
+---
+// Capitular de abertura de matéria: a primeira letra do primeiro parágrafo ocupa 3 linhas.
+// initial-letter (Chrome/Edge/Safari) com fallback em float para o Firefox.
+---
+
+<div class="capitular">
+  <slot />
+</div>
+
+<style>
+  .capitular {
+    --cor-capitular: var(--cor-tinta);
+  }
+  :global(.tom-capa) .capitular {
+    --cor-capitular: var(--cor-ouro-claro);
+  }
+  .capitular > :global(p:first-of-type::first-letter) {
+    float: left;
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    font-size: calc(var(--entrelinha-texto) * 3em + 0.15em);
+    line-height: 0.82;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--cor-capitular);
+  }
+  @supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+    .capitular > :global(p:first-of-type::first-letter) {
+      float: none;
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0 0.12em 0 0;
+      -webkit-initial-letter: 3;
+      initial-letter: 3;
+    }
+  }
+</style>

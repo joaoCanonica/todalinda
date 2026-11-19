@@ -1,0 +1,114 @@
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quanto custa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O valor depende do comprimento e do histórico do fio; na avaliação a gente te passa. Em unhas, penteado e make, a recepção informa no agendamento."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Como agendo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pelo agendador do site, que monta a mensagem e abre o WhatsApp da recepção, ou pelo telefone (49) 3018-0082."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Posso escolher a profissional?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pode. Se não tiver preferência, a casa indica quem atende o seu caso."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Precisa fazer teste de mecha?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sim, em qualquer química (coloração, mechas, clareamento). O teste mostra como o seu fio reage antes do procedimento completo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Fiz química recentemente. Posso fazer cor ou mechas?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Conte isso ao agendar. O histórico muda a técnica e, às vezes, o tempo entre um procedimento e outro; a decisão é tomada com você na avaliação."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo dura a cor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende do fio, da técnica, da rotina e dos cuidados em casa. Na avaliação, a profissional indica de quanto em quanto tempo voltar para a manutenção."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quanto tempo leva o atendimento?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Varia com a técnica e o comprimento do cabelo. A recepção informa a estimativa quando confirma o horário."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "De quanto em quanto tempo volto?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A profissional indica na avaliação: depende da técnica (raiz, tonalização, corte) e do seu fio."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Que produto devo usar em casa?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Os indicados na sua avaliação. Eles são escolhidos para o seu fio e para a técnica feita."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Qual o horário?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Terça a sábado, das 9h às 19h. Domingo e segunda, fechado. Em feriados, confirme pelo WhatsApp."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Onde fica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rua Lauro Müller, 574, Centro, Lages/SC, CEP 88501-000. Um sobrado claro, com gramado na frente."
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Todalinda",
+        "item": "https://todalinda.exemplo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Perguntas frequentes",
+        "item": "https://todalinda.exemplo/perguntas-frequentes"
+      }
+    ]
+  }
+]

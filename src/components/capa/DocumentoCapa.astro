@@ -1,0 +1,84 @@
+---
+// Documento da home com abertura + capa. Usado por / (variante a), /_capa-a e /_capa-b.
+import '../../styles/global.css';
+import { cores } from '../../config/tema.ts';
+import JsonLd from '../seo/JsonLd.astro';
+import Seo from '../seo/Seo.astro';
+import { salaoLd } from '../seo/dados.ts';
+import { video } from '../../lib/midia.ts';
+import Abertura from '../abertura/Abertura.astro';
+import AberturaHead from '../abertura/AberturaHead.astro';
+import PreviewBanner from '../PreviewBanner.astro';
+import CapaHome from './CapaHome.astro';
+
+interface Props {
+  variante?: 'a' | 'b';
+  titulo?: string;
+  aviso?: string;
+  descricao?: string;
+}
+const {
+  variante = 'a',
+  titulo = 'Todalinda · cor, corte e cuidado com o fio · Lages/SC',
+  aviso,
+  descricao,
+} = Astro.props;
+const trecho = variante === 'a' ? 'ondas' : 'iluminada';
+const g = video('v-filme', trecho, '720x900-4x5');
+const p = video('v-filme', trecho, '544x680-4x5');
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <Seo titulo={titulo} descricao={descricao ?? ''} />
+    <meta name="theme-color" content={cores.noite} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset={`${p.poster} 544w, ${g.poster} 720w`}
+      imagesizes="(min-width: 60rem) 42vw, 100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/manrope-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <AberturaHead />
+  </head>
+  <body>
+    <Abertura />
+    <PreviewBanner />
+    {aviso && (
+      <p class="aviso-preview versalete" role="note">
+        {aviso}
+      </p>
+    )}
+    <main id="conteudo">
+      <CapaHome variante={variante} />
+      <slot />
+    </main>
+    <slot name="rodape" />
+    <JsonLd grafo={[await salaoLd()]} />
+  </body>
+</html>
+
+<style>
+  .aviso-preview {
+    margin: 0;
+    padding: 0.5rem var(--margem);
+    background: var(--cor-mocha);
+    color: var(--cor-papel);
+    max-width: none;
+  }
+</style>

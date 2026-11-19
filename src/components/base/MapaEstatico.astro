@@ -1,0 +1,94 @@
+---
+// "Como chegar". Sem mapa de terceiros carregado na página: endereço, coordenadas e os três apps.
+// Imagem estática do mapa (OSM, com atribuição) entra quando for gerada (pendência); até lá, cartão tipográfico.
+import { contato } from '../../config/contato.ts';
+
+interface Props {
+  imagem?: { src: string; alt: string; atribuicao: string };
+}
+const { imagem } = Astro.props;
+const e = contato.endereco.valor;
+const { lat, lng } = contato.geo.valor;
+---
+
+<div class="mapa">
+  {imagem ? (
+    <figure class="mapa__img">
+      <img src={imagem.src} alt={imagem.alt} loading="lazy" decoding="async" />
+      <figcaption>{imagem.atribuicao}</figcaption>
+    </figure>
+  ) : (
+    <div class="mapa__tipo" aria-hidden="true">
+      <span class="numeros">{Math.abs(lat).toFixed(4).replace('.', ',')}° S</span>
+      <span class="numeros">{Math.abs(lng).toFixed(4).replace('.', ',')}° O</span>
+      <span>{contato.plusCode.valor}</span>
+    </div>
+  )}
+  <address class="mapa__endereco">
+    <span>
+      {e.logradouro}, {e.numero}
+    </span>
+    <span>
+      {e.bairro} · {e.cidade}/{e.uf} · <span class="numeros">{e.cep}</span>
+    </span>
+  </address>
+  <ul class="mapa__apps" role="list">
+    <li>
+      <a href={contato.mapas.google.valor} rel="noopener" target="_blank">
+        Google Maps<span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </li>
+    <li>
+      <a href={contato.mapas.waze.valor} rel="noopener" target="_blank">
+        Waze<span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </li>
+    <li>
+      <a href={contato.mapas.apple.valor} rel="noopener" target="_blank">
+        Apple Mapas<span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .mapa {
+    display: grid;
+    gap: var(--e-4);
+    max-width: 32rem;
+  }
+  .mapa__tipo {
+    display: grid;
+    place-content: center;
+    gap: var(--e-1);
+    aspect-ratio: 16 / 9;
+    border: var(--fio) solid var(--fio-cor);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+    text-align: center;
+    color: var(--texto-2);
+  }
+  .mapa__endereco {
+    display: grid;
+    font-style: normal;
+  }
+  .mapa__apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2) var(--e-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+  .mapa__apps a {
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 0.6em;
+    color: var(--acento);
+    text-underline-offset: 0.22em;
+  }
+  :global(.tom-capa) .mapa__apps a {
+    color: var(--cor-ouro-claro);
+  }
+</style>

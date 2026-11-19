@@ -1,0 +1,51 @@
+---
+// A moldura de filigrana do logo, desenhando-se do centro para fora (máscara radial, ≤ 1,2 s).
+// Uso EXCLUSIVO: abertura e selo. Nunca como enfeite de seção.
+import filigrana from '../marca/svg/todalinda-filigrana.svg?raw';
+
+interface Props {
+  animar?: boolean;
+  class?: string;
+}
+const { animar = true, class: classe = '' } = Astro.props;
+const svg = filigrana
+  .replace(/\sid="(filigrana|moldura)"/g, '')
+  .replace('<svg ', '<svg aria-hidden="true" focusable="false" class="filigrana__svg" ');
+---
+
+<div class:list={['filigrana', { 'filigrana--animar': animar }, classe]}>
+  <Fragment set:html={svg} />
+</div>
+
+<style>
+  .filigrana {
+    color: var(--acento);
+    aspect-ratio: 1;
+  }
+  .filigrana--animar {
+    --revelar: 100%;
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      #000 var(--revelar),
+      transparent calc(var(--revelar) + 12%)
+    );
+    mask-image: radial-gradient(
+      circle at 50% 50%,
+      #000 var(--revelar),
+      transparent calc(var(--revelar) + 12%)
+    );
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .filigrana--animar {
+      animation: filigrana-revelar 1.2s var(--curva-entrada) both;
+    }
+  }
+  @keyframes filigrana-revelar {
+    from {
+      --revelar: 0%;
+    }
+    to {
+      --revelar: 100%;
+    }
+  }
+</style>
