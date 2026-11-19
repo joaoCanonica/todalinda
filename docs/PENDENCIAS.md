@@ -171,3 +171,14 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Safari iOS e Firefox:** este ambiente só tem Chromium. Roteiro manual em `docs/QA.md` §3.
 - **fps do 3D medidos com WebGL por software** (SwiftShader). Falta medir num Android intermediário real.
 - **Volta pelo histórico (bfcache):** o tour recria a cena ao voltar (`pageshow`). O Chromium automatizado daqui não usa o bfcache, então esse caminho está coberto pelo código, não por teste.
+
+## Atualização de 19/11/2026 (decisões do João)
+- **Idades:** "são todos maiores de idade, até que se saiba". As 6 marcações `crianca: verificar` viraram `nao`, com a origem anotada no manifesto e na curadoria:
+  - `f-859140964`, `f-860153001`, `v-transformacao` e `q-iluminada`;
+  - os trechos `iluminada` e `logo-final` do `v-filme`.
+
+  **A produção está liberada (0 travas).** A trava de criança continua ativa: se alguma for menor, basta marcar `sim`.
+- **Maquete esquemática aprovada:** vai à produção com o selo "Representação esquemática — em breve, a casa real", até chegar a planta.
+- **Domínio `todalinda.com.br`:** fixado na config. Ainda não está registrado nem apontado. **Não imprimir o cartão QR antes de o domínio estar no ar.**
+- **Link "Pedir avaliações":** pendente. A rede deste ambiente não lê o Google Maps, e a extensão do Chrome não estava conectada nesta sessão. Passo a passo em `docs/DEPLOY.md`. Até lá, `/avaliar` abre a ficha do Google.
+- **Deploy:** o João sobe na Vercel. O build automático da Vercel pelo Git fica desligado (`git.deploymentEnabled: false`, a Vercel não tem ffmpeg nem Chromium). Quem publica é o GitHub Actions, conforme `docs/DEPLOY.md`.

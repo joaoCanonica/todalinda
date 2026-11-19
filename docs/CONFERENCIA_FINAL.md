@@ -64,7 +64,9 @@ Cada trava foi provada com `--simular`, e cada simulação acrescentou exatament
 | Termo vetado no HTML | `audit-compliance --simular=termo` | ✓ |
 | AggregateRating | `audit-compliance --simular=nota` | ✓ |
 
-**Estado de hoje em `MODO=producao`: BLOQUEADO por 5 travas `midia-crianca`** (as mídias com idade a confirmar). O bloqueio está certo: a produção só sai depois que o João confirmar as idades, ou com essas mídias tiradas das coleções.
+**Atualização de 19/11/2026:** o João informou que as clientes são maiores de idade (vale até que se saiba o contrário). As 6 marcações de "idade a confirmar" viraram `nao`, com essa origem anotada no manifesto e em `scripts/dados/curadoria.mjs`. **Em `MODO=producao`, a produção está liberada: 0 travas.** Todas as simulações continuam disparando. No mesmo dia, ele também aprovou a maquete esquemática (`maqueteEsquematica.aprovadaPeloJoao = true`) e definiu o domínio `todalinda.com.br`.
+
+*Estado em 18/11 (antes da atualização): BLOQUEADO por 5 travas `midia-crianca`* (as mídias com idade a confirmar). O bloqueio está certo: a produção só sai depois que o João confirmar as idades, ou com essas mídias tiradas das coleções.
 
 ---
 
@@ -116,6 +118,8 @@ Cada trava foi provada com `--simular`, e cada simulação acrescentou exatament
 ---
 
 ## 3. O que depende do João
+
+> Atualizado em 19/11/2026: os itens 1 e 6 estão resolvidos (idades e maquete). Do item 2, o domínio está definido, mas ainda não registrado. O item 3, o link de avaliação, segue pendente: este ambiente não consegue ler o Google Maps. O passo a passo está em `docs/DEPLOY.md`.
 
 1. **Confirmar a idade** das clientes em `f-859140964`, `f-860153001`, `v-transformacao` (e no trecho `iluminada` do filme). Sem isso, a produção não sai, e é assim que deve ser. Se alguma for menor de idade, a mídia sai do manifesto.
 2. **Domínio definitivo** (`PUBLIC_SITE_URL`). Libera canonical, sitemap, Plausible e o QR medindo a origem; depois disso, reimprimir os cartões de `/avaliar/qr`.

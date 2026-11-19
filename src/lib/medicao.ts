@@ -5,6 +5,8 @@
 //   | "umami" | "ga4" (só com aceite; usa cookie) | vazio (desligada: eventos só no console do preview).
 // - Nenhum evento leva nome, telefone ou o texto da mensagem: só ids de serviço/profissional e a origem.
 import { EVENTO, aceito, quandoAceitar } from '../components/consentimento/consentimento.ts';
+import { seo } from '../config/seo.ts';
+import { valorDe } from '../config/tipos.ts';
 
 export type Evento =
   | { nome: 'clique_agendar'; props: { servico: string; profissional: string; origem: string } }
@@ -24,7 +26,7 @@ const FERRAMENTA: Ferramenta =
       'plausible');
 /** plausible: domínio do site; umami: website id; ga4: G-XXXX. */
 // Plausible: o "site" é o domínio definitivo; sem domínio (preview), a medição fica desligada
-const dominio = (env.PUBLIC_SITE_URL ?? '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+const dominio = (valorDe(seo.siteUrl) ?? '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
 const ID = env.PUBLIC_MEDICAO_ID ?? (FERRAMENTA === 'plausible' ? dominio : '');
 /** Endereço do script (permite servir pelo próprio domínio, via proxy). */
 const SCRIPT = env.PUBLIC_MEDICAO_SCRIPT ?? '';

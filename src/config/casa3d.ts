@@ -15,6 +15,7 @@ export interface Ambiente3D {
  * em produção, só com aprovação expressa do João. Sem aprovação, /a-casa mostra fotos + lista.
  */
 export const maqueteEsquematica = {
-  aprovadaPeloJoao: false,
+  /** Aprovada pelo João em 19/11/2026: vai à produção com o selo, até chegar a planta. */
+  aprovadaPeloJoao: true,
   selo: 'Representação esquemática — em breve, a casa real',
 } as const;

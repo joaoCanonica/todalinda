@@ -943,13 +943,13 @@
       "consentimento": "autorizado",
       "audioLiberado": false,
       "problemas": [
-        "Cliente muito jovem (aparelho nos dentes): confirmar maioridade antes de publicar."
+        "Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário)."
       ],
       "edicoes": [],
       "naoUsar": false,
       "parAntesDepois": null,
       "escolha": true,
-      "crianca": "verificar",
+      "crianca": "nao",
       "id": "f-859140964",
       "arquivo": "media-originais/fotos/SaveClip.App_859140964_18436002922177756_8860080997321218242_n.jpg",
       "tipo": "imagem",
@@ -1000,13 +1000,13 @@
       "consentimento": "autorizado",
       "audioLiberado": false,
       "problemas": [
-        "Mesma cliente de 859140964: confirmar maioridade."
+        "Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário)."
       ],
       "edicoes": [],
       "naoUsar": false,
       "parAntesDepois": null,
       "escolha": false,
-      "crianca": "verificar",
+      "crianca": "nao",
       "id": "f-860153001",
       "arquivo": "media-originais/fotos/SaveClip.App_860153001_18436002898177756_3801170917733126655_n.jpg",
       "tipo": "imagem",
@@ -2951,7 +2951,7 @@
             "720x1280",
             "540x960"
           ],
-          "crianca": "verificar",
+          "crianca": "nao",
           "nota": "Corte em 29,13 s; flare em 31,9 s; logo entra em 36,3 s."
         },
         {
@@ -2966,7 +2966,7 @@
           "tamanhos": [
             "720x1280"
           ],
-          "crianca": "verificar",
+          "crianca": "nao",
           "nota": "Logo horizontal sobre a imagem (entra em 36,3 s, mapa: 36,0). Só referência."
         }
       ],
@@ -2974,7 +2974,7 @@
       "consentimento": "autorizado",
       "audioLiberado": false,
       "problemas": [
-        "Cliente de 29–36 s (a mesma do vídeo 936752395) parece muito jovem: confirmar maioridade antes de usar \"iluminada\".",
+        "Cliente de 29–36 s (a mesma do vídeo 936752395): Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).",
         "Música de fundo: direitos desconhecidos; usar só mudo."
       ],
       "edicoes": [
@@ -3302,7 +3302,7 @@
       "consentimento": "autorizado",
       "audioLiberado": false,
       "problemas": [
-        "Cliente parece muito jovem: confirmar maioridade.",
+        "Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).",
         "O \"antes\" vai até 4,8 s (corte medido), não 3 s como no mapa."
       ],
       "edicoes": [
@@ -3316,7 +3316,7 @@
         "confirmado": false
       },
       "escolha": false,
-      "crianca": "verificar",
+      "crianca": "nao",
       "id": "v-transformacao",
       "arquivo": "media-originais/videos/snapinsta-1794936752395.mp4",
       "tipo": "video",
@@ -3499,7 +3499,7 @@
       "naoUsar": false,
       "parAntesDepois": null,
       "escolha": false,
-      "crianca": "verificar",
+      "crianca": "nao",
       "id": "q-iluminada",
       "arquivo": "media-originais/quadros/q-iluminada.jpg",
       "tipo": "imagem",

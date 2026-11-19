@@ -26,9 +26,9 @@ export const fotos = {
     escolha: true,
     descricao: 'Retrato sorrindo, parede de letras.',
     uso: ['galeria', 'servico-morena-iluminada'],
-    crianca: 'verificar',
+    crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
     problemas: [
-      'Cliente muito jovem (aparelho nos dentes): confirmar maioridade antes de publicar.',
+      'Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).',
     ],
   },
   859866649: {
@@ -40,8 +40,10 @@ export const fotos = {
     tecnica: T.morena,
     descricao: 'Perfil (mesma cliente de 859140964).',
     uso: ['galeria'],
-    crianca: 'verificar',
-    problemas: ['Mesma cliente de 859140964: confirmar maioridade.'],
+    crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
+    problemas: [
+      'Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).',
+    ],
   },
   876662670: {
     tecnica: T.morena,
@@ -423,7 +425,7 @@ export const videos = {
     uso: ['abertura', 'hero', 'a-casa', 'equipe'],
     // a idade a confirmar vale só para os trechos com a cliente de 29–37 s (iluminada, logo-final)
     problemas: [
-      'Cliente de 29–36 s (a mesma do vídeo 936752395) parece muito jovem: confirmar maioridade antes de usar "iluminada".',
+      'Cliente de 29–36 s (a mesma do vídeo 936752395): Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).',
       'Música de fundo: direitos desconhecidos; usar só mudo.',
     ],
     trechos: [
@@ -453,7 +455,7 @@ export const videos = {
       },
       {
         nome: 'iluminada',
-        crianca: 'verificar',
+        crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
         in: 29.2,
         out: 35.9,
         loop: true,
@@ -463,7 +465,7 @@ export const videos = {
       },
       {
         nome: 'logo-final',
-        crianca: 'verificar',
+        crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
         in: 36.3,
         out: 37.2,
         sizes: ['720x1280'],
@@ -478,10 +480,10 @@ export const videos = {
       'Transformação: antes (longo escuro, roupão Truss) → depois (iluminado mel com corte).',
     tecnica: `${T.morena} + corte`,
     uso: ['antes-depois', 'home', 'servico-morena-iluminada'],
-    crianca: 'verificar',
+    crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
     par: { papel: 'ambos', com: [] },
     problemas: [
-      'Cliente parece muito jovem: confirmar maioridade.',
+      'Maioridade: o João (WAXLO) informou em 19/11/2026 que as clientes são maiores de idade (vale até que se saiba o contrário).',
       'O "antes" vai até 4,8 s (corte medido), não 3 s como no mapa.',
     ],
     trechos: [
@@ -639,7 +641,7 @@ export const quadros = [
     tempo: 33.0,
     descricao: 'Cliente com morena iluminada mel, sorrindo.',
     uso: ['hero-pôster-alternativo'],
-    crianca: 'verificar',
+    crianca: 'nao' /* maioridade informada pelo João em 19/11/2026 */,
   },
   {
     id: 'q-filigrana',

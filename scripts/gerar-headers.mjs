@@ -53,12 +53,25 @@ for (const h of html) {
     estilos.add(hash(corpo));
   for (const [, v] of h.matchAll(/\sstyle="([^"]*)"/g)) atributos.add(hash(desescapar(v)));
 }
+// O vercel.json serve aos dois modos (preview e produção têm um ou outro estilo diferente, como o
+// selo PROVISÓRIO): ao gerar, somam-se os hashes que já estavam na CSP com os do build atual.
+const anterior = existsSync(ARQ) ? readFileSync(ARQ, 'utf8') : '';
+const cspAnterior = anterior.match(/"Content-Security-Policy",\s*"value":\s*"([^"]+)"/)?.[1] ?? '';
+const hashesDe = (diretiva) =>
+  new Set(
+    cspAnterior
+      .split(';')
+      .find((d) => d.trim().startsWith(diretiva))
+      ?.match(/'sha256-[^']+'/g) ?? [],
+  );
+const scriptsAntes = hashesDe('script-src');
+const estilosAntes = hashesDe('style-src');
 const ord = (s) => [...s].sort();
 
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'wasm-unsafe-eval' https://plausible.io ${ord(scripts).join(' ')}`,
-  `style-src 'self' 'unsafe-hashes' ${ord(estilos).join(' ')} ${ord(atributos).join(' ')}`,
+  `script-src 'self' 'wasm-unsafe-eval' https://plausible.io ${ord(new Set([...scripts, ...(conferir ? [] : scriptsAntes)])).join(' ')}`,
+  `style-src 'self' 'unsafe-hashes' ${ord(new Set([...estilos, ...atributos, ...(conferir ? [] : estilosAntes)])).join(' ')}`,
   "img-src 'self' data: blob:",
   "media-src 'self' blob:",
   "font-src 'self'",
@@ -79,6 +92,9 @@ const config = {
   installCommand: 'pnpm install --frozen-lockfile',
   buildCommand: 'pnpm build',
   outputDirectory: 'dist',
+  // o build precisa de ffmpeg e Chromium, que a Vercel não tem: quem constrói e publica é o
+  // GitHub Actions (.github/workflows/deploy.yml). O build automático da Vercel pelo Git fica desligado.
+  git: { deploymentEnabled: false },
   cleanUrls: true,
   trailingSlash: false,
   headers: [
@@ -137,14 +153,19 @@ const config = {
 const texto = `${JSON.stringify(config, null, 2)}\n`;
 const resumo = `${scripts.size} scripts, ${estilos.size} estilos, ${atributos.size} atributos style por hash`;
 if (conferir) {
-  const atual = existsSync(ARQ) ? readFileSync(ARQ, 'utf8') : '';
-  if (atual !== texto) {
+  // tudo o que este build precisa tem de estar na CSP do vercel.json (o resto da config, idêntico)
+  const faltam = [
+    ...[...scripts].filter((h) => !scriptsAntes.has(h)),
+    ...[...estilos, ...atributos].filter((h) => !estilosAntes.has(h)),
+  ];
+  const semCsp = (t) => t.replace(/"Content-Security-Policy",\s*"value":\s*"[^"]+"/, '');
+  if (faltam.length || semCsp(anterior) !== semCsp(texto)) {
     console.error(
-      `[headers] vercel.json desatualizado em relação ao build (${resumo}): rode \`pnpm deploy:headers\``,
+      `[headers] vercel.json desatualizado em relação ao build (${faltam.length} hash(es) faltando na CSP; ${resumo}): rode \`pnpm deploy:headers\``,
     );
     process.exit(1);
   }
-  console.log(`[headers] vercel.json em dia (${resumo})`);
+  console.log(`[headers] vercel.json cobre este build (${resumo})`);
 } else {
   writeFileSync(ARQ, texto);
   console.log(`[headers] vercel.json escrito (${resumo}; CSP com ${csp.length} caracteres)`);
