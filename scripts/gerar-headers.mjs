@@ -155,10 +155,27 @@ if (conferir) {
     ...[...scripts].filter((h) => !scriptsAntes.has(h)),
     ...[...estilos, ...atributos].filter((h) => !estilosAntes.has(h)),
   ];
-  const semCsp = (t) => t.replace(/"Content-Security-Policy",\s*"value":\s*"[^"]+"/, '');
-  if (faltam.length || semCsp(anterior) !== semCsp(texto)) {
+  // compara o conteúdo (JSON, chave a chave), não o texto: na Vercel o arquivo pode chegar
+  // com outra formatação; a CSP já foi conferida acima pelos hashes
+  const semCsp = (o) =>
+    JSON.stringify(o, (_k, v) =>
+      v && typeof v === 'object' && v.key === 'Content-Security-Policy' ? { key: v.key } : v,
+    );
+  let lido = {};
+  try {
+    lido = JSON.parse(anterior);
+  } catch {
+    // ilegível: todas as chaves contam como diferentes
+  }
+  // só as chaves que este script gera (a plataforma pode acrescentar as dela)
+  const diferentes = Object.keys(config).filter((k) => semCsp(lido[k]) !== semCsp(config[k]));
+  for (const k of diferentes)
     console.error(
-      `[headers] vercel.json desatualizado em relação ao build (${faltam.length} hash(es) faltando na CSP; ${resumo}): rode \`pnpm deploy:headers\``,
+      `[headers] ${k}: lido ${semCsp(lido[k])?.slice(0, 300)} · esperado ${semCsp(config[k]).slice(0, 300)}`,
+    );
+  if (faltam.length || diferentes.length) {
+    console.error(
+      `[headers] vercel.json desatualizado em relação ao build (${faltam.length} hash(es) faltando na CSP; chaves diferentes: ${diferentes.join(', ') || 'nenhuma'}; ${resumo}): rode \`pnpm deploy:headers\``,
     );
     process.exit(1);
   }
