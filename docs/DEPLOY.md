@@ -1,37 +1,40 @@
 # Deploy na Vercel
 
-O build gera os vídeos (ffmpeg) e as imagens de compartilhamento (Chromium), e a Vercel não tem nenhum dos dois. Por isso:
+O build roda na própria Vercel (integração com o GitHub): todo push na `main` constrói e publica em produção, e as outras branches viram preview.
 
-- **quem constrói é o GitHub Actions** (`.github/workflows/deploy.yml`);
-- o Actions envia o site pronto para a Vercel (`vercel deploy --prebuilt`);
-- o build automático da Vercel pelo Git fica **desligado** no `vercel.json` (`git.deploymentEnabled: false`). Ligado, ele falharia a cada push.
+- **Vídeos:** a Vercel não tem ffmpeg. O build usa o do pacote `ffmpeg-static`, que vem no `pnpm install`.
+- **Imagens de compartilhamento (OG):** são compostas sem navegador (fontes da casa em vetor pelo `fontkit` + `sharp`).
+- **Node:** 22.x, fixado no `package.json` (`engines`) e no projeto da Vercel.
+- **Cache:** os derivados de mídia (AVIF/WebP/MP4/WebM) ficam guardados no cache de build da Vercel (`node_modules/.cache/todalinda/media`). Só o primeiro build gera tudo do zero e é longo (ver PENDENCIAS). Os seguintes reaproveitam o que não mudou.
+- **Travas:** rodam no build (validate-config, audit-compliance, audit-seo, conferência do `vercel.json`). Se alguma falhar, o deploy falha e nada é publicado.
+- **Ação manual:** o workflow `.github/workflows/deploy.yml` ficou só manual (*Actions → deploy → Run workflow*). É o caminho alternativo, se um dia o build da Vercel não der conta.
 
-## Uma vez só (≈ 10 min)
+## Configuração do projeto na Vercel (já feita em 19/11/2026)
 
-1. **Projeto na Vercel.** Crie o projeto: "Add New → Project", importando `joaoCanonica/todalinda`, ou pela CLI com `vercel link`. Framework: Astro. As demais configurações vêm do `vercel.json`.
-2. **IDs do projeto.** Em *Settings → General* do projeto, copie o **Project ID**. Em *Settings* do time (ou da conta), copie o **Team ID**.
-3. **Token.** Crie um em vercel.com/account/tokens.
-4. **Segredos no GitHub.** Em *Settings → Secrets and variables → Actions* do repositório, crie:
-   - `VERCEL_TOKEN`: o token;
-   - `VERCEL_ORG_ID`: o Team ID;
-   - `VERCEL_PROJECT_ID`: o Project ID.
-5. **Variáveis na Vercel** (*Settings → Environment Variables*):
+| Item | Valor |
+|---|---|
+| Framework | Astro (o resto vem do `vercel.json`) |
+| Node.js Version | 22.x |
+| `PUBLIC_MODO` | `producao` (Production) · `preview` (Preview e Development) |
 
-   | Variável | Preview | Production |
-   |---|---|---|
-   | `PUBLIC_MODO` | `preview` | `producao` |
-   | `PUBLIC_GOOGLE_REVIEW_URL` | — | o link "Pedir avaliações" (abaixo) |
-   | `PUBLIC_INDEXAR` | — | `sim`, **só quando o domínio estiver no ar** |
+Ainda falta:
 
-   O domínio `https://todalinda.com.br` já está na config (`src/config/seo.ts`). `PUBLIC_SITE_URL` só é preciso para testar noutro endereço.
-6. **Domínio.** Depois de registrar `todalinda.com.br`, adicione-o em *Settings → Domains* e aponte o DNS como a Vercel indicar. A Vercel emite o certificado sozinha.
+| Variável | Ambiente | Valor |
+|---|---|---|
+| `PUBLIC_GOOGLE_REVIEW_URL` | Production | o link "Pedir avaliações" (abaixo) |
+| `PUBLIC_INDEXAR` | Production | `sim`, **só quando o domínio estiver no ar** |
+
+O domínio `https://todalinda.com.br` já está na config (`src/config/seo.ts`). `PUBLIC_SITE_URL` só é preciso para testar noutro endereço.
+
+**Domínio.** Depois de registrar `todalinda.com.br`, adicione-o em *Settings → Domains* e aponte o DNS como a Vercel indicar. A Vercel emite o certificado sozinha.
+
+**Endereço `.vercel.app`.** O projeto está com *Deployment Protection* (Vercel Authentication): o endereço `.vercel.app` só abre para quem está logado no time. Com o domínio próprio, o site abre para todos. Para mostrar antes disso, desligue a proteção em *Settings → Deployment Protection* ou gere um link de compartilhamento.
 
 ## Publicar
 
-- **Produção:** todo push na branch `main` constrói e publica (as travas rodam no build; se alguma falhar, nada é publicado).
-- **Preview:** em *Actions → deploy → Run workflow*, escolha `preview`. O preview sai com `noindex`.
-
-Para levar este trabalho à `main`, faça o merge da branch `claude/festive-ramanujan-bnqqrw`.
+- **Produção:** push (ou merge) na `main`. Para levar este trabalho à `main`, faça o merge da branch `claude/festive-ramanujan-bnqqrw`.
+- **Preview:** push em qualquer outra branch. O preview sai com `noindex` e a faixa "em revisão".
+- **Refazer um deploy que falhou:** *Deployments → … → Redeploy*. Use um commit novo da `main`, não o deploy antigo, que é do código antigo.
 
 ## O link "Pedir avaliações" (Google)
 

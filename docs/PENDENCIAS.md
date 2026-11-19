@@ -13,7 +13,7 @@ Lista viva. Cada item: o que falta · quem resolve · o que trava.
 ### Ferramentas
 - **Transcrição local:** resolvido na sessão 1 (ambiente "todalinda" com os hosts do Hugging Face; modelo large-v3-turbo em `.ferramentas/hf`).
 - **Git LFS para `modelos-originais/`:** não configurado. Só com autorização do João.
-- **Node:** o ambiente tem Node 22.23.5 (LTS em manutenção até abr/2027). O LTS ativo é o 26. `engines` aceita ≥ 22.23.4 (mínimo do Astro 7.4). Subir para 26 quando o deploy for definido.
+- **Node:** 22.x fixado (`engines` e projeto na Vercel). Com o intervalo aberto (`>=22.23.4`), a Vercel escolheu o Node 26 no primeiro deploy. Subir para o 26 é decisão futura, testando o build inteiro.
 
 ### Dados do cliente (vindos do pacote, seção C)
 - Mês de abertura, estacionamento, pagamentos, cartão-presente, noiva fora do salão, acessibilidade: PENDENTE.
@@ -181,7 +181,7 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Maquete esquemática aprovada:** vai à produção com o selo "Representação esquemática — em breve, a casa real", até chegar a planta.
 - **Domínio `todalinda.com.br`:** fixado na config. Ainda não está registrado nem apontado. **Não imprimir o cartão QR antes de o domínio estar no ar.**
 - **Link "Pedir avaliações":** pendente. A rede deste ambiente não lê o Google Maps, e a extensão do Chrome não estava conectada nesta sessão. Passo a passo em `docs/DEPLOY.md`. Até lá, `/avaliar` abre a ficha do Google.
-- **Deploy:** o João sobe na Vercel. O build automático da Vercel pelo Git fica desligado (`git.deploymentEnabled: false`, a Vercel não tem ffmpeg nem Chromium). Quem publica é o GitHub Actions, conforme `docs/DEPLOY.md`.
+- **Deploy (atualizado em 19/11):** o primeiro build na Vercel falhou (sem ffmpeg, sem Chromium, Node 26). Corrigido: o build agora roda na própria Vercel (ffmpeg do pacote `ffmpeg-static`, OG sem navegador, Node 22.x, derivados no cache de build). O GitHub Actions ficou só manual. Ver `docs/DEPLOY.md`.
 - **Link de avaliação (19/11, 2ª tentativa):** o João mandou um link de busca do Google (`google.com/search?…q=toda+linda+lages&si=…&uds=…`). Ele **não serve** como `PUBLIC_GOOGLE_REVIEW_URL`:
   - é o link da página de resultados, não do formulário de avaliação;
   - carrega parâmetros de sessão (`sxsrf`, `si`, `uds`, `ved`, `biw`) que expiram ou mudam de pessoa para pessoa;
