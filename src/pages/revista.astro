@@ -1,23 +1,17 @@
 ---
-// /revista — o ARQUIVO: as três edições como capas na estante, com número grande, data, páginas e a
-// linha de cada uma. O link do Flipsnack entra quando chegar (está no Linktree da casa); até lá,
-// "Edição online em breve" (com selo PROVISÓRIO no preview).
+// /revista — o ARQUIVO: as três edições na estante, com a capa real (Flipsnack), data, páginas, a
+// linha de cada uma e o link para ler a edição inteira no Flipsnack.
 import Botao from '../components/base/Botao.astro';
 import Pagina from '../components/edicao/Pagina.astro';
 import CabecaPagina from '../components/paginas/CabecaPagina.astro';
-import Provisorio from '../components/Provisorio.astro';
+import Poster from '../components/base/Poster.astro';
+import { alt } from '../content/textos/midia.ts';
 import { doisDigitos } from '../components/secoes/util.ts';
 import { contato } from '../config/contato.ts';
 import { revista as r } from '../content/textos/paginas.ts';
 import Interna from '../layouts/Interna.astro';
 
-// links do Flipsnack: PENDENTES (docs/PENDENCIAS.md)
-const LINKS: (string | null)[] = [null, null, null];
-const edicoes = r.edicoes.map((e, i) => ({
-  ...e,
-  numero: doisDigitos(i + 1),
-  link: LINKS[i] ?? null,
-}));
+const edicoes = r.edicoes.map((e, i) => ({ ...e, numero: doisDigitos(i + 1) }));
 ---
 
 <Interna
@@ -31,34 +25,27 @@ const edicoes = r.edicoes.map((e, i) => ({
     <ol class="estante" role="list">
       {edicoes.map((e) => (
         <li class="estante__item">
-          <article class="capa" aria-labelledby={`ed-${e.numero}`}>
-            <p class="capa__cabeca versalete" aria-hidden="true">
-              Todalinda
-            </p>
-            <p class="capa__numero numeros" aria-hidden="true">
-              <span class="capa__no">Nº</span>
-              {e.numero}
-            </p>
-            <h2 id={`ed-${e.numero}`} class="capa__nome">
-              {e.nome}
-            </h2>
-            <p class="capa__data versalete">
-              {e.data} · {e.paginas} páginas
-            </p>
-          </article>
+          <a class="estante__capa" href={e.link} rel="noopener" target="_blank">
+            <Poster
+              imagem={e.capa}
+              alt={alt[e.capa] ?? ''}
+              sizes="(min-width: 48rem) 30vw, 90vw"
+              proporcao="3 / 4"
+            />
+            <span class="sr-only"> (abre a edição no Flipsnack, em nova aba)</span>
+          </a>
+          <p class="estante__num versalete">
+            Edição {e.numero} · {e.data} · {e.paginas} páginas
+          </p>
+          <h2 id={`ed-${e.numero}`} class="estante__nome">
+            {e.nome}
+          </h2>
           <p class="estante__linha">{e.linha}</p>
-          {e.link ? (
-            <a class="estante__link" href={e.link} rel="noopener" target="_blank">
-              {r.botao}
-              <span class="sr-only"> (abre em nova aba)</span>
-            </a>
-          ) : (
-            <p class="estante__link estante__link--pendente">
-              <Provisorio motivo="link do Flipsnack pendente (está no Linktree)">
-                Edição online em breve
-              </Provisorio>
-            </p>
-          )}
+          <a class="estante__link versalete" href={e.link} rel="noopener" target="_blank">
+            {r.botao}
+            <span aria-hidden="true">↗</span>
+            <span class="sr-only"> (Flipsnack, abre em nova aba)</span>
+          </a>
         </li>
       ))}
     </ol>
@@ -100,57 +87,44 @@ const edicoes = r.edicoes.map((e, i) => ({
       gap: var(--e-6);
     }
   }
-  .capa {
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    aspect-ratio: 3 / 4;
-    padding: var(--e-5);
+  .estante__capa {
+    display: block;
     border: var(--fio) solid var(--fio-cor);
-    background: var(--cor-cafe);
-    box-shadow: inset 6px 0 0 color-mix(in srgb, var(--cor-noite) 55%, transparent); /* a lombada */
+    box-shadow: 0 1.2rem 2.4rem -1.2rem color-mix(in srgb, var(--cor-noite) 80%, transparent);
+    transition: translate 0.4s var(--ease, ease);
   }
-  .capa__cabeca {
-    margin: 0;
-    padding-bottom: var(--e-2);
-    border-bottom: var(--fio) solid var(--fio-cor);
-    color: var(--cor-papel);
-    letter-spacing: 0.4em;
+  .estante__capa:hover {
+    translate: 0 -4px;
   }
-  .capa__numero {
-    align-self: center;
-    margin: 0;
-    font-family: var(--fonte-titulo);
-    font-size: clamp(4.5rem, 3rem + 5vw, 8rem);
-    line-height: 1;
-    color: var(--cor-ouro-claro);
+  .estante__capa:focus-visible {
+    outline: 2px solid var(--cor-ouro-claro);
+    outline-offset: 4px;
   }
-  .capa__no {
-    font-size: 0.32em;
-    vertical-align: super;
-    margin-inline-end: 0.15em;
+  .estante__num {
+    margin: var(--e-4) 0 var(--e-2);
+    color: var(--cor-ouro);
   }
-  .capa__nome {
+  .estante__nome {
     font-size: var(--fs-h3);
     font-style: italic;
     font-weight: 700;
   }
-  .capa__data {
-    margin: var(--e-3) 0 0;
-    color: var(--cor-ouro);
-  }
   .estante__linha {
-    margin: var(--e-4) 0 var(--e-2);
+    margin: var(--e-3) 0 var(--e-2);
     color: var(--texto-2);
   }
   .estante__link {
     display: inline-flex;
     align-items: center;
+    gap: 0.5em;
     min-height: 44px;
     color: var(--cor-ouro-claro);
+    text-underline-offset: 0.25em;
   }
-  .estante__link--pendente {
-    color: var(--texto-2);
-    font-size: var(--fs-pequeno);
+  @media (prefers-reduced-motion: reduce) {
+    .estante__capa {
+      transition: none;
+    }
   }
   .prox {
     display: grid;

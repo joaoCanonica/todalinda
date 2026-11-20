@@ -1,29 +1,14 @@
 ---
-// "Como chegar". Sem mapa de terceiros carregado na página: endereço, coordenadas e os três apps.
-// Imagem estática do mapa (OSM, com atribuição) entra quando for gerada (pendência); até lá, cartão tipográfico.
+// "Como chegar" da home: o mapa do Google (no clique, ou sozinho depois do aceite), o endereço e os
+// três apps.
 import { contato } from '../../config/contato.ts';
+import MapaGoogle from './MapaGoogle.astro';
 
-interface Props {
-  imagem?: { src: string; alt: string; atribuicao: string };
-}
-const { imagem } = Astro.props;
 const e = contato.endereco.valor;
-const { lat, lng } = contato.geo.valor;
 ---
 
 <div class="mapa">
-  {imagem ? (
-    <figure class="mapa__img">
-      <img src={imagem.src} alt={imagem.alt} loading="lazy" decoding="async" />
-      <figcaption>{imagem.atribuicao}</figcaption>
-    </figure>
-  ) : (
-    <div class="mapa__tipo" aria-hidden="true">
-      <span class="numeros">{Math.abs(lat).toFixed(4).replace('.', ',')}° S</span>
-      <span class="numeros">{Math.abs(lng).toFixed(4).replace('.', ',')}° O</span>
-      <span>{contato.plusCode.valor}</span>
-    </div>
-  )}
+  <MapaGoogle proporcao="16 / 10" />
   <address class="mapa__endereco">
     <span>
       {e.logradouro}, {e.numero}
@@ -56,17 +41,6 @@ const { lat, lng } = contato.geo.valor;
     display: grid;
     gap: var(--e-4);
     max-width: 32rem;
-  }
-  .mapa__tipo {
-    display: grid;
-    place-content: center;
-    gap: var(--e-1);
-    aspect-ratio: 16 / 9;
-    border: var(--fio) solid var(--fio-cor);
-    font-family: var(--fonte-titulo);
-    font-size: var(--fs-h3);
-    text-align: center;
-    color: var(--texto-2);
   }
   .mapa__endereco {
     display: grid;

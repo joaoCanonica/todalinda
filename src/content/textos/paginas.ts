@@ -46,6 +46,8 @@ export const revista = {
       paginas: 24,
       linha: 'A equipe, as clientes e um ensaio de Dia da Noiva na estrutura completa da casa.',
       fonte: F.revista1,
+      capa: 'rev-2021',
+      link: 'https://www.flipsnack.com/revistatodalinda/revista-todalinda-dez-janeiro-fev-2022.html',
     },
     {
       nome: '5 anos: do sonho à realização',
@@ -53,6 +55,8 @@ export const revista = {
       paginas: 20,
       linha: 'A festa de cinco anos, depoimentos e a fala da Edna sobre o começo.',
       fonte: F.revista5anos,
+      capa: 'rev-2022',
+      link: 'https://www.flipsnack.com/BFE96FCC5A8/revista-todalinda-5-anos.html',
     },
     {
       nome: 'Equipe dos Sonhos',
@@ -60,6 +64,8 @@ export const revista = {
       paginas: 20,
       linha: 'Treinamentos, o primeiro Sunset Todalinda no gramado e a matéria Momento Todalinda.',
       fonte: F.revista2023,
+      capa: 'rev-2023',
+      link: 'https://www.flipsnack.com/BFE96FCC5A8/revista-todalinda.html',
     },
   ],
   botao: 'Ler a edição',
@@ -199,14 +205,8 @@ export const comoChegar = {
   feriados: 'Em feriados, confirme o horário pelo WhatsApp antes de vir.',
   contato: 'Dúvida no caminho? Fale com a recepção.',
   proximosFeriados: 'Próximos feriados',
-  /** Mapa interativo: só carrega depois do clique (e do aviso de privacidade). */
-  mapa: {
-    titulo: 'O mapa',
-    aviso:
-      'O mapa interativo vem do OpenStreetMap. Ao carregar, o seu navegador se conecta a ele, que recebe o seu endereço IP. Nada é carregado antes do clique e do seu aceite no aviso de privacidade.',
-    botao: 'Carregar o mapa interativo',
-    moldura: 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)',
-  },
+  /** Mapa do Google: componente MapaGoogle (textos em geral.ts). */
+  mapa: { titulo: 'O mapa' },
   // estacionamento: PENDENTE (só entra quando a casa confirmar)
 };
 
@@ -335,7 +335,7 @@ export const privacidade = {
     {
       titulo: 'Mapa',
       texto:
-        'Na página Como chegar, o mapa interativo do OpenStreetMap só carrega se você aceitar no aviso de privacidade e clicar para carregá-lo. A partir daí, o seu navegador se conecta ao OpenStreetMap, que recebe o seu endereço IP, conforme a política de privacidade dele.',
+        'O mapa do Google (na capa e em Como chegar) só carrega quando você clica em “Ver o mapa” ou depois que você aceita no aviso de privacidade. A partir daí, o seu navegador se conecta ao Google, que recebe o seu endereço IP, conforme a política de privacidade do Google.',
     },
     {
       titulo: 'Links para outros sites',

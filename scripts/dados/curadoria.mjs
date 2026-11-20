@@ -263,6 +263,34 @@ export const fotos = {
     uso: ['equipe', 'nossa-historia'],
     escolha: true,
   },
+  // capas das 3 revistas da casa (Flipsnack, imagem de capa pública de cada edição; baixadas em 20/11/2026)
+  'revista-2021-12': {
+    id: 'rev-2021',
+    natureza: 'arte',
+    pessoa: 'equipe Todalinda',
+    descricao: 'Capa da revista Todalinda, dez/2021–fev/2022: a equipe de branco brindando.',
+    uso: ['revista'],
+    problemas: [
+      'Fonte: flipsnack.com/revistatodalinda/revista-todalinda-dez-janeiro-fev-2022 (capa, 900 px).',
+    ],
+  },
+  'revista-2022-07': {
+    id: 'rev-2022',
+    natureza: 'arte',
+    pessoa: 'equipe Todalinda',
+    descricao:
+      'Capa da revista Todalinda "5 anos: do sonho à realização", jul/2022: a equipe na frente da casa.',
+    uso: ['revista'],
+    problemas: ['Fonte: flipsnack.com/BFE96FCC5A8/revista-todalinda-5-anos (capa, 600 px).'],
+  },
+  'revista-2023-09': {
+    id: 'rev-2023',
+    natureza: 'arte',
+    pessoa: 'equipe Todalinda',
+    descricao: 'Capa da revista Todalinda "Equipe dos Sonhos", set/2023: a equipe de preto.',
+    uso: ['revista'],
+    problemas: ['Fonte: flipsnack.com/BFE96FCC5A8/revista-todalinda (capa, 794 px).'],
+  },
 };
 
 const arteEdu = (desc) => ({

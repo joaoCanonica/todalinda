@@ -24,7 +24,7 @@ Varredura por botox, toxina, preenchimento, agulha, microagulhamento, escleroter
 - **Agendador sem coleta.** A mensagem é montada no aparelho; nenhum `fetch` ou `form` envia dados ao site. O destino da fase 1 é só um link `wa.me`. O e2e e a leitura do código (`src/components/agendador/agendador.ts`) confirmam. O nome opcional só entra no texto do WhatsApp.
 - **Consentimento real.**
   - "Aceitar" e "Recusar" têm o mesmo tamanho, cor e borda (o e2e mede).
-  - Antes do aceite, nenhum request de terceiro: e2e em 8 rotas. Medição (Plausible), mapa (OpenStreetMap) e embeds só carregam depois do aceite.
+  - Antes do aceite, nenhum request de terceiro: e2e em 8 rotas. Medição (Plausible) só carrega depois do aceite; o mapa do Google, só no clique em "Ver o mapa" (ou sozinho, depois do aceite).
   - A escolha fica no aparelho e muda em "Preferências de privacidade", no rodapé.
   - Sem JS, nada de terceiro carrega.
 - **Medição sem dado pessoal.** Os eventos levam só ids de serviço/profissional e a página de origem. O Plausible não usa cookie.
@@ -99,7 +99,7 @@ Cada trava foi provada com `--simular`, e cada simulação acrescentou exatament
 - **Exceções da CSP (documentadas):**
   - `script-src 'wasm-unsafe-eval'`: os decodificadores do 3D (Meshopt, Draco, Basis/KTX2) e o Spark compilam WebAssembly. Só baixam no `/a-casa`, sob demanda.
   - `worker-src blob:` e `connect-src data: blob:`: esses decodificadores rodam em Workers criados de Blob e leem o WASM embutido.
-  - `frame-src https://www.openstreetmap.org`: o mapa, só depois do aceite.
+  - `frame-src https://www.google.com`: o mapa do Google, só depois do clique ou do aceite (20/11/2026).
   - `https://plausible.io` em `script-src`/`connect-src`: a medição, só depois do aceite.
   - `style-src 'unsafe-hashes'`: os atributos `style=""` (proporção das fotos e LQIP) entram por hash, não liberados.
 - **Cache:**

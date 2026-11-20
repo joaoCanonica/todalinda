@@ -1,7 +1,7 @@
 {
   "$schema": "./media.manifest.schema.json",
   "versao": 1,
-  "atualizado": "2026-11-18",
+  "atualizado": "2026-11-20",
   "itens": [
     {
       "pessoa": null,
@@ -2097,6 +2097,93 @@
       "altura": 150,
       "resolucaoMax": 150,
       "motivoNaoUsar": "Capa de destaque de 150 px; o site tem iconografia própria."
+    },
+    {
+      "pessoa": "equipe Todalinda",
+      "tecnica": null,
+      "descricao": "Capa da revista Todalinda, dez/2021–fev/2022: a equipe de branco brindando.",
+      "uso": [
+        "revista"
+      ],
+      "texto": null,
+      "trechos": [],
+      "rotacao": 0,
+      "consentimento": "autorizado",
+      "audioLiberado": false,
+      "problemas": [
+        "Fonte: flipsnack.com/revistatodalinda/revista-todalinda-dez-janeiro-fev-2022 (capa, 900 px)."
+      ],
+      "edicoes": [],
+      "naoUsar": false,
+      "parAntesDepois": null,
+      "escolha": false,
+      "crianca": "nao",
+      "id": "rev-2021",
+      "arquivo": "media-originais/fotos/revista-2021-12-edicao-01.jpg",
+      "tipo": "imagem",
+      "natureza": "arte",
+      "largura": 900,
+      "altura": 1350,
+      "resolucaoMax": 900,
+      "recorte": null
+    },
+    {
+      "pessoa": "equipe Todalinda",
+      "tecnica": null,
+      "descricao": "Capa da revista Todalinda \"5 anos: do sonho à realização\", jul/2022: a equipe na frente da casa.",
+      "uso": [
+        "revista"
+      ],
+      "texto": null,
+      "trechos": [],
+      "rotacao": 0,
+      "consentimento": "autorizado",
+      "audioLiberado": false,
+      "problemas": [
+        "Fonte: flipsnack.com/BFE96FCC5A8/revista-todalinda-5-anos (capa, 600 px)."
+      ],
+      "edicoes": [],
+      "naoUsar": false,
+      "parAntesDepois": null,
+      "escolha": false,
+      "crianca": "nao",
+      "id": "rev-2022",
+      "arquivo": "media-originais/fotos/revista-2022-07-5-anos.jpg",
+      "tipo": "imagem",
+      "natureza": "arte",
+      "largura": 600,
+      "altura": 851,
+      "resolucaoMax": 600,
+      "recorte": null
+    },
+    {
+      "pessoa": "equipe Todalinda",
+      "tecnica": null,
+      "descricao": "Capa da revista Todalinda \"Equipe dos Sonhos\", set/2023: a equipe de preto.",
+      "uso": [
+        "revista"
+      ],
+      "texto": null,
+      "trechos": [],
+      "rotacao": 0,
+      "consentimento": "autorizado",
+      "audioLiberado": false,
+      "problemas": [
+        "Fonte: flipsnack.com/BFE96FCC5A8/revista-todalinda (capa, 794 px)."
+      ],
+      "edicoes": [],
+      "naoUsar": false,
+      "parAntesDepois": null,
+      "escolha": false,
+      "crianca": "nao",
+      "id": "rev-2023",
+      "arquivo": "media-originais/fotos/revista-2023-09-equipe-dos-sonhos.jpg",
+      "tipo": "imagem",
+      "natureza": "arte",
+      "largura": 794,
+      "altura": 1123,
+      "resolucaoMax": 794,
+      "recorte": null
     },
     {
       "pessoa": null,

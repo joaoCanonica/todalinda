@@ -39,7 +39,7 @@ describe('manifesto de mídia', () => {
 
   it('cobre todos os originais de media-originais/', () => {
     const arquivos = new Set(manifesto.itens.map((i) => i.arquivo));
-    expect(arquivos.size).toBe(112);
+    expect(arquivos.size).toBe(115);
   });
 
   it('naoUsar obrigatórios estão marcados', () => {

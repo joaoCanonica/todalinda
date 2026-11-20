@@ -10,6 +10,7 @@ export const assinatura = 'Desde 2017, no Centro de Lages.';
 export const navegacao = {
   pular: 'Pular para o conteúdo',
   menu: 'Menu',
+  capa: 'Capa',
   fechar: 'Fechar menu',
   itens: [
     { rotulo: 'Serviços', href: '/#sumario' },
@@ -17,6 +18,7 @@ export const navegacao = {
     { rotulo: 'Equipe', href: '/equipe' },
     { rotulo: 'A casa', href: '/a-casa' },
     { rotulo: 'Nossa história', href: '/nossa-historia' },
+    { rotulo: 'Revista', href: '/revista' },
     { rotulo: 'Como chegar', href: '/como-chegar' },
   ],
   agendar: 'Agendar',
@@ -140,3 +142,11 @@ export const acessibilidade = {
   provisorio: 'Provisório',
   carregando: 'Carregando',
 } as const;
+
+/** Mapa do Google (home e /como-chegar): carrega no clique, ou sozinho depois do aceite. */
+export const mapaGoogle = {
+  botao: 'Ver o mapa',
+  aviso:
+    'O mapa vem do Google: ao abrir, o seu navegador se conecta ao Google, que recebe o seu endereço IP.',
+  abrir: 'Abrir no Google Maps',
+};

@@ -1,17 +1,13 @@
 ---
-// 11 · A REVISTA (capa): as 3 edições como capas. A captura do flip (Flipsnack) não foi possível
-// neste ambiente (rede restrita) e os links ainda não estão no repositório: capa tipográfica + PROVISÓRIO.
+// 11 · A REVISTA (capa): as 3 edições com a capa real (imagem pública do Flipsnack) e o link para ler.
 import { paginas } from '../../content/textos/index.ts';
 import { revista as r } from '../../content/textos/home.ts';
 import Rotulo from '../base/Rotulo.astro';
 import Pagina from '../edicao/Pagina.astro';
-import Provisorio from '../Provisorio.astro';
+import Poster from '../base/Poster.astro';
+import { alt } from '../../content/textos/midia.ts';
 
-const edicoes = paginas.revista.edicoes.map((e, i) => ({
-  ...e,
-  numero: String(i + 1).padStart(2, '0'),
-  link: null as string | null,
-}));
+const edicoes = paginas.revista.edicoes;
 ---
 
 <Pagina tom="capa" secao={r.folio} id="revista" rotulo="A revista">
@@ -25,33 +21,32 @@ const edicoes = paginas.revista.edicoes.map((e, i) => ({
   <ul class="rev" role="list">
     {edicoes.map((e) => (
       <li class="rev__item" data-revelar>
-        <article class="rev__capa" aria-label={`Revista Todalinda: ${e.nome}, ${e.data}`}>
-          <p class="rev__cabeca versalete" aria-hidden="true">
-            Todalinda
-          </p>
-          <p class="rev__numero numeros" aria-hidden="true">
-            {e.numero}
-          </p>
-          <h3 class="rev__nome">{e.nome}</h3>
-          <p class="rev__data versalete">
-            {e.data} · {e.paginas} páginas
-          </p>
-        </article>
+        <a class="rev__capa" href={e.link} rel="noopener" target="_blank">
+          <Poster
+            imagem={e.capa}
+            alt={alt[e.capa] ?? ''}
+            sizes="(min-width: 60rem) 25vw, 80vw"
+            proporcao="3 / 4"
+          />
+          <span class="sr-only"> (abre a edição no Flipsnack, em nova aba)</span>
+        </a>
+        <p class="rev__data versalete">
+          {e.data} · {e.paginas} páginas
+        </p>
+        <h3 class="rev__nome">{e.nome}</h3>
         <p class="rev__linha">{e.linha}</p>
-        {e.link ? (
-          <a class="rev__link" href={e.link} rel="noopener" target="_blank">
-            Ler a edição<span class="sr-only"> (abre em nova aba)</span>
-          </a>
-        ) : (
-          <p class="rev__link rev__link--pendente">
-            <Provisorio motivo="link do Flipsnack pendente (está no Linktree)">
-              Edição online em breve
-            </Provisorio>
-          </p>
-        )}
+        <a class="rev__link versalete" href={e.link} rel="noopener" target="_blank">
+          Ler a edição <span aria-hidden="true">↗</span>
+          <span class="sr-only"> (Flipsnack, abre em nova aba)</span>
+        </a>
       </li>
     ))}
   </ul>
+  <p class="rev__todas">
+    <a class="versalete" href="/revista">
+      Ver o arquivo da revista
+    </a>
+  </p>
 </Pagina>
 
 <style>
@@ -69,47 +64,47 @@ const edicoes = paginas.revista.edicoes.map((e, i) => ({
     max-width: var(--largura-max);
   }
   .rev__capa {
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    aspect-ratio: 3 / 4;
-    padding: var(--e-5);
+    display: block;
     border: var(--fio) solid var(--fio-cor);
-    background: linear-gradient(var(--cor-cafe), var(--cor-cafe)) padding-box;
+    box-shadow: 0 1.2rem 2.4rem -1.2rem color-mix(in srgb, #000 80%, transparent);
+    transition: translate 0.4s ease;
   }
-  .rev__cabeca {
-    margin: 0;
-    padding-bottom: var(--e-2);
-    border-bottom: var(--fio) solid var(--fio-cor);
-    color: var(--cor-papel);
-    letter-spacing: 0.4em;
+  .rev__capa:hover {
+    translate: 0 -4px;
   }
-  .rev__numero {
-    align-self: center;
-    margin: 0;
-    font-family: var(--fonte-titulo);
-    font-size: clamp(4rem, 3rem + 4vw, 6.5rem);
-    line-height: 1;
-    color: var(--cor-ouro-claro);
+  .rev__capa:focus-visible {
+    outline: 2px solid var(--cor-ouro-claro);
+    outline-offset: 4px;
+  }
+  .rev__data {
+    margin: var(--e-4) 0 var(--e-2);
+    color: var(--cor-ouro);
   }
   .rev__nome {
     font-size: var(--fs-h3);
     font-style: italic;
     font-weight: 700;
   }
-  .rev__data {
-    margin: var(--e-3) 0 0;
-    color: var(--cor-ouro);
-  }
   .rev__linha {
-    margin: var(--e-4) 0 var(--e-2);
+    margin: var(--e-3) 0 var(--e-2);
     color: var(--texto-2);
     font-size: var(--fs-pequeno);
   }
-  .rev__link {
-    font-size: var(--fs-pequeno);
+  .rev__link,
+  .rev__todas a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    min-height: 44px;
     color: var(--cor-ouro-claro);
+    text-underline-offset: 0.25em;
   }
-  .rev__link--pendente {
-    color: var(--texto-2);
+  .rev__todas {
+    margin-top: var(--e-6);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rev__capa {
+      transition: none;
+    }
   }
 </style>

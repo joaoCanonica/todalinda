@@ -82,6 +82,12 @@ export const alt: Record<string, string> = {
   'q-dido-sorrindo': 'Dido Rodrigues sorri com uma cliente depois de um penteado de rabo alto.',
   'q-iluminada': 'Cliente sorrindo com morena iluminada mel.',
   'q-filigrana': 'Escova com secador diante do painel de filigrana da casa.',
+  // capas das revistas (Flipsnack)
+  'rev-2021': 'Capa da primeira revista Todalinda: a equipe, toda de branco, brindando no jardim.',
+  'rev-2022':
+    'Capa da revista Todalinda “5 anos: do sonho à realização”: a equipe reunida em frente à casa.',
+  'rev-2023':
+    'Capa da revista Todalinda “Equipe dos Sonhos”: a equipe, de preto, depois de um treinamento.',
 };
 
 /** Descrições de vídeo (para leitor de tela, legenda e JSON-LD VideoObject). */
