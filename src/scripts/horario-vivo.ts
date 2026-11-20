@@ -7,6 +7,9 @@ function atualizar() {
   for (const el of document.querySelectorAll<HTMLElement>('[data-status-horario]')) {
     const texto = el.querySelector('[data-status-texto]');
     if (texto) texto.textContent = s.texto;
+    // feriado: a casa costuma fechar, mas pode abrir com muito movimento (João, 20/11/2026)
+    const aviso = el.querySelector<HTMLElement>('[data-status-feriado]');
+    if (aviso) aviso.hidden = !('feriado' in s && s.feriado);
     el.dataset.aberto = String(s.aberto);
   }
   const hoje = local(agora).diaSemana;

@@ -10,6 +10,7 @@ export const assinatura = 'Desde 2017, no Centro de Lages.';
 export const navegacao = {
   pular: 'Pular para o conteúdo',
   menu: 'Menu',
+  capa: 'Capa',
   fechar: 'Fechar menu',
   itens: [
     { rotulo: 'Serviços', href: '/#sumario' },
@@ -17,6 +18,7 @@ export const navegacao = {
     { rotulo: 'Equipe', href: '/equipe' },
     { rotulo: 'A casa', href: '/a-casa' },
     { rotulo: 'Nossa história', href: '/nossa-historia' },
+    { rotulo: 'Revista', href: '/revista' },
     { rotulo: 'Como chegar', href: '/como-chegar' },
   ],
   agendar: 'Agendar',
@@ -65,6 +67,7 @@ export const whatsapp = {
   avaliacao: 'Olá! Vim pelo site e quero agendar uma avaliação do fio.',
   doisReais: 'Olá! Vim pelo site e quero saber do Dois Reais ou um Cabelo.',
   comoChegar: 'Olá! Vim pelo site e quero confirmar como chegar à Todalinda.',
+  feriado: 'Olá! Vim pelo site: a Todalinda vai abrir hoje, no feriado?',
 } as const;
 
 /** Bloco “Avaliar no Google”: sem estrelas, sem nota, sem incentivo. */
@@ -140,3 +143,16 @@ export const acessibilidade = {
   provisorio: 'Provisório',
   carregando: 'Carregando',
 } as const;
+
+/** Mapa do Google (home e /como-chegar): carrega no clique, ou sozinho depois do aceite. */
+export const mapaGoogle = {
+  botao: 'Ver o mapa',
+  aviso:
+    'O mapa vem do Google: ao abrir, o seu navegador se conecta ao Google, que recebe o seu endereço IP.',
+  abrir: 'Abrir no Google Maps',
+};
+
+/** Status em dia de feriado: a casa costuma fechar, mas pode abrir com muito movimento. */
+export const feriadoAviso = {
+  link: 'Pode abrir com muito movimento: confirme no WhatsApp',
+};

@@ -8,7 +8,7 @@
 //    (splat) compilam WebAssembly; só baixam sob demanda, no /a-casa.
 //  - worker-src blob: — esses decodificadores rodam em Web Workers criados de um Blob.
 //  - connect-src data: blob: — o WASM embutido em base64 é lido por fetch(data:).
-//  - frame-src openstreetmap.org — o mapa interativo, só depois do clique e do aceite.
+//  - frame-src www.google.com — o mapa do Google, só depois do clique ou do aceite.
 //  - script-src/connect-src plausible.io — a medição, só depois do aceite.
 //  - style-src 'unsafe-hashes' — os atributos style="" (proporção das fotos, LQIP) vão por hash.
 import { createHash } from 'node:crypto';
@@ -77,7 +77,7 @@ const csp = [
   "font-src 'self'",
   "connect-src 'self' data: blob: https://plausible.io",
   "worker-src 'self' blob:",
-  'frame-src https://www.openstreetmap.org',
+  'frame-src https://www.google.com',
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -112,7 +112,7 @@ const config = {
         {
           key: 'Permissions-Policy',
           value:
-            'camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), fullscreen=(self)',
+            'camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), fullscreen=(self)',
         },
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },

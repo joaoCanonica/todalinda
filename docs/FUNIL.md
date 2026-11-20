@@ -121,7 +121,7 @@ GA4 (`PUBLIC_MEDICAO=ga4`) também funciona, mas usa cookie, pesa bem mais e exi
 ### Consentimento
 
 - O aviso aparece na primeira visita, com **"Aceitar" e "Recusar" do mesmo tamanho, cor e borda** (o e2e confere).
-- Antes do aceite, nada de terceiro: medição, mapa interativo (OpenStreetMap) e embeds.
+- Antes do aceite, nada de terceiro: medição e embeds. O mapa do Google carrega no clique em "Ver o mapa" (ou sozinho, depois do aceite).
 - A escolha fica só no aparelho (`localStorage`) e muda em **"Preferências de privacidade"**, no rodapé.
 - Sem JS, o aviso não aparece e nada de terceiro carrega.
 

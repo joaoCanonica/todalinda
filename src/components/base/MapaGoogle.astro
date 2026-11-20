@@ -1,0 +1,171 @@
+---
+// Mapa do Google (embed sem chave). Nada de terceiros carrega antes da escolha da pessoa:
+// - sem aceite: um clique em "Ver o mapa" (com o aviso ao lado) carrega o mapa só nesta página;
+// - com aceite no aviso de privacidade: o mapa carrega sozinho quando chega perto da tela.
+// Sem JS: o cartão com as coordenadas e o link para o Google Maps.
+import { contato } from '../../config/contato.ts';
+import { mapaGoogle as t } from '../../content/textos/geral.ts';
+
+interface Props {
+  /** proporção do mapa (padrão 4 / 3) */
+  proporcao?: string;
+}
+const { proporcao = '4 / 3' } = Astro.props;
+const { lat, lng } = contato.geo.valor;
+const embed = `https://www.google.com/maps?q=${lat},${lng}&z=17&hl=pt-BR&output=embed`;
+---
+
+<div class="mg" style={`aspect-ratio: ${proporcao}`} data-mapa-google={embed}>
+  <div class="mg__cartao">
+    <span class="mg__rosa" aria-hidden="true">
+      N
+    </span>
+    <span class="mg__pino" aria-hidden="true"></span>
+    <span class="mg__coord numeros" aria-hidden="true">
+      {Math.abs(lat).toFixed(4).replace('.', ',')}° S · {Math.abs(lng).toFixed(4).replace('.', ',')}
+      ° O
+    </span>
+    <div class="mg__acao" data-mapa-acao hidden>
+      <button type="button" class="mg__botao versalete" data-mapa-carregar>
+        {t.botao}
+      </button>
+      <p class="mg__aviso">{t.aviso}</p>
+    </div>
+    <noscript>
+      <a
+        class="mg__botao versalete"
+        href={contato.mapas.google.valor}
+        rel="noopener"
+        target="_blank"
+      >
+        {t.abrir}
+      </a>
+    </noscript>
+  </div>
+</div>
+
+<script>
+  import { aceito, EVENTO } from '../consentimento/consentimento.ts';
+
+  for (const palco of document.querySelectorAll<HTMLElement>('[data-mapa-google]')) {
+    const acao = palco.querySelector<HTMLElement>('[data-mapa-acao]');
+    if (acao) acao.hidden = false;
+    let carregado = false;
+    const carregar = (foco: boolean) => {
+      if (carregado) return;
+      carregado = true;
+      const f = document.createElement('iframe');
+      f.src = palco.dataset.mapaGoogle ?? '';
+      f.title =
+        'Mapa do Google com a localização da Todalinda, na Rua Lauro Müller, 574, Centro de Lages';
+      f.loading = 'lazy';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.allowFullscreen = true;
+      f.className = 'mg__iframe';
+      palco.replaceChildren(f);
+      if (foco) f.focus();
+    };
+    palco.querySelector('[data-mapa-carregar]')?.addEventListener('click', () => carregar(true));
+    // quem já aceitou no aviso de privacidade vê o mapa sem clicar, quando ele chega perto da tela
+    const automatico = () => {
+      const io = new IntersectionObserver(
+        (es) => {
+          if (es.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            carregar(false);
+          }
+        },
+        { rootMargin: '300px' },
+      );
+      io.observe(palco);
+    };
+    if (aceito()) automatico();
+    else
+      window.addEventListener(EVENTO, (e) => {
+        if ((e as CustomEvent<string>).detail === 'aceito') automatico();
+      });
+  }
+</script>
+
+<style>
+  .mg {
+    position: relative;
+    width: 100%;
+    border: var(--fio) solid var(--fio-cor);
+    background: var(--cor-cafe);
+    overflow: hidden;
+  }
+  .mg :global(.mg__iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .mg__cartao {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: var(--e-3);
+    padding: var(--e-5);
+    text-align: center;
+    color: var(--cor-papel);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 47px, rgb(247 243 236 / 0.08) 47px 48px),
+      repeating-linear-gradient(90deg, transparent 0 47px, rgb(247 243 236 / 0.08) 47px 48px),
+      var(--cor-cafe);
+  }
+  .mg__rosa {
+    position: absolute;
+    inset-block-start: var(--e-3);
+    inset-inline-end: var(--e-4);
+    font-size: var(--fs-versalete);
+    font-weight: 600;
+    color: var(--cor-ouro-claro);
+  }
+  .mg__pino {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid var(--cor-ouro-claro);
+    border-radius: 50% 50% 50% 0;
+    rotate: -45deg;
+  }
+  .mg__coord {
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-h3);
+  }
+  .mg__acao {
+    display: grid;
+    justify-items: center;
+    gap: var(--e-2);
+    max-width: 28rem;
+  }
+  .mg__acao[hidden] {
+    display: grid;
+    visibility: hidden;
+  }
+  .mg__botao {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1.2em;
+    border: 0;
+    background: var(--cor-papel);
+    color: var(--cor-noite);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .mg__botao:hover {
+    background: var(--cor-ouro-claro);
+  }
+  .mg__botao:focus-visible {
+    outline: 2px solid var(--cor-ouro-claro);
+    outline-offset: 3px;
+  }
+  .mg__aviso {
+    margin: 0;
+    font-size: var(--fs-pequeno);
+    color: rgb(247 243 236 / 0.78);
+  }
+</style>

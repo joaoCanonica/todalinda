@@ -1,12 +1,25 @@
 ---
 // Status ao vivo ("Aberto agora · até 19h", "Fecha em 20 min", "Fechado · abre terça às 9h").
 // Sem JS, mostra o horário fixo. Não é região "live": muda a cada minuto e não deve interromper.
+import { feriadoAviso, whatsapp } from '../../content/textos/geral.ts';
 import { horarioResumo } from '../../lib/horario.ts';
+import { linkWhatsApp } from '../../lib/whatsapp.ts';
 ---
 
 <p class="status versalete" data-status-horario>
   <span class="status__ponto" aria-hidden="true"></span>
   <span data-status-texto>{horarioResumo()}</span>
+  <a
+    class="status__feriado"
+    href={linkWhatsApp(whatsapp.feriado)}
+    rel="noopener"
+    target="_blank"
+    data-status-feriado
+    hidden
+  >
+    {feriadoAviso.link}
+    <span class="sr-only"> (abre o WhatsApp em nova aba)</span>
+  </a>
 </p>
 
 <script>
@@ -15,18 +28,28 @@ import { horarioResumo } from '../../lib/horario.ts';
 
 <style>
   .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: 0.4em 0.6em;
     margin: 0;
     color: var(--texto);
     letter-spacing: 0.12em;
   }
   .status__ponto {
+    align-self: center;
     width: 0.55em;
     height: 0.55em;
     border-radius: 50%;
     border: var(--fio) solid currentColor;
+  }
+  .status__feriado {
+    grid-column: 2;
+    color: var(--acento);
+    text-underline-offset: 0.25em;
+  }
+  .status__feriado[hidden] {
+    display: none;
   }
   .status[data-aberto='true'] .status__ponto {
     background: var(--acento);

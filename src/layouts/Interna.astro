@@ -125,6 +125,12 @@ const externo = hrefAgendar.startsWith('http');
         <details class="topo__menu">
           <summary class="versalete">{navegacao.menu}</summary>
           <ul role="list">
+            <li>
+              <a href="/" class="versalete">
+                <span aria-hidden="true">←&nbsp;</span>
+                {navegacao.capa}
+              </a>
+            </li>
             {navegacao.itens.map((i) => (
               <li>
                 <a
@@ -151,6 +157,30 @@ const externo = hrefAgendar.startsWith('http');
         {externo && <span class="sr-only"> (abre o WhatsApp em nova aba)</span>}
       </a>
     </header>
+    <nav class="volta tom-capa" aria-label="Você está em">
+      <ol role="list">
+        <li>
+          <a href="/" class="volta__capa versalete">
+            <span aria-hidden="true">←</span> {navegacao.capa}
+          </a>
+        </li>
+        {(trilha ?? []).map((p, i, todos) =>
+          i === todos.length - 1 ? (
+            <li>
+              <span class="versalete" aria-current="page">
+                {p.nome}
+              </span>
+            </li>
+          ) : (
+            <li>
+              <a href={p.url} class="versalete">
+                {p.nome}
+              </a>
+            </li>
+          ),
+        )}
+      </ol>
+    </nav>
     <main id="conteudo" tabindex="-1">
       <slot />
     </main>
@@ -271,7 +301,46 @@ const externo = hrefAgendar.startsWith('http');
   .topo__lista {
     display: none;
   }
-  @media (min-width: 64rem) {
+  .volta {
+    padding: 0 var(--margem);
+    border-bottom: var(--fio) solid var(--fio-cor);
+  }
+  .volta ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .volta li {
+    display: flex;
+    align-items: center;
+  }
+  .volta li + li::before {
+    content: '/';
+    margin-inline: 0.8em;
+    color: var(--texto-2);
+  }
+  .volta a,
+  .volta span[aria-current] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 44px;
+    color: var(--texto-2);
+    text-decoration: none;
+  }
+  .volta a:hover {
+    color: var(--texto);
+  }
+  .volta .volta__capa {
+    color: var(--cor-ouro-claro);
+  }
+  .volta span[aria-current] {
+    color: var(--texto);
+  }
+  @media (min-width: 80rem) {
     .topo__menu {
       display: none;
     }
@@ -283,6 +352,7 @@ const externo = hrefAgendar.startsWith('http');
       list-style: none;
     }
     .topo__lista a {
+      white-space: nowrap;
       display: inline-flex;
       align-items: center;
       min-height: 44px;

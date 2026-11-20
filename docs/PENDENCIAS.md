@@ -77,7 +77,7 @@ Lista viva gerada pela config: `pnpm validate-config --tudo`. Resumo do que depe
 
 ## Sessão 3 — Design system (18/11/2026)
 - **Fonte da revista:** não foi possível abrir o Linktree/Flipsnack deste ambiente. Playfair Display segue como hipótese; João, confirmar no PDF da revista (se for outra, troca só `--fonte-titulo`).
-- **Mapa estático:** sem imagem de mapa por ora (rede restrita, e nada de iframe de terceiros). O "Como chegar" mostra o cartão tipográfico com coordenadas, plus code e os três apps. Gerar uma imagem estática (OpenStreetMap, com atribuição) quando houver acesso.
+- **Mapa:** resolvido em 20/11/2026: mapa do Google (embed sem chave) na capa e em Como chegar, no clique ou sozinho depois do aceite.
 - **Ouro oficial:** tokens Ouro e Ouro claro continuam PROVISÓRIOS.
 - **Pedra recalibrada** para #756B64 (AA sobre Papel); o tom original virou "Pedra clara" (só sobre Noite). Ajuste do CLAUDE.md fica a critério do João.
 - **Aspas da citação na página clara** usam Mocha, não Ouro (ouro sobre Papel reprova o contraste).
@@ -103,7 +103,7 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Estacionamento, formas de pagamento, cartão-presente, noiva fora do salão, acessibilidade:** fora dos textos até confirmar (o teste barra essas palavras).
 - **Feriados:** os textos dizem "em feriados, confirme pelo WhatsApp" (não afirmam que a casa fecha).
 - **Domínio:** o cartão do QR monta "ou acesse <domínio>/avaliar" só quando `PUBLIC_SITE_URL` existir.
-- **Links das 3 revistas (Flipsnack):** pegar os endereços no Linktree.
+- **Links das 3 revistas (Flipsnack):** resolvido em 20/11/2026 (endereços da investigação §fontes; capas baixadas do Flipsnack).
 - **Regras do Dois Reais ou um Cabelo:** o site não fala de regras nem de prêmio; manda para o Instagram.
 
 ### Decisões de texto
@@ -116,7 +116,7 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 ## Sessão 6A — Home (18/11/2026)
 - **Idade a confirmar:** o vídeo "transformação" aparece em Antes e depois **só no preview** (com PROVISÓRIO). Em produção, as seções escondem sozinhas a mídia "verificar" (`src/components/secoes/util.ts`) em vez de travar o build; com a confirmação, ela volta.
 - **Pares de foto antes/depois:** prováveis, com PROVISÓRIO até a casa confirmar.
-- **Revista:** capas tipográficas. A captura do flip (Flipsnack) não foi possível daqui (rede) e os links ainda não estão no repositório.
+- **Revista:** capas reais e links do Flipsnack desde 20/11/2026.
 - **3D:** o bloco "A casa" mostra a fachada em traço Ouro (desenhada a partir da captura) e leva a /a-casa; a ilha 3D entra na sessão 6B.
 - **Agendar:** botões por serviço → WhatsApp, até o agendador da sessão 7 (id #agendar reservado).
 - **Rodapé:** o logo mono oficial (em Ouro) entra como arquivo carregado tarde (`public/marca/`), não inline: inline somava 84 KB ao HTML de toda visita.
@@ -140,8 +140,6 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Trabalhos assinados:** nenhuma foto tem autoria confirmada; os perfis da equipe dizem que os trabalhos aparecem quando a casa confirmar.
 - **Tratamentos e limpeza de pele:** sem mídia/publicação, não geram matéria (`/servicos/tratamentos` e `/servicos/limpeza-de-pele` dão 404). O glossário do fio fica em `/tratamentos`.
 - **Retratos:** Dido, Karine, Thaynara e Marina sem retrato em alta: grade com cartão tipográfico; no perfil, monograma com "Retrato em breve".
-- **Revista:** links do Flipsnack pendentes (estão no Linktree). Capas tipográficas até lá.
-- **Mapa:** a imagem estática de mapa não foi gerada (tile.openstreetmap.org bloqueado neste ambiente); no lugar, um cartão com coordenadas e Plus Code. O mapa interativo é o embed do OpenStreetMap, carregado só depois do clique, com aviso de privacidade (texto novo em `/privacidade`). **Não testado aqui** (rede bloqueada): conferir no preview publicado.
 - **Estacionamento:** opcional e não confirmado: `/como-chegar` não fala de estacionamento.
 - **Feriados:** a lista de próximos feriados sai do calendário em `src/config/horario.ts`; a frase "confirme pelo WhatsApp" continua com PROVISÓRIO até a casa dizer se fecha nos feriados. Aniversário de Lages (22/11) com lei municipal a confirmar.
 - **/a-casa** mantém o cabeçalho próprio da sessão 6B; as demais internas usam `src/layouts/Interna.astro` (sumário no desktop, menu nativo `<details>` no celular).
@@ -188,3 +186,13 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
   - não traz o identificador da ficha (Place ID, `ChIJ…`).
 
   `/avaliar` segue na ficha estável (`maps?cid=14959576611857227956`). O link certo começa com `https://g.page/r/` e termina em `/review`: Perfil da Empresa → "Pedir avaliações" (`docs/DEPLOY.md`).
+
+## Ajustes de 20/11/2026 (pedido do João)
+
+- **Voltar à capa:** toda página interna tem a trilha "← Capa / página" logo abaixo do cabeçalho, e "Capa" no menu do celular. "Revista" entrou no sumário. O menu em linha só aparece a partir de 1280 px (em 1024 px os itens quebravam).
+- **Revistas:** capas reais (imagem de capa pública de cada edição no Flipsnack, em `media-originais/fotos/revista-*.jpg`) e link "Ler a edição" para o Flipsnack, na capa do site e em `/revista`. A capa de 2021 tem 900 px; as outras, 600 e 794 px (o Flipsnack não entrega maior sem login). Se a casa tiver os PDFs, dá para trocar por capas maiores.
+- **Mapa:** o mapa do Google substituiu o OpenStreetMap. Não carrega nada antes do clique em "Ver o mapa"; quem aceitou no aviso de privacidade vê o mapa sozinho. Textos do aviso e de `/privacidade` atualizados; CSP com `frame-src https://www.google.com`.
+- **Console:** o cabeçalho `Permissions-Policy` tinha `bluetooth`, que o Chrome não reconhece (aviso em todas as páginas). Removido.
+- **CSP:** os hashes foram refeitos só com os dois modos atuais (de 7,6 KB para 5,9 KB).
+- **Feriados (João, 20/11/2026):** a casa costuma fechar nos feriados, mas pode abrir com alta demanda. Em dia de feriado, o status ao vivo mostra "Fechado · feriado" e o link "Pode abrir com muito movimento: confirme no WhatsApp"; os textos de horário e do FAQ dizem o mesmo. O agendador continua sem oferecer feriados.
+- **Capas das revistas:** o João aprovou as capas no tamanho do Flipsnack (uso de exposição). A rede extra desta sessão (Flipsnack e Google Maps) foi aceita.

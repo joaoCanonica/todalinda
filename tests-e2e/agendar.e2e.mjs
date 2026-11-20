@@ -325,7 +325,7 @@ await cenario('nenhum request de terceiro antes do consentimento', async () => {
     await p.waitForTimeout(400);
   }
   assert.deepEqual(terceiros, [], `requests de terceiros: ${terceiros.join(', ')}`);
-  // o aviso aparece; "Carregar o mapa" sem aceite não carrega nada e pede o aceite
+  // o aviso aparece; o mapa do Google não carrega antes do clique em "Ver o mapa"
   await p.goto(`${BASE}/como-chegar`);
   await p.waitForSelector('[data-consentimento]:not([hidden])', { timeout: 5000 }); // carrega depois do LCP
   assert.equal(
@@ -334,9 +334,7 @@ await cenario('nenhum request de terceiro antes do consentimento', async () => {
     'o aviso aparece na primeira visita',
   );
   await p.screenshot({ path: `${SAIDA}/e2e-consentimento__390.png` });
-  await p.locator('[data-mapa-carregar]').click();
-  await p.waitForTimeout(300);
-  assert.deepEqual(terceiros, [], 'mapa não pode carregar sem aceite');
+  assert.deepEqual(terceiros, [], 'o mapa não pode carregar antes do clique');
   // pesos iguais: mesmo tamanho e mesma cor
   const [rec, ace] = await Promise.all(
     ['recusado', 'aceito'].map((v) =>
@@ -355,11 +353,12 @@ await cenario('nenhum request de terceiro antes do consentimento', async () => {
     ),
   );
   assert.equal(rec, ace, 'Aceitar e Recusar com o mesmo peso');
-  await p.locator('[data-consentir="aceito"]').click();
-  await p.waitForTimeout(500);
+  await p.locator('[data-consentir="recusado"]').click();
+  await p.locator('[data-mapa-carregar]').first().click();
+  await p.waitForTimeout(800);
   assert.ok(
-    terceiros.some((u) => u.includes('openstreetmap.org')),
-    'depois do aceite, o mapa carrega',
+    terceiros.some((u) => u.includes('google.com/maps')),
+    'o clique em "Ver o mapa" carrega o mapa do Google',
   );
   await ctx.close();
 });

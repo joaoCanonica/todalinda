@@ -1,8 +1,9 @@
 ---
 // /como-chegar — o "SERVIÇO" da revista: o endereço em manchete com copiar, a fachada, o horário com
-// status ao vivo e os próximos feriados, o mapa (estático; o interativo só depois do clique e do aviso
-// de privacidade) e os três apps. Estacionamento só quando a casa confirmar.
+// status ao vivo e os próximos feriados, o mapa do Google (no clique, ou sozinho depois do aceite no
+// aviso de privacidade) e os três apps. Estacionamento só quando a casa confirmar.
 import Botao from '../components/base/Botao.astro';
+import MapaGoogle from '../components/base/MapaGoogle.astro';
 import Poster from '../components/base/Poster.astro';
 import Rotulo from '../components/base/Rotulo.astro';
 import StatusHorario from '../components/base/StatusHorario.astro';
@@ -22,7 +23,6 @@ import Interna from '../layouts/Interna.astro';
 import { linkWhatsApp } from '../lib/whatsapp.ts';
 
 const e = contato.endereco.valor;
-const { lat, lng } = contato.geo.valor;
 const linhaCopiar = `${e.logradouro}, ${e.numero} - ${e.bairro}, ${e.cidade} - ${e.uf}, ${e.cep}`;
 const estacionamento = valorDe(contato.estacionamento);
 const hoje = new Date().toISOString().slice(0, 10);
@@ -34,9 +34,6 @@ const fmtData = (iso: string) =>
     weekday: 'short',
     timeZone: 'UTC',
   }).format(new Date(`${iso}T12:00:00Z`));
-const d = 0.004; // ~400 m de cada lado
-const bbox = [lng - d * 1.4, lat - d, lng + d * 1.4, lat + d].map((n) => n.toFixed(5)).join('%2C');
-const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
 ---
 
 <Interna
@@ -107,19 +104,8 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
 
   <Pagina tom="pagina" secao="Mapa" rotulo={c.mapa.titulo}>
     <div class="mapa">
-      <div class="mapa__palco" data-mapa={embed}>
-        <div class="mapa__cartao" aria-hidden="true">
-          <span class="mapa__rosa">N</span>
-          <span class="numeros">{Math.abs(lat).toFixed(4).replace('.', ',')}° S</span>
-          <span class="numeros">{Math.abs(lng).toFixed(4).replace('.', ',')}° O</span>
-          <span class="mapa__plus">{contato.plusCode.valor}</span>
-        </div>
-        <div class="mapa__consentimento" data-mapa-aviso hidden>
-          <p>{c.mapa.aviso}</p>
-          <button type="button" class="mapa__botao versalete" data-mapa-carregar>
-            {c.mapa.botao}
-          </button>
-        </div>
+      <div class="mapa__palco">
+        <MapaGoogle />
       </div>
       <div class="mapa__lado">
         <h2 class="versalete">{c.apps}</h2>
@@ -161,8 +147,6 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
 </Interna>
 
 <script>
-  import { abrirAviso, aceito, quandoAceitar } from '../components/consentimento/consentimento.ts';
-
   // copiar endereço
   for (const b of document.querySelectorAll<HTMLButtonElement>('[data-copiar]')) {
     if (!navigator.clipboard) continue;
@@ -199,27 +183,6 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
         return li;
       }),
     );
-  }
-  // mapa interativo: só depois do clique E do "Aceitar" no aviso de privacidade
-  const palco = document.querySelector<HTMLElement>('[data-mapa]');
-  const aviso = palco?.querySelector<HTMLElement>('[data-mapa-aviso]');
-  if (palco && aviso) {
-    aviso.hidden = false;
-    const carregarMapa = () => {
-      const f = document.createElement('iframe');
-      f.src = palco.dataset.mapa ?? '';
-      f.title = 'Mapa interativo da região da Todalinda, no Centro de Lages (OpenStreetMap)';
-      f.loading = 'lazy';
-      f.referrerPolicy = 'no-referrer';
-      f.className = 'mapa__iframe';
-      palco.replaceChildren(f);
-      f.focus();
-    };
-    aviso.querySelector('[data-mapa-carregar]')?.addEventListener('click', () => {
-      if (aceito()) return carregarMapa();
-      abrirAviso(); // pede o aceite; o mapa carrega se a pessoa aceitar
-      quandoAceitar(carregarMapa);
-    });
   }
 </script>
 
@@ -342,61 +305,6 @@ const embed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&laye
     display: grid;
     gap: var(--e-4);
     align-content: start;
-  }
-  .mapa__palco :global(.mapa__iframe) {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border: var(--fio) solid var(--fio-cor);
-  }
-  .mapa__cartao {
-    position: relative;
-    display: grid;
-    align-content: center;
-    justify-items: center;
-    gap: var(--e-2);
-    aspect-ratio: 4 / 3;
-    border: var(--fio) solid var(--fio-cor);
-    background:
-      repeating-linear-gradient(0deg, transparent 0 47px, var(--fio-cor) 47px 48px),
-      repeating-linear-gradient(90deg, transparent 0 47px, var(--fio-cor) 47px 48px);
-    font-family: var(--fonte-titulo);
-    font-size: var(--fs-h3);
-  }
-  .mapa__rosa {
-    position: absolute;
-    inset-block-start: var(--e-3);
-    inset-inline-end: var(--e-4);
-    font-family: var(--fonte-texto);
-    font-size: var(--fs-versalete);
-    font-weight: 600;
-    color: var(--acento);
-  }
-  .mapa__plus {
-    font-family: var(--fonte-texto);
-    font-size: var(--fs-pequeno);
-    color: var(--texto-2);
-  }
-  .mapa__consentimento {
-    border-top: var(--fio) solid var(--fio-cor);
-    padding-top: var(--e-4);
-  }
-  .mapa__consentimento[hidden] {
-    display: block;
-    visibility: hidden;
-  }
-  .mapa__consentimento p {
-    color: var(--texto-2);
-    font-size: var(--fs-pequeno);
-  }
-  .mapa__botao {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    padding: 0 1em;
-    border: var(--fio) solid var(--cor-tinta);
-    background: transparent;
-    color: var(--texto);
-    cursor: pointer;
   }
   .mapa__lado h2 {
     color: var(--acento);
