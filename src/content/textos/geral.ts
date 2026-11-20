@@ -67,6 +67,7 @@ export const whatsapp = {
   avaliacao: 'Olá! Vim pelo site e quero agendar uma avaliação do fio.',
   doisReais: 'Olá! Vim pelo site e quero saber do Dois Reais ou um Cabelo.',
   comoChegar: 'Olá! Vim pelo site e quero confirmar como chegar à Todalinda.',
+  feriado: 'Olá! Vim pelo site: a Todalinda vai abrir hoje, no feriado?',
 } as const;
 
 /** Bloco “Avaliar no Google”: sem estrelas, sem nota, sem incentivo. */
@@ -149,4 +150,9 @@ export const mapaGoogle = {
   aviso:
     'O mapa vem do Google: ao abrir, o seu navegador se conecta ao Google, que recebe o seu endereço IP.',
   abrir: 'Abrir no Google Maps',
+};
+
+/** Status em dia de feriado: a casa costuma fechar, mas pode abrir com muito movimento. */
+export const feriadoAviso = {
+  link: 'Pode abrir com muito movimento: confirme no WhatsApp',
 };

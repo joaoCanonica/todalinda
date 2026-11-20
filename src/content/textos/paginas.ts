@@ -202,7 +202,8 @@ export const comoChegar = {
   referencia: 'Procure a placa “somos TODALINDA” e a porta de madeira cor de laranja.',
   apps: 'Abrir no aplicativo de mapas',
   horario: 'Horário',
-  feriados: 'Em feriados, confirme o horário pelo WhatsApp antes de vir.',
+  feriados:
+    'Nos feriados a casa costuma fechar, mas pode abrir em dias de muito movimento: mande uma mensagem pelo WhatsApp para conferir.',
   contato: 'Dúvida no caminho? Fale com a recepção.',
   proximosFeriados: 'Próximos feriados',
   /** Mapa do Google: componente MapaGoogle (textos em geral.ts). */
@@ -289,7 +290,7 @@ export const faq = {
         {
           pergunta: 'Qual o horário?',
           resposta:
-            'Terça a sábado, das 9h às 19h. Domingo e segunda, fechado. Em feriados, confirme pelo WhatsApp.',
+            'Terça a sábado, das 9h às 19h. Domingo e segunda, fechado. Nos feriados a casa costuma fechar, mas pode abrir com muito movimento: confirme pelo WhatsApp.',
         },
         {
           pergunta: 'Onde fica?',

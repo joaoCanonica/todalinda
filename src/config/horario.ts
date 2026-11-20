@@ -23,7 +23,7 @@ export const horario = {
   /** Se a casa fecha nos feriados abaixo. Presumido até a casa confirmar. */
   fechaNosFeriados: aviso(
     true,
-    'presumido: a casa fecha nos feriados listados; confirmar (e dizer se abre em algum)',
+    'João, 20/11/2026: a casa costuma fechar nos feriados, mas pode abrir com alta demanda; o site manda conferir pelo WhatsApp',
   ),
   /** Avisa "Fecha em N min" quando faltar isso ou menos. */
   avisoFechamentoMin: 30,

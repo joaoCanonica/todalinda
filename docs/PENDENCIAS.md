@@ -194,3 +194,5 @@ Todos os textos estão em `src/content/textos/` (revisão em **/_textos**). Fras
 - **Mapa:** o mapa do Google substituiu o OpenStreetMap. Não carrega nada antes do clique em "Ver o mapa"; quem aceitou no aviso de privacidade vê o mapa sozinho. Textos do aviso e de `/privacidade` atualizados; CSP com `frame-src https://www.google.com`.
 - **Console:** o cabeçalho `Permissions-Policy` tinha `bluetooth`, que o Chrome não reconhece (aviso em todas as páginas). Removido.
 - **CSP:** os hashes foram refeitos só com os dois modos atuais (de 7,6 KB para 5,9 KB).
+- **Feriados (João, 20/11/2026):** a casa costuma fechar nos feriados, mas pode abrir com alta demanda. Em dia de feriado, o status ao vivo mostra "Fechado · feriado" e o link "Pode abrir com muito movimento: confirme no WhatsApp"; os textos de horário e do FAQ dizem o mesmo. O agendador continua sem oferecer feriados.
+- **Capas das revistas:** o João aprovou as capas no tamanho do Flipsnack (uso de exposição). A rede extra desta sessão (Flipsnack e Google Maps) foi aceita.
